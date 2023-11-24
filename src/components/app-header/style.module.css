@@ -1,0 +1,58 @@
+header {
+	display: flex;
+	justify-content: space-around;
+	background: var(--interface-modal-bg, #1c1c21);
+	box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+		0px 4px 8px 0px rgba(0, 0, 0, 0.04),
+		0px 16px 24px 0px rgba(0, 0, 0, 0.04),
+		0px 24px 32px 0px rgba(0, 0, 0, 0.04);
+	align-items: center;
+	padding: 16px 320px;
+}
+.container {
+	display: flex;
+	align-items: center;
+}
+a {
+	display: flex;
+	align-items:center;
+	text-decoration: none;
+}
+.activeElement{
+	display: flex;
+	color:#F2F2F3;
+}
+.navElement{
+	color:#8585AD;
+}
+.container section {
+	display: flex;
+}
+.mediaContainer {
+	display: none;
+}
+@media screen and (width< 870px) {
+	.container {
+		flex-direction: column;
+		display: none;
+	}
+	.mediaContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.navigation {
+		display: flex;
+	}
+	.navigation section {
+		display: flex;
+		align-items: center;
+		width: 200px;
+	}
+}
+@media screen and (width< 700px) {
+	.navigation {
+		flex-direction: column;
+		justify-content: center;
+	}
+}

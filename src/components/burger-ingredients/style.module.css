@@ -1,0 +1,35 @@
+.container {
+	display: flex;
+}
+.main {
+	width: 600px;
+	flex-shrink: 0;
+	margin: 0% 40px 0% 22%;
+}
+.breadContainer {
+	display: flex;
+	gap: 24px;
+	margin-bottom: 40px;
+}
+@media screen and (width < 1600px) {
+	.main {
+		margin: 0% 40px 0% 10%;
+	}
+}
+@media screen and (width < 1400px) {
+	.main {
+		margin: 0% 40px 0% 3%;
+	}
+}
+@media screen and (width < 1300px) {
+	.container {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+@media screen and (width < 750px) {
+	.container {
+		flex-direction: column;
+		align-items: start;
+	}
+}

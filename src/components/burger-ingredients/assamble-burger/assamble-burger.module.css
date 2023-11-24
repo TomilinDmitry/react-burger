@@ -1,0 +1,14 @@
+.burger {
+	width: 630px;
+	height: 545px;
+	overflow-y: scroll;
+}
+.burger::-webkit-scrollbar {
+	width: 8px;
+}
+.burger::-webkit-scrollbar-thumb {
+	background: #8585ad;
+}
+.burger::-webkit-scrollbar-track {
+	background: var(--interface-input, #2f2f37);
+}
