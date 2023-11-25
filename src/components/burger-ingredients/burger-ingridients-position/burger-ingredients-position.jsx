@@ -11,9 +11,10 @@ const Section = (props) => {
 
 
 	return (
+		
 		<section className={style.container}>
 			<Counter count={count} size="default" extraClass="m-1" />
-			<img onClick={currentCount} src={props.src} alt={props.alt} />
+			<img onClick={currentCount} src={props.image} alt={props.name} />
 
 			<p
 				style={{ display: "flex" }}

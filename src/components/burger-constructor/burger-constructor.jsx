@@ -1,4 +1,4 @@
-import React, { children, useEffect, useState } from "react"
+import React, { useState } from "react"
 import style from "./constructor.module.css"
 import {
 	Button,
@@ -6,18 +6,18 @@ import {
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components"
 import ConstructorPositions from "./burger-free-positions/free-positions-constuctor"
-import Modal from "../modal/order-modal/modal"
+import Modal from "../modal/modal"
 import PropTypes from "prop-types"
-import { createPortal } from "react-dom"
-const modalRoot = document.getElementById("modal")
-function BurgerConstructor() {
-	const [modal, setModal] = useState(false)
-	const [ingridientModal, setIngridientModal] = useState(false)
-	const openModal = () => {
-		setModal(true)
+import OrderDetails from "../modal/order-modal/order-modal"
+import ModalOverlay from "../modal/modal-overlay/modal-overlay"
+
+function BurgerConstructor({ props }) {
+	const [isOpen, setIsOpen] = useState(false)
+	const open = () => {
+		setIsOpen(true)
 	}
-	const closeModal = () => {
-		setModal(false)
+	const close = () => {
+		setIsOpen(false)
 	}
 	return (
 		<aside className={style.container}>
@@ -53,17 +53,23 @@ function BurgerConstructor() {
 					610 <CurrencyIcon type="primary" />
 				</p>
 				<Button
-					onClick={openModal}
+					onClick={open}
 					htmlType="button"
 					type="primary"
 					size="medium">
 					Оформить заказ
 				</Button>
 			</section>
-			{createPortal(<Modal/>, modalRoot)}
+			{isOpen && (
+				<Modal onClose={close}>
+					<OrderDetails />
+					<ModalOverlay />
+				</Modal>
+			)}
 		</aside>
 	)
 }
+
 BurgerConstructor.propTypes = {
 	type: PropTypes.string,
 	isLocked: PropTypes.bool,
@@ -72,6 +78,7 @@ BurgerConstructor.propTypes = {
 	thumbnail: PropTypes.string,
 	htmlType: PropTypes.string,
 	size: PropTypes.string,
+	title: PropTypes.string,
 }
 
 export default BurgerConstructor

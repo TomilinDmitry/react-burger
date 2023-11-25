@@ -249,10 +249,9 @@ const ConstructorPositions = () => {
 		},
 	]
 	const listIngridient = positions.map((position) => (
-		<section className={style.container}>
+		<section className={style.container} key = {position._id}>
 			<DragIcon type="primary" />
 			<ConstructorElement
-				key={position._id}
 				isLocked={false}
 				text={position.name}
 				price={position.price}

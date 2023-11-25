@@ -1,7 +1,5 @@
 .container {
 	display: flex;
-}
-.main {
 	width: 600px;
 	flex-shrink: 0;
 	margin: 0% 40px 0% 22%;
@@ -10,6 +8,22 @@
 	display: flex;
 	gap: 24px;
 	margin-bottom: 40px;
+}
+.ingredientContainer{
+	display: flex;
+	width: 630px;
+	flex-wrap: wrap;
+	height: 545px;
+	overflow-y: scroll;
+}
+.ingredientContainer::-webkit-scrollbar {
+	width: 8px;
+}
+.ingredientContainer::-webkit-scrollbar-thumb {
+	background: #8585ad;
+}
+.ingredientContainer::-webkit-scrollbar-track {
+	background: var(--interface-input, #2f2f37);
 }
 @media screen and (width < 1600px) {
 	.main {

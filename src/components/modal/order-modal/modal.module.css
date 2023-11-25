@@ -1,8 +1,16 @@
 .mainContainer {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	overflow: hidden;
+	align-items:center;
+	padding: 60px 40px 40px 40px;
+	justify-content: center;
+	flex-shrink: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
 }
 .order {
 	margin: 60px 0px 32px 0;
@@ -16,11 +24,7 @@
 	font-weight: 400;
 	line-height: 120px; /* 83.333% */
 }
-.closeBtn {
-	display: flex;
-	justify-content: end;
-	cursor: pointer;
-}
+
 .footerText {
 	color: var(--text-dark-grey-secondary-text, #8585ad);
 }
