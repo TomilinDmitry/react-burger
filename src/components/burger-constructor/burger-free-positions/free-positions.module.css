@@ -1,7 +1,21 @@
-.container {
-	margin-bottom: 16px;
-}
+
 svg {
 	margin-right: 8px;
+} 
+.list{
+	list-style: none;
+	display: flex;
+	align-items: center;
 }
 
+ul{
+	display: flex;
+	flex-direction: column;
+	/* gap: 16px; */
+    list-style-type: none;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 32px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0;
+}

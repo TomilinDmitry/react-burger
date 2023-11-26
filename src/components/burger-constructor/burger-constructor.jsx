@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import style from "./constructor.module.css"
 import {
 	Button,
+	CloseIcon,
 	ConstructorElement,
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -10,18 +11,37 @@ import Modal from "../modal/modal"
 import PropTypes from "prop-types"
 import OrderDetails from "../modal/order-modal/order-modal"
 import ModalOverlay from "../modal/modal-overlay/modal-overlay"
+import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 
-function BurgerConstructor({ props }) {
+function BurgerConstructor({ ingredients, dataInfo }) {
 	const [isOpen, setIsOpen] = useState(false)
+	const [isOpenIngDetails, setIsOpenIngDetails] = useState(false)
 	const open = () => {
 		setIsOpen(true)
+	}
+	const openIngDetails = () => {
+		setIsOpenIngDetails(true)
 	}
 	const close = () => {
 		setIsOpen(false)
 	}
+	const closeIngDetails = () => {
+		setIsOpenIngDetails(false)
+	}
+	const KeyDown = (e) => {
+		if (e.key === "Escape") {
+			close()
+		}
+	}
+	useEffect(() => {
+		document.addEventListener("keydown", KeyDown)
+		return () => {
+			document.removeEventListener("keydown", KeyDown)
+		}
+	})
 	return (
 		<aside className={style.container}>
-			<section className="mb-4 ml-8">
+			<section  className="mb-4 ml-8">
 				<ConstructorElement
 					type="top"
 					isLocked={true}
@@ -32,16 +52,14 @@ function BurgerConstructor({ props }) {
 					}
 				/>
 			</section>
-			<section
-				// onClick={() => setIngridientModal(true)}
-				className={style.freePositionBlock}>
-				<ConstructorPositions />
+			<section className={style.freePositionBlock}>
+				<ConstructorPositions isOpen={openIngDetails} ingredients={ingredients} />
 			</section>
 			<section className="pl-8">
 				<ConstructorElement
 					type="bottom"
 					isLocked={true}
-					text="Краторная булка N-200i (верх)"
+					text="Краторная булка N-200i (низ)"
 					price={200}
 					thumbnail={
 						"https://code.s3.yandex.net/react/code/bun-02.png"
@@ -61,9 +79,20 @@ function BurgerConstructor({ props }) {
 				</Button>
 			</section>
 			{isOpen && (
-				<Modal onClose={close}>
-					<OrderDetails />
-					<ModalOverlay />
+				<Modal onClick={(e) => e.stopPropagation()}>
+					<OrderDetails title="Детали заказа" closeModal={close} />
+					<ModalOverlay onClose={close} />
+				</Modal>
+			)}
+			{isOpenIngDetails && (
+				<Modal onClick={(e) => e.stopPropagation()}>
+					<IngredientDetails
+						dataInfo={dataInfo}
+						title="Детали ингредиента"
+						closeModal={closeIngDetails}
+						name="БиоКотлета"
+					/>
+					<ModalOverlay onClose={closeIngDetails} />
 				</Modal>
 			)}
 		</aside>

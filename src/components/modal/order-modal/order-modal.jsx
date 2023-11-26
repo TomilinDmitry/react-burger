@@ -1,9 +1,20 @@
 import React from "react"
 import doneImg from "../../../images/done.svg"
 import style from "./modal.module.css"
-const OrderDetails = () => {
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+const OrderDetails = ({ closeModal, title },props) => {
 	return (
 		<div className={style.mainContainer}>
+			<section className={style.overlayHeader}>
+				<section>
+					<h1>{title}</h1>
+				</section>
+
+				<section onClick={closeModal} className={style.closeBtn}>
+					<CloseIcon type="primary" />
+				</section>
+			</section>
+			<h1 className={style.orderTitle}>{props.title}</h1>
 			<p className={`${style.order} text text_type_digits-large`}>
 				12890
 			</p>
@@ -13,6 +24,7 @@ const OrderDetails = () => {
 			<section className="mb-15">
 				<img src={doneImg} alt="123" />
 			</section>
+			<section className={style.footerTextBlock}>
 			<p className="text text_type_main-default mb-2">
 				Ваш заказ начали готовить
 			</p>
@@ -20,6 +32,7 @@ const OrderDetails = () => {
 				className={`${style.footerText} text text_type_main-default`}>
 				Дождитесь готовности на орбинатльной станции
 			</p>
+			</section>
 		</div>
 	)
 }

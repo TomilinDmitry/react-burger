@@ -9,6 +9,9 @@
 	gap: 24px;
 	margin-bottom: 40px;
 }
+.title{
+	text-align: start;
+}
 .ingredientContainer{
 	display: flex;
 	width: 630px;
@@ -25,6 +28,7 @@
 .ingredientContainer::-webkit-scrollbar-track {
 	background: var(--interface-input, #2f2f37);
 }
+
 @media screen and (width < 1600px) {
 	.main {
 		margin: 0% 40px 0% 10%;
