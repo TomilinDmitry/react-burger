@@ -56,3 +56,8 @@ img {
 	cursor: pointer;
 	z-index: 1;
 }
+.modalContainerInfo{
+	display: flex;
+	flex-direction: column;
+	align-items:center;
+}

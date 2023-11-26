@@ -5,16 +5,22 @@ import {
 	Counter,
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components"
+import PropTypes from "prop-types"
+
 const Section = (props) => {
 	const [count, setCount] = useState(0)
 	const currentCount = () => setCount(count + 1)
 
 
+
 	return (
-		
-		<section className={style.container}>
+		<section  className={style.container}>
 			<Counter count={count} size="default" extraClass="m-1" />
-			<img onClick={currentCount} src={props.image} alt={props.name} />
+			<img
+				onClick={currentCount}
+				src={props.image}
+				alt={props.name}
+			/>
 
 			<p
 				style={{ display: "flex" }}
@@ -30,5 +36,4 @@ const Section = (props) => {
 		</section>
 	)
 }
-
 export default Section

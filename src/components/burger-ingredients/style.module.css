@@ -9,10 +9,23 @@
 	gap: 24px;
 	margin-bottom: 40px;
 }
-.title{
+.title {
 	text-align: start;
 }
-.ingredientContainer{
+.tabsBlock {
+	display: flex;
+	flex-direction: column;
+}
+.sectionBlock {
+	display: flex;
+	flex-wrap: wrap;
+}
+.blockTitle {
+	display: flex;
+	align-items: start;
+}
+
+.ingredientContainer {
 	display: flex;
 	width: 630px;
 	flex-wrap: wrap;

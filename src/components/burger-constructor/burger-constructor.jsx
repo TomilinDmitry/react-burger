@@ -13,21 +13,17 @@ import OrderDetails from "../modal/order-modal/order-modal"
 import ModalOverlay from "../modal/modal-overlay/modal-overlay"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 
-function BurgerConstructor({ ingredients, dataInfo }) {
+function BurgerConstructor({ ingredients}) {
 	const [isOpen, setIsOpen] = useState(false)
-	const [isOpenIngDetails, setIsOpenIngDetails] = useState(false)
+	
 	const open = () => {
 		setIsOpen(true)
 	}
-	const openIngDetails = () => {
-		setIsOpenIngDetails(true)
-	}
+	
 	const close = () => {
 		setIsOpen(false)
 	}
-	const closeIngDetails = () => {
-		setIsOpenIngDetails(false)
-	}
+	
 	const KeyDown = (e) => {
 		if (e.key === "Escape") {
 			close()
@@ -53,7 +49,7 @@ function BurgerConstructor({ ingredients, dataInfo }) {
 				/>
 			</section>
 			<section className={style.freePositionBlock}>
-				<ConstructorPositions isOpen={openIngDetails} ingredients={ingredients} />
+				<ConstructorPositions ingredients={ingredients} />
 			</section>
 			<section className="pl-8">
 				<ConstructorElement
@@ -82,17 +78,6 @@ function BurgerConstructor({ ingredients, dataInfo }) {
 				<Modal onClick={(e) => e.stopPropagation()}>
 					<OrderDetails title="Детали заказа" closeModal={close} />
 					<ModalOverlay onClose={close} />
-				</Modal>
-			)}
-			{isOpenIngDetails && (
-				<Modal onClick={(e) => e.stopPropagation()}>
-					<IngredientDetails
-						dataInfo={dataInfo}
-						title="Детали ингредиента"
-						closeModal={closeIngDetails}
-						name="БиоКотлета"
-					/>
-					<ModalOverlay onClose={closeIngDetails} />
 				</Modal>
 			)}
 		</aside>

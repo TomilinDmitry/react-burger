@@ -248,22 +248,33 @@ function App() {
 			__v: 0,
 		},
 	]
-	const [ingredientsState, setIngredientsState] = useState(ingridients);
-	const url = 'https://norma.nomoreparties.space/api/ingredients'
-	const [data,setData] = useState([]);
+	const [ingredientsState, setIngredientsState] =
+		useState(ingridients)
+	const buns = ingredientsState.filter((item) => item.type === "bun")
+	const sauces = ingredientsState.filter(
+		(item) => item.type === "sauce",
+	)
+	const mainIngredients = ingredientsState.filter(
+		(item) => item.type === "main",
+	)
+	const url = "https://norma.nomoreparties.space/api/ingredients"
+	const [data, setData] = useState([])
 	useEffect(() => {
-		fetch (url)
-		.then(response=>response.json())
-		.then(data=>setData(data))
-		.catch(e=>console.error(`Ошибка: ${e}`))
-	  }, []); 
-	
+		fetch(url)
+			.then((response) => response.json())
+			.then((data) => setData(data))
+			.catch((e) => console.error(`Ошибка: ${e}`))
+	}, [])
+
 	return (
 		<div className="App">
 			<AppHeader />
 			<main className="main-block">
-				<BurgerIgredients ingredients = {ingredientsState} />
-				<BurgerConstructor dataInfo = {data} ingredients = {ingredientsState} />
+				<BurgerIgredients buns={buns} sauces={sauces} mains ={mainIngredients} dataInfo={data} ingredient={ingridients} />
+				<BurgerConstructor
+					
+					ingredients={ingredientsState}
+				/>
 			</main>
 		</div>
 	)
