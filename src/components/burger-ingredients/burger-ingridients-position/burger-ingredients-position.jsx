@@ -10,9 +10,7 @@ import PropTypes from "prop-types"
 const Section = (props) => {
 	const [count, setCount] = useState(0)
 	const currentCount = () => setCount(count + 1)
-
-
-
+	
 	return (
 		<section  className={style.container}>
 			<Counter count={count} size="default" extraClass="m-1" />
@@ -22,18 +20,20 @@ const Section = (props) => {
 				alt={props.name}
 			/>
 
-			<p
-				style={{ display: "flex" }}
-				className="text text_type_digits-default m-1">
+			<p className={`${style.paragraph} text text_type_digits-default m-1`}>
 				{props.price}
 				<CurrencyIcon type="primary" className="ml-4" />
 			</p>
-			<p
-				style={{ textAlign: "center" }}
-				className="text text_type_main-default">
+			<p className="text text_type_main-default">
 				{props.name}
 			</p>
 		</section>
 	)
 }
+Section.propTypes ={
+	image:PropTypes.string,
+	name:PropTypes.string,
+	price:PropTypes.number
+}
+
 export default Section

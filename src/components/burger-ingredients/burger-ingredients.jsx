@@ -6,12 +6,11 @@ import Section from "./burger-ingridients-position/burger-ingredients-position"
 import Modal from "../modal/modal"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 import ModalOverlay from "../modal/modal-overlay/modal-overlay"
+import PropTypes from "prop-types"
 const BurgerIgredients = ({
 	buns,
 	mains,
 	sauces,
-	dataInfo,
-	ingredient,
 }) => {
 	const [isOpenIngDetails, setIsOpenIngDetails] = useState(false)
 	const [selectedIngredient, setSelectedIngredient] = useState(null);
@@ -101,5 +100,9 @@ const BurgerIgredients = ({
 		</div>
 	)
 }
-
+BurgerIgredients.propTypes = {
+	buns:PropTypes.array,
+	sauces:PropTypes.array,
+	mains:PropTypes.array,
+}
 export default BurgerIgredients

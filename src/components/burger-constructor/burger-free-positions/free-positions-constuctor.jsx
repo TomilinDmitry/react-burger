@@ -4,10 +4,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components"
 import React from "react"
 import style from "./free-positions.module.css"
+import PropTypes from "prop-types"
 const ConstructorPositions = ({
 	ingredients,
-	index,
-	dataInfo,
 	isOpen,
 }) => {
 	return (
@@ -28,6 +27,10 @@ const ConstructorPositions = ({
 			))}
 		</ul>
 	)
+}
+ConstructorPositions.propTypes= {
+	ingredients:PropTypes.array,
+	isOpen:PropTypes.func
 }
 
 export default ConstructorPositions

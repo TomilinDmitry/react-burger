@@ -11,7 +11,6 @@ import Modal from "../modal/modal"
 import PropTypes from "prop-types"
 import OrderDetails from "../modal/order-modal/order-modal"
 import ModalOverlay from "../modal/modal-overlay/modal-overlay"
-import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 
 function BurgerConstructor({ ingredients}) {
 	const [isOpen, setIsOpen] = useState(false)
@@ -93,6 +92,7 @@ BurgerConstructor.propTypes = {
 	htmlType: PropTypes.string,
 	size: PropTypes.string,
 	title: PropTypes.string,
+	ingredients:PropTypes.array
 }
 
 export default BurgerConstructor

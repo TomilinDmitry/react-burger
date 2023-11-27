@@ -2,6 +2,7 @@ import React from "react"
 import doneImg from "../../../images/done.svg"
 import style from "./modal.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import PropTypes from "prop-types"
 const OrderDetails = ({ closeModal, title },props) => {
 	return (
 		<div className={style.mainContainer}>
@@ -36,5 +37,9 @@ const OrderDetails = ({ closeModal, title },props) => {
 		</div>
 	)
 }
-
+OrderDetails.propTypes ={
+	closeModal:PropTypes.func.isRequired,
+	title:PropTypes.string,
+	props:PropTypes.string
+}
 export default OrderDetails

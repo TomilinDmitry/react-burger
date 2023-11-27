@@ -4,6 +4,9 @@ import "./App.css"
 import AppHeader from "./components/app-header/app-header"
 import BurgerIgredients from "./components/burger-ingredients/burger-ingredients"
 import BurgerConstructor from "./components/burger-constructor/burger-constructor"
+import PropTypes from "prop-types"
+
+
 function App() {
 	const ingridients = [
 		{
@@ -262,8 +265,10 @@ function App() {
 	useEffect(() => {
 		fetch(url)
 			.then((response) => response.json())
-			.then((data) => setData(data))
-			.catch((e) => console.error(`Ошибка: ${e}`))
+			.then((data) => 
+			{data.success === true ? setData(data) : alert(`Ошибка: Массив не получен,проверьте `)})
+				.catch((e) => console.error(`Ошибка: ${e}`))
+
 	}, [])
 
 	return (
@@ -272,12 +277,18 @@ function App() {
 			<main className="main-block">
 				<BurgerIgredients buns={buns} sauces={sauces} mains ={mainIngredients} dataInfo={data} ingredient={ingridients} />
 				<BurgerConstructor
-					
 					ingredients={ingredientsState}
 				/>
 			</main>
 		</div>
 	)
+}
+App.propTypes={
+	buns:PropTypes.array,
+	sauces:PropTypes.array,
+	mains:PropTypes.array,
+	dataInfo:PropTypes.array,
+	ingredient:PropTypes.array,
 }
 
 export default App

@@ -2,6 +2,7 @@ import React from "react"
 import ModalOverlay from "../modal-overlay/modal-overlay"
 import style from "./ingridient-details.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import PropTypes from "prop-types"
 const IngredientDetails = ({ closeModal, title, dataInfo }) => {
 	return (
 		<div className={style.mainContainer}>
@@ -46,6 +47,11 @@ const IngredientDetails = ({ closeModal, title, dataInfo }) => {
 			)}
 		</div>
 	)
+}
+IngredientDetails.propTypes ={
+	closeModal:PropTypes.func.isRequired,
+	title:PropTypes.string,
+	dataInfo:PropTypes.object
 }
 
 export default IngredientDetails

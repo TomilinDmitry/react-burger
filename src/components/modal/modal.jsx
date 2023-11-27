@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import style from "./modal.module.css"
 import PortalReactDOM from "react-dom"
 const Modal = ({ children }) => {
