@@ -23,7 +23,7 @@ const OrderDetails = ({ closeModal, title },props) => {
 				Идентификатор заказа
 			</p>
 			<section className="mb-15">
-				<img src={doneImg} alt="123" />
+				<img src={doneImg} alt="Выполнено!" />
 			</section>
 			<section className={style.footerTextBlock}>
 			<p className="text text_type_main-default mb-2">

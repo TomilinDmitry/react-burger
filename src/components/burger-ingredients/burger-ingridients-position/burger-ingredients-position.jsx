@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
 
-const Section = (props) => {
+const IngredientCard = (props) => {
 	const [count, setCount] = useState(0)
 	const currentCount = () => setCount(count + 1)
 	
@@ -30,10 +30,10 @@ const Section = (props) => {
 		</section>
 	)
 }
-Section.propTypes ={
+IngredientCard.propTypes ={
 	image:PropTypes.string,
 	name:PropTypes.string,
 	price:PropTypes.number
 }
 
-export default Section
+export default IngredientCard

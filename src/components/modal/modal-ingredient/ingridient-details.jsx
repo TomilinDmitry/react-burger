@@ -1,5 +1,4 @@
 import React from "react"
-import ModalOverlay from "../modal-overlay/modal-overlay"
 import style from "./ingridient-details.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
@@ -24,7 +23,7 @@ const IngredientDetails = ({ closeModal, title, dataInfo }) => {
 						<span>{dataInfo.name}</span>
 					</p>
 
-					<p
+					<div
 						className={`${style.textBlock} text text_type_main-medium mb-15`}>
 						<p className={style.block}>
 							<span>Калории,ккал</span>
@@ -42,13 +41,13 @@ const IngredientDetails = ({ closeModal, title, dataInfo }) => {
 							<span>Углеводы,г</span>
 							<span>{dataInfo.carbohydrates}</span>
 						</p>
-					</p>
+					</div>
 				</div>
 			)}
 		</div>
 	)
 }
-IngredientDetails.propTypes ={
+IngredientDetails.propTypes = {
 	closeModal:PropTypes.func.isRequired,
 	title:PropTypes.string,
 	dataInfo:PropTypes.object

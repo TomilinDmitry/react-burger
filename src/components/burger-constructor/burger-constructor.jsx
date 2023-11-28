@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import style from "./constructor.module.css"
 import {
 	Button,
-	CloseIcon,
 	ConstructorElement,
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components"

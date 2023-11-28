@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import style from "./style.module.css"
 import BurgerIgredientsTab from "../UI/Tab/burger-ingredient-tab"
-
-import Section from "./burger-ingridients-position/burger-ingredients-position"
 import Modal from "../modal/modal"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 import ModalOverlay from "../modal/modal-overlay/modal-overlay"
+import IngredientCard from "./burger-ingridients-position/burger-ingredients-position"
 import PropTypes from "prop-types"
-const BurgerIgredients = ({
-	buns,
-	mains,
-	sauces,
-}) => {
+
+
+
+const BurgerIngredients = ({dataInfo}) => {
+	const filteredIngredient = useMemo(()=>{
+	return {
+	buns: dataInfo.filter((ingredient) => ingredient.type === 'bun'),
+ 	 sauces : dataInfo.filter((ingredient) => ingredient.type === 'sauce'),
+   	mains : dataInfo.filter((ingredient) => ingredient.type === 'main'),
+}},[dataInfo])
+
 	const [isOpenIngDetails, setIsOpenIngDetails] = useState(false)
 	const [selectedIngredient, setSelectedIngredient] = useState(null);
 	const open = (ingredient) => {
@@ -21,17 +26,6 @@ const BurgerIgredients = ({
 	const closeIngDetails = () => {
 		setIsOpenIngDetails(false)
 	}
-	const KeyDown = (e) => {
-		if (e.key === "Escape") {
-			closeIngDetails()
-		}
-	}
-	useEffect(() => {
-		document.addEventListener("keydown", KeyDown)
-		return () => {
-			document.removeEventListener("keydown", KeyDown)
-		}
-	})
 	return (
 		<div className={style.container}>
 			<main className={style.main}>
@@ -39,55 +33,50 @@ const BurgerIgredients = ({
 					className={`${style.title} text text_type_main-large pt-10 pb-5`}>
 					Соберите бургер
 				</h1>
-				<section className="mb-10">
+				<div className="mb-10">
 					<BurgerIgredientsTab />
-				</section>
-				<section className={style.ingredientContainer}>
+				</div>
+				<div className={style.ingredientContainer}>
 					<section className={style.tabsBlock}>
-						<p className={style.blockTitle}>
-							<span className="text text_type_main-medium">
-								Булки
-							</span>
-						</p>
+						<h1 className={`${style.blockTitle} text text_type_main-medium`}>
+							Булки
+						</h1>
 						<section className={style.sectionBlock}>
-							{buns.map((bun) => (
+							{filteredIngredient.buns.map((bun) => (
 								<div onClick={() => open(bun)} key={bun._id}>
-									<Section {...bun} />
+									<IngredientCard {...bun} />
 								</div>
 							))}
 						</section>
 					</section>
 					<section className={style.tabsBlock}>
-						<p className={style.blockTitle}>
-							<span className="text text_type_main-medium">
-								Соусы
-							</span>
-						</p>
+					<h1 className={`${style.blockTitle} text text_type_main-medium`}>
+							Соусы
+						</h1>
 						<section className={style.sectionBlock}>
-							{sauces.map((sauce) => (
+							{filteredIngredient.sauces.map((sauce) => (
 								<div onClick={() => open(sauce)} key={sauce._id}>
-									<Section {...sauce} />
+									<IngredientCard {...sauce} />
 								</div>
 							))}
 						</section>
 					</section>
-					<section className={style.tabsBlock}>
-						<p className={style.blockTitle}>
-							<span className="text text_type_main-medium">
-								Начинки
-							</span>
-						</p>
+					<div className={style.tabsBlock}>
+						<h1 className={`${style.blockTitle} text text_type_main-medium`}>
+							Начинки
+						</h1>
 						<section className={style.sectionBlock}>
-							{mains.map((main) => (
+							{filteredIngredient.mains.map((main) => (
 								<div onClick={() => open(main)} key={main._id}>
-									<Section {...main} />
+									<IngredientCard {...main} />
 								</div>
 							))}
 						</section>
-					</section>
-				</section>
+					</div>
+				</div>
 				{isOpenIngDetails && selectedIngredient && (
-					<Modal onClick={(e) => e.stopPropagation()}>
+					<>
+					<Modal onClose ={closeIngDetails} onClick={(e) => e.stopPropagation()}>
 						<IngredientDetails
 							dataInfo={selectedIngredient}
 							title="Детали ингредиента"
@@ -95,14 +84,26 @@ const BurgerIgredients = ({
 						/>
 						<ModalOverlay onClose={closeIngDetails} />
 					</Modal>
+					</>
 				)}
 			</main>
 		</div>
 	)
 }
-BurgerIgredients.propTypes = {
-	buns:PropTypes.array,
-	sauces:PropTypes.array,
-	mains:PropTypes.array,
-}
-export default BurgerIgredients
+BurgerIngredients.propTypes = {
+	dataInfo:PropTypes.arrayOf(
+		PropTypes.shape({
+		_id:PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+		}
+
+export default BurgerIngredients
