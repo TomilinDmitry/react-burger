@@ -2,6 +2,7 @@ import React, { useEffect } from "react"
 import style from "./modal.module.css"
 import PortalReactDOM from "react-dom"
 import PropTypes from "prop-types"
+import ModalOverlay from "./modal-overlay/modal-overlay"
 
 const Modal = ({ children,onClose }) => {
 	const KeyDown = (e) => {
@@ -17,10 +18,13 @@ const Modal = ({ children,onClose }) => {
 	})
 	const modalRoot = document.getElementById("modal")
 	return PortalReactDOM.createPortal(
-		<div className={style.container}>{children}</div>,
+		<div className={style.container}>{children}
+		
+		<ModalOverlay onClose={onClose}/>
+		</div>,
 		modalRoot,
-	)
-}
+		)
+	}
 Modal.propTypes ={
 	onClose: PropTypes.func.isRequired,
 	children:PropTypes.any

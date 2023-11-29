@@ -73,9 +73,8 @@ function BurgerConstructor({ ingredients}) {
 				</Button>
 			</section>
 			{isOpen && (
-				<Modal onClick={(e) => e.stopPropagation()}>
+				<Modal onClose={close} onClick={(e) => e.stopPropagation()}>
 					<OrderDetails title="Детали заказа" closeModal={close} />
-					<ModalOverlay onClose={close} />
 				</Modal>
 			)}
 		</aside>

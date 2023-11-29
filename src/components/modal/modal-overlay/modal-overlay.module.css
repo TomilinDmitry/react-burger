@@ -1,12 +1,11 @@
 .modalContainer {
-	display: flex;
 	justify-content: flex-end;
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
 	padding: 40px 40px 0px 40px;
 	flex-shrink: 0;
-	
+	background: rgba(0,0,0, 0.8);
 	position: fixed;
 	top: 50%;
 	left: 50%;

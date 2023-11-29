@@ -82,7 +82,6 @@ const BurgerIngredients = ({dataInfo}) => {
 							title="Детали ингредиента"
 							closeModal={closeIngDetails}
 						/>
-						<ModalOverlay onClose={closeIngDetails} />
 					</Modal>
 					</>
 				)}
