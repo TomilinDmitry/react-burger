@@ -1,0 +1,66 @@
+.container {
+	display: flex;
+	width: 600px;
+	flex-shrink: 0;
+	margin: 0% 40px 0% 22%;
+}
+.breadContainer {
+	display: flex;
+	gap: 24px;
+	margin-bottom: 40px;
+}
+.title {
+	text-align: start;
+}
+.tabsBlock {
+	display: flex;
+	flex-direction: column;
+}
+.sectionBlock {
+	display: flex;
+	flex-wrap: wrap;
+}
+.blockTitle {
+	display: flex;
+	align-items: start;
+}
+
+.ingredientContainer {
+	display: flex;
+	width: 630px;
+	flex-wrap: wrap;
+	height: 545px;
+	overflow-y: scroll;
+}
+.ingredientContainer::-webkit-scrollbar {
+	width: 8px;
+}
+.ingredientContainer::-webkit-scrollbar-thumb {
+	background: #8585ad;
+}
+.ingredientContainer::-webkit-scrollbar-track {
+	background: var(--interface-input, #2f2f37);
+}
+
+@media screen and (width < 1600px) {
+	.main {
+		margin: 0% 40px 0% 10%;
+	}
+}
+@media screen and (width < 1400px) {
+	.main {
+		margin: 0% 40px 0% 3%;
+	}
+}
+@media screen and (width < 1300px) {
+	.container {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+@media screen and (width < 750px) {
+	.container {
+		flex-direction: column;
+		align-items: start;
+	}
+}

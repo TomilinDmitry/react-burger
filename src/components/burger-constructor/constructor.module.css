@@ -1,0 +1,35 @@
+aside {
+	display: flex;
+	flex-direction: column;
+}
+.container {
+	/* width: 560px;
+	position: absolute;
+	bottom:55px;
+	left:60%; */
+	display: flex;
+	flex-direction: column;
+	margin: 100px 0px 0px 40px;
+}
+.freePositionBlock {
+	overflow-y: scroll;
+	width: 580px;
+	height: 380px;
+	padding-right: 8px;
+}
+.freePositionBlock::-webkit-scrollbar {
+	width: 8px;
+}
+.freePositionBlock::-webkit-scrollbar-thumb {
+	background: #8585ad;
+}
+.freePositionBlock::-webkit-scrollbar-track {
+	background: var(--interface-input, #2f2f37);
+}
+.bottomContainer {
+	display: flex;
+	margin-top: 40px;
+	margin-right: 16px;
+	align-items: center;
+	justify-content: end;
+}

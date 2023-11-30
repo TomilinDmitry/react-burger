@@ -1,0 +1,11 @@
+
+.text {
+	/* display: flex; */
+	position: absolute;
+	align-items: center;
+	justify-content: center;
+	right: 60%;
+	top: 10%;
+	z-index: 1;
+}
+
