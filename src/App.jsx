@@ -32,7 +32,7 @@ function App() {
 		<div className="App">
 			<AppHeader />
 			<main className="main-block">
-				<BurgerIngredients dataInfo={data}/>
+				<BurgerIngredients/>
 				<BurgerConstructor
 					ingredients={data}
 				/>

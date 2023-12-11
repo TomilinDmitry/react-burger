@@ -1,31 +1,44 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useRef} from "react"
 import style from "./style.module.css"
 import BurgerIgredientsTab from "../UI/Tab/burger-ingredient-tab"
 import Modal from "../modal/modal"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
-import ModalOverlay from "../modal/modal-overlay/modal-overlay"
 import IngredientCard from "./burger-ingridients-position/burger-ingredients-position"
 import PropTypes from "prop-types"
+import { useDispatch, useSelector } from "react-redux"
+import { asyncIngredient } from "../../services/async-action/async-action"
+import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/action"
 
 
 
-const BurgerIngredients = ({dataInfo}) => {
+const BurgerIngredients = () => {
+	const dispatch = useDispatch();
+	const {data,loading,failed} = useSelector(store=>store.burger)
+
+	useEffect(()=>{
+		dispatch(asyncIngredient())
+	},[dispatch])
+
+	const {selectedIngredient} = useSelector(store=>store.selected)
+
 	const filteredIngredient = useMemo(()=>{
-	return {
-	buns: dataInfo.filter((ingredient) => ingredient.type === 'bun'),
- 	 sauces : dataInfo.filter((ingredient) => ingredient.type === 'sauce'),
-   	mains : dataInfo.filter((ingredient) => ingredient.type === 'main'),
-}},[dataInfo])
+		return {
+			buns: data.filter((ingredient) => ingredient.type === 'bun'),
+ 	 		sauces : data.filter((ingredient) => ingredient.type === 'sauce'),
+   			mains : data.filter((ingredient) => ingredient.type === 'main'),
+				}},[data])
 
-	const [isOpenIngDetails, setIsOpenIngDetails] = useState(false)
-	const [selectedIngredient, setSelectedIngredient] = useState(null);
 	const open = (ingredient) => {
-		setIsOpenIngDetails(true)
-		setSelectedIngredient(ingredient);
+		dispatch(setSelectedIngredient(ingredient));
 	}
-	const closeIngDetails = () => {
-		setIsOpenIngDetails(false)
-	}
+
+	if (loading) {
+		return <p>Происходит загрузка данных,ожидайте....</p>; 
+	  }
+
+	if (failed) {
+		return <p>Ошибка при загрузке данных:{failed}</p>;
+	  }	
 	return (
 		<div className={style.container}>
 			<main className={style.main}>
@@ -74,14 +87,11 @@ const BurgerIngredients = ({dataInfo}) => {
 						</section>
 					</div>
 				</div>
-				{isOpenIngDetails && selectedIngredient && (
+
+				{selectedIngredient && (
 					<>
-					<Modal onClose ={closeIngDetails} onClick={(e) => e.stopPropagation()}>
-						<IngredientDetails
-							dataInfo={selectedIngredient}
-							title="Детали ингредиента"
-							closeModal={closeIngDetails}
-						/>
+					<Modal onClick={(e) => e.stopPropagation()}>
+						<IngredientDetails title="Детали ингредиента"/>
 					</Modal>
 					</>
 				)}

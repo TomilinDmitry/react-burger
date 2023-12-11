@@ -2,41 +2,45 @@ import React, { useEffect, useState } from "react"
 import style from "./constructor.module.css"
 import {
 	Button,
-	ConstructorElement,
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components"
-import ConstructorPositions from "./burger-free-positions/free-positions-constuctor"
 import Modal from "../modal/modal"
 import PropTypes from "prop-types"
 import OrderDetails from "../modal/order-modal/order-modal"
-import ModalOverlay from "../modal/modal-overlay/modal-overlay"
+import TopStubs from "../UI/Stubs/top/top-stubs"
+import CenterStubs from "../UI/Stubs/center/center-stubs"
+import BottomStubs from "../UI/Stubs/bottom/bottom-stubs"
+import { useDispatch, useSelector } from "react-redux"
+import { setIsOpen } from "../../services/burger-constructor/action"
 
-function BurgerConstructor({ ingredients}) {
-	const [isOpen, setIsOpen] = useState(false)
-	
+function BurgerConstructor() {
+	const dispatch = useDispatch()
+
+	const {isOpen} = useSelector(state => state.modal)
+
 	const open = () => {
-		setIsOpen(true)
+		dispatch(setIsOpen(true))
 	}
 	
-	const close = () => {
-		setIsOpen(false)
-	}
+	// const close = () => {
+	// 	dispatch(setIsOpen(false))
+	// }
 	
-	const KeyDown = (e) => {
-		if (e.key === "Escape") {
-			close()
-		}
-	}
-	useEffect(() => {
-		document.addEventListener("keydown", KeyDown)
-		return () => {
-			document.removeEventListener("keydown", KeyDown)
-		}
-	})
+	// const KeyDown = (e) => {
+	// 	if (e.key === "Escape") {
+	// 		close()
+	// 	}
+	// }
+	// useEffect(() => {
+	// 	document.addEventListener("keydown", KeyDown)
+	// 	return () => {
+	// 		document.removeEventListener("keydown", KeyDown)
+	// 	}
+	// })
 	return (
 		<aside className={style.container}>
 			<section  className="mb-4 ml-8">
-				<ConstructorElement
+				{/* <ConstructorElement
 					type="top"
 					isLocked={true}
 					text="Краторная булка N-200i (верх)"
@@ -44,13 +48,15 @@ function BurgerConstructor({ ingredients}) {
 					thumbnail={
 						"https://code.s3.yandex.net/react/code/bun-02.png"
 					}
-				/>
+				/> */}
+				<TopStubs/>
 			</section>
-			<section className={style.freePositionBlock}>
-				<ConstructorPositions ingredients={ingredients} />
+			<section className={`${style.freePositionBlock} mb-4 ml-8`}>
+				{/* <ConstructorPositions ingredients={ingredients} /> */}
+				<CenterStubs/>
 			</section>
 			<section className="pl-8">
-				<ConstructorElement
+				{/* <ConstructorElement
 					type="bottom"
 					isLocked={true}
 					text="Краторная булка N-200i (низ)"
@@ -58,11 +64,12 @@ function BurgerConstructor({ ingredients}) {
 					thumbnail={
 						"https://code.s3.yandex.net/react/code/bun-02.png"
 					}
-				/>
+				/> */}
+				<BottomStubs/>
 			</section>
 			<section className={style.bottomContainer}>
 				<p className="text text_type_digits-medium mr-10">
-					610 <CurrencyIcon type="primary" />
+					0 <CurrencyIcon type="primary" />
 				</p>
 				<Button
 					onClick={open}
@@ -73,8 +80,8 @@ function BurgerConstructor({ ingredients}) {
 				</Button>
 			</section>
 			{isOpen && (
-				<Modal onClose={close} onClick={(e) => e.stopPropagation()}>
-					<OrderDetails title="Детали заказа" closeModal={close} />
+				<Modal onClick={(e) => e.stopPropagation()}>
+					<OrderDetails title="Детали заказа"  />
 				</Modal>
 			)}
 		</aside>

@@ -31,7 +31,6 @@
 }
 .main-block{
 	display: flex;
-	align-items:center;
 }
 @keyframes App-logo-spin {
 	from {

@@ -3,11 +3,16 @@ import style from "./modal.module.css"
 import PortalReactDOM from "react-dom"
 import PropTypes from "prop-types"
 import ModalOverlay from "./modal-overlay/modal-overlay"
+import { useDispatch, useSelector } from "react-redux"
+import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/action"
+import { setIsOpen } from "../../services/burger-constructor/action"
 
-const Modal = ({ children,onClose }) => {
+const Modal = ({ children}) => {
+	const dispatch = useDispatch()
 	const KeyDown = (e) => {
 		if (e.key === "Escape") {
-			onClose()
+			dispatch(setSelectedIngredient(null))
+			dispatch(setIsOpen(false))
 		}
 	}
 	useEffect(() => {
@@ -20,7 +25,7 @@ const Modal = ({ children,onClose }) => {
 	return PortalReactDOM.createPortal(
 		<div className={style.container}>{children}
 		
-		<ModalOverlay onClose={onClose}/>
+		<ModalOverlay />
 		</div>,
 		modalRoot,
 		)

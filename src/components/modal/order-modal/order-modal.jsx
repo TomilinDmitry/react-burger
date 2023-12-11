@@ -3,7 +3,13 @@ import doneImg from "../../../images/done.svg"
 import style from "./modal.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
-const OrderDetails = ({ closeModal, title },props) => {
+import { useDispatch, useSelector } from "react-redux"
+import { setIsOpen } from "../../../services/burger-constructor/action"
+const OrderDetails = ({title },props) => {
+	const dispatch = useDispatch()
+	const closeModal = () =>{
+		dispatch(setIsOpen(null))
+	}
 	return (
 		<div className={style.mainContainer}>
 			<section className={style.overlayHeader}>
@@ -12,12 +18,12 @@ const OrderDetails = ({ closeModal, title },props) => {
 				</section>
 
 				<section onClick={closeModal} className={style.closeBtn}>
-					<CloseIcon type="primary" />
+					<CloseIcon  type="primary" />
 				</section>
 			</section>
 			<h1 className={style.orderTitle}>{props.title}</h1>
 			<p className={`${style.order} text text_type_digits-large`}>
-				12890
+				{Math.round((Math.random()*1000))}
 			</p>
 			<p className="text text_type_main-default mb-15">
 				Идентификатор заказа
@@ -38,7 +44,7 @@ const OrderDetails = ({ closeModal, title },props) => {
 	)
 }
 OrderDetails.propTypes ={
-	closeModal:PropTypes.func.isRequired,
+	// closeModal:PropTypes.func.isRequired,
 	title:PropTypes.string,
 	props:PropTypes.string
 }

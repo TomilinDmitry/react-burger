@@ -14,7 +14,7 @@ aside {
 .freePositionBlock {
 	overflow-y: scroll;
 	width: 580px;
-	height: 380px;
+	max-height: 380px;
 	padding-right: 8px;
 }
 .freePositionBlock::-webkit-scrollbar {
