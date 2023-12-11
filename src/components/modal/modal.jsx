@@ -5,14 +5,14 @@ import PropTypes from "prop-types"
 import ModalOverlay from "./modal-overlay/modal-overlay"
 import { useDispatch, useSelector } from "react-redux"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/action"
-import { setIsOpen } from "../../services/burger-constructor/action"
+import { orderClose } from "../../services/burger-constructor/order-details/action"
 
-const Modal = ({ children}) => {
+const Modal = ({ children }) => {
 	const dispatch = useDispatch()
 	const KeyDown = (e) => {
 		if (e.key === "Escape") {
 			dispatch(setSelectedIngredient(null))
-			dispatch(setIsOpen(false))
+			dispatch(orderClose())
 		}
 	}
 	useEffect(() => {
@@ -23,15 +23,15 @@ const Modal = ({ children}) => {
 	})
 	const modalRoot = document.getElementById("modal")
 	return PortalReactDOM.createPortal(
-		<div className={style.container}>{children}
-		
-		<ModalOverlay />
+		<div className={style.container}>
+			{children}
+
+			<ModalOverlay />
 		</div>,
 		modalRoot,
-		)
-	}
-Modal.propTypes ={
-	onClose: PropTypes.func.isRequired,
-	children:PropTypes.any
+	)
+}
+Modal.propTypes = {
+	children: PropTypes.any,
 }
 export default Modal

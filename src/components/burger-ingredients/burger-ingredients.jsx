@@ -6,7 +6,7 @@ import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 import IngredientCard from "./burger-ingridients-position/burger-ingredients-position"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
-import { asyncIngredient } from "../../services/async-action/async-action"
+import { asyncIngredient } from "../../services/async-action/async-action-ingredient"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/action"
 
 
@@ -32,12 +32,16 @@ const BurgerIngredients = () => {
 		dispatch(setSelectedIngredient(ingredient));
 	}
 
-	if (loading) {
-		return <p>Происходит загрузка данных,ожидайте....</p>; 
-	  }
+	// if (loading) {
+	// 	return<p className={`${style.loadingBlock} text text_type_main-large`}>
+	// 	<span>
+	// 	Происходит загрузка данных,ожидайте....
+	// 	</span>
+	// 	</p>; 
+	//   }
 
 	if (failed) {
-		return <p>Ошибка при загрузке данных:{failed}</p>;
+		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{failed}</p>;
 	  }	
 	return (
 		<div className={style.container}>
@@ -49,6 +53,13 @@ const BurgerIngredients = () => {
 				<div className="mb-10">
 					<BurgerIgredientsTab />
 				</div>
+				{loading ? (
+     				 <p className={`${style.loadingBlock} text text_type_main-large`}>
+      				  <span>
+        				  Происходит загрузка данных, ожидайте....
+      					  </span>
+      				</p>
+    				) : (
 				<div className={style.ingredientContainer}>
 					<section className={style.tabsBlock}>
 						<h1 className={`${style.blockTitle} text text_type_main-medium`}>
@@ -87,6 +98,7 @@ const BurgerIngredients = () => {
 						</section>
 					</div>
 				</div>
+					)}
 
 				{selectedIngredient && (
 					<>
@@ -99,20 +111,20 @@ const BurgerIngredients = () => {
 		</div>
 	)
 }
-BurgerIngredients.propTypes = {
-	dataInfo:PropTypes.arrayOf(
-		PropTypes.shape({
-		_id:PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-		}
+// BurgerIngredients.propTypes = {
+// 	dataInfo:PropTypes.arrayOf(
+// 		PropTypes.shape({
+// 		_id:PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       type: PropTypes.string.isRequired,
+//       proteins: PropTypes.number.isRequired,
+//       fat: PropTypes.number.isRequired,
+//       carbohydrates: PropTypes.number.isRequired,
+//       calories: PropTypes.number.isRequired,
+//       price: PropTypes.number.isRequired,
+//       image: PropTypes.string.isRequired,
+//     })
+//   ).isRequired,
+// 		}
 
 export default BurgerIngredients

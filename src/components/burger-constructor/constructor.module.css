@@ -33,3 +33,23 @@ aside {
 	align-items: center;
 	justify-content: end;
 }
+.loadingBlock{
+	display: flex;
+	align-items:center;
+	font-size: 36px;
+	width: 1000px;
+	span{
+		width:500px;
+	}
+	justify-content: center;
+}
+.failedBlock{
+	display: flex;
+	align-items:center;
+	font-size: 48px;
+	position: absolute;
+	color: red;
+	width: 700px;
+	top:40%;
+	left:35%
+}

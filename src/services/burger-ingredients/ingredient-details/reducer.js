@@ -4,7 +4,7 @@ const initialState = {
     selectedIngredient:null,
 }
 
-export const selectedReducer = (state=initialState,action) =>{
+export const selectedIngReducer = (state=initialState,action) =>{
     switch(action.type){
         case SET_SELECTED_INGREDIENT :
             return {

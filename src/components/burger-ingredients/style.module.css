@@ -41,7 +41,25 @@
 .ingredientContainer::-webkit-scrollbar-track {
 	background: var(--interface-input, #2f2f37);
 }
-
+.loadingBlock{
+	display: flex;
+	justify-content: start;
+	font-size: 48px;
+	width: 1000px;
+	span{
+		width:550px;
+	}
+}
+.failedBlock{
+	display: flex;
+	align-items:center;
+	font-size: 48px;
+	position: absolute;
+	color: red;
+	width: 700px;
+	top:40%;
+	left:35%
+}
 @media screen and (width < 1600px) {
 	.main {
 		margin: 0% 40px 0% 10%;

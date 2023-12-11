@@ -11,16 +11,30 @@ import TopStubs from "../UI/Stubs/top/top-stubs"
 import CenterStubs from "../UI/Stubs/center/center-stubs"
 import BottomStubs from "../UI/Stubs/bottom/bottom-stubs"
 import { useDispatch, useSelector } from "react-redux"
-import { setIsOpen } from "../../services/burger-constructor/action"
+import { asyncOrder } from "../../services/async-action/async-action-ingredient"
 
 function BurgerConstructor() {
 	const dispatch = useDispatch()
-
-	const {isOpen} = useSelector(state => state.modal)
-
-	const open = () => {
-		dispatch(setIsOpen(true))
+	const onSubmitOrder = () =>{
+		dispatch(asyncOrder([ "643d69a5c3f7b9001cfa093c","643d69a5c3f7b9001cfa093f", "643d69a5c3f7b9001cfa093c"]))
 	}
+	const {loading,orderName,failed} = useSelector(state=> state.order)
+	if (loading) {
+		return <p className={`${style.loadingBlock} text text_type_main-large`}>
+			<span>
+			Происходит загрузка данных,ожидайте....
+			</span>
+			</p>; 
+	  }
+
+	if (failed) {
+		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{failed}</p>;
+	  }	
+	// const {isOpen} = useSelector(state => state.modal)
+
+	// const open = () => {
+	// 	dispatch(setIsOpen(true))
+	// }
 	
 	// const close = () => {
 	// 	dispatch(setIsOpen(false))
@@ -72,14 +86,14 @@ function BurgerConstructor() {
 					0 <CurrencyIcon type="primary" />
 				</p>
 				<Button
-					onClick={open}
+					onClick={onSubmitOrder}
 					htmlType="button"
 					type="primary"
 					size="medium">
 					Оформить заказ
 				</Button>
 			</section>
-			{isOpen && (
+			{orderName && (
 				<Modal onClick={(e) => e.stopPropagation()}>
 					<OrderDetails title="Детали заказа"  />
 				</Modal>

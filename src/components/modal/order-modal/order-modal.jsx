@@ -4,11 +4,14 @@ import style from "./modal.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
-import { setIsOpen } from "../../../services/burger-constructor/action"
-const OrderDetails = ({title },props) => {
+import { orderClose } from "../../../services/burger-constructor/order-details/action"
+
+const OrderDetails = ({ title }, props) => {
 	const dispatch = useDispatch()
-	const closeModal = () =>{
-		dispatch(setIsOpen(null))
+	const {orderNumber,orderName} = useSelector(state=> state.order)
+
+	const close = () => {
+		dispatch(orderClose())
 	}
 	return (
 		<div className={style.mainContainer}>
@@ -17,13 +20,13 @@ const OrderDetails = ({title },props) => {
 					<h1>{title}</h1>
 				</section>
 
-				<section onClick={closeModal} className={style.closeBtn}>
-					<CloseIcon  type="primary" />
+				<section onClick={close}className={style.closeBtn}>
+					<CloseIcon type="primary" />
 				</section>
 			</section>
 			<h1 className={style.orderTitle}>{props.title}</h1>
 			<p className={`${style.order} text text_type_digits-large`}>
-				{Math.round((Math.random()*1000))}
+				{orderNumber}
 			</p>
 			<p className="text text_type_main-default mb-15">
 				Идентификатор заказа
@@ -32,20 +35,19 @@ const OrderDetails = ({title },props) => {
 				<img src={doneImg} alt="Выполнено!" />
 			</section>
 			<section className={style.footerTextBlock}>
-			<p className="text text_type_main-default mb-2">
-				Ваш заказ начали готовить
-			</p>
-			<p
-				className={`${style.footerText} text text_type_main-default`}>
-				Дождитесь готовности на орбинатльной станции
-			</p>
+				<p className="text text_type_main-default mb-2">
+					Ваш "{orderName.name}" начали готовить
+				</p>
+				<p
+					className={`${style.footerText} text text_type_main-default`}>
+					Дождитесь готовности на орбинатльной станции
+				</p>
 			</section>
 		</div>
 	)
 }
-OrderDetails.propTypes ={
-	// closeModal:PropTypes.func.isRequired,
-	title:PropTypes.string,
-	props:PropTypes.string
+OrderDetails.propTypes = {
+	title: PropTypes.string,
+	props: PropTypes.string,
 }
 export default OrderDetails
