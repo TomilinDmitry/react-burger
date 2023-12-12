@@ -1,9 +1,10 @@
-import { INGREDIENT_FAILED, INGREDIENT_LOADING, INGREDIENT_SUCCESS} from "./action"
+import { INGREDIENT_FAILED, INGREDIENT_LOADING, INGREDIENT_SUCCESS, SET_ACTIVE_TAB} from "./action"
 
 const initialState = {
     data:[],
     loading:false,
     failed:null,
+    activeTab:'buns',
 }
 export const burgerReducer = (state=initialState,action) =>{
     switch(action.type){
@@ -25,6 +26,12 @@ export const burgerReducer = (state=initialState,action) =>{
                 ...state,
                 loading:false,
                 failed:action.payload,
+
+            }
+        case SET_ACTIVE_TAB:
+            return{
+                ...state,
+                activeTab:action.payload,
 
             }
         default:

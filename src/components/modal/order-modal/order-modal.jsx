@@ -36,7 +36,7 @@ const OrderDetails = ({ title }, props) => {
 			</section>
 			<section className={style.footerTextBlock}>
 				<p className="text text_type_main-default mb-2">
-					Ваш "{orderName.name}" начали готовить
+					Ваш заказ начали готовить
 				</p>
 				<p
 					className={`${style.footerText} text text_type_main-default`}>

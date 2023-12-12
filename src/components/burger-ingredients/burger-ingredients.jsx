@@ -18,7 +18,7 @@ const BurgerIngredients = () => {
 	useEffect(()=>{
 		dispatch(asyncIngredient())
 	},[dispatch])
-
+	
 	const {selectedIngredient} = useSelector(store=>store.selected)
 
 	const filteredIngredient = useMemo(()=>{
@@ -31,22 +31,13 @@ const BurgerIngredients = () => {
 	const open = (ingredient) => {
 		dispatch(setSelectedIngredient(ingredient));
 	}
-
-	// if (loading) {
-	// 	return<p className={`${style.loadingBlock} text text_type_main-large`}>
-	// 	<span>
-	// 	Происходит загрузка данных,ожидайте....
-	// 	</span>
-	// 	</p>; 
-	//   }
-
 	if (failed) {
 		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{failed}</p>;
 	  }	
 	return (
 		<div className={style.container}>
 			<main className={style.main}>
-				<h1
+				<h1 
 					className={`${style.title} text text_type_main-large pt-10 pb-5`}>
 					Соберите бургер
 				</h1>
@@ -62,7 +53,7 @@ const BurgerIngredients = () => {
     				) : (
 				<div className={style.ingredientContainer}>
 					<section className={style.tabsBlock}>
-						<h1 className={`${style.blockTitle} text text_type_main-medium`}>
+						<h1  className={`${style.blockTitle} text text_type_main-medium`}>
 							Булки
 						</h1>
 						<section className={style.sectionBlock}>

@@ -22,35 +22,14 @@ function BurgerConstructor() {
 	if (loading) {
 		return <p className={`${style.loadingBlock} text text_type_main-large`}>
 			<span>
-			Происходит загрузка данных,ожидайте....
+			Ожидайте,ваш заказ формируется....
 			</span>
 			</p>; 
 	  }
 
 	if (failed) {
-		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{failed}</p>;
+		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при формировании заказа:{failed}</p>;
 	  }	
-	// const {isOpen} = useSelector(state => state.modal)
-
-	// const open = () => {
-	// 	dispatch(setIsOpen(true))
-	// }
-	
-	// const close = () => {
-	// 	dispatch(setIsOpen(false))
-	// }
-	
-	// const KeyDown = (e) => {
-	// 	if (e.key === "Escape") {
-	// 		close()
-	// 	}
-	// }
-	// useEffect(() => {
-	// 	document.addEventListener("keydown", KeyDown)
-	// 	return () => {
-	// 		document.removeEventListener("keydown", KeyDown)
-	// 	}
-	// })
 	return (
 		<aside className={style.container}>
 			<section  className="mb-4 ml-8">
