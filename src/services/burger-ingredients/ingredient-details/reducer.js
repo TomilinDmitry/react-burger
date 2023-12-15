@@ -1,17 +1,16 @@
-import { SET_SELECTED_INGREDIENT } from "./action"
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const selectedIngSlice = createSlice({
+name:'selected',
+initialState:{
     selectedIngredient:null,
-}
-
-export const selectedIngReducer = (state=initialState,action) =>{
-    switch(action.type){
-        case SET_SELECTED_INGREDIENT :
-            return {
-                ...state,
-                selectedIngredient: action.payload
-            }
-            default :
-            return state;
+},
+reducers:{
+    setSelectedIngredient (state,action) {
+        state.selectedIngredient = action.payload
     }
 }
+})
+
+export default selectedIngSlice.reducer;
+export const {setSelectedIngredient} = selectedIngSlice.actions;

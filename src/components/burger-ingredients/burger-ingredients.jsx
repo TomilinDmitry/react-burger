@@ -1,25 +1,55 @@
 import React, { useEffect, useMemo, useRef} from "react"
 import style from "./style.module.css"
-import BurgerIgredientsTab from "../UI/Tab/burger-ingredient-tab"
 import Modal from "../modal/modal"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 import IngredientCard from "./burger-ingridients-position/burger-ingredients-position"
-import PropTypes from "prop-types"
+// import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
-import { asyncIngredient } from "../../services/async-action/async-action-ingredient"
-import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/action"
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
+import { getIngredient, setActiveTab } from "../../services/burger-ingredients/reducer"
+import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/reducer"
 
 
 
 const BurgerIngredients = () => {
-	const dispatch = useDispatch();
-	const {data,loading,failed} = useSelector(store=>store.burger)
-
-	useEffect(()=>{
-		dispatch(asyncIngredient())
-	},[dispatch])
 	
+	const dispatch = useDispatch();
+
 	const {selectedIngredient} = useSelector(store=>store.selected)
+	const {data,loading,error,activeTab} = useSelector(store=>store.ingredients)
+	
+	const currentTab = (tab) =>{
+		dispatch(setActiveTab(tab))
+	}
+	
+	useEffect(()=>{
+		dispatch(getIngredient())
+	},[dispatch])
+
+	///Refs
+	const tabsRef = useRef(null)
+	const bunsRef = useRef(null)
+	const saucesRef = useRef(null)
+	const ingredientRef = useRef(null)
+	
+	///Scroll parametr
+	const scroll = () =>{
+		const tabsRect = tabsRef.current.getBoundingClientRect()
+		const bunsRect = bunsRef.current.getBoundingClientRect()
+		const saucesRect = saucesRef.current.getBoundingClientRect()
+		const ingredientRect = ingredientRef.current.getBoundingClientRect()
+		
+		if (bunsRect.top >= tabsRect.top){
+			currentTab('buns')
+		
+		}else if (saucesRect.top >= tabsRect.top){
+			currentTab('sauces')
+		}else if (ingredientRect.top >= tabsRect.top){
+			currentTab('ingredients')
+			
+		}
+	}
+
 
 	const filteredIngredient = useMemo(()=>{
 		return {
@@ -31,8 +61,8 @@ const BurgerIngredients = () => {
 	const open = (ingredient) => {
 		dispatch(setSelectedIngredient(ingredient));
 	}
-	if (failed) {
-		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{failed}</p>;
+	if (error) {
+		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{error}</p>;
 	  }	
 	return (
 		<div className={style.container}>
@@ -41,8 +71,25 @@ const BurgerIngredients = () => {
 					className={`${style.title} text text_type_main-large pt-10 pb-5`}>
 					Соберите бургер
 				</h1>
-				<div className="mb-10">
-					<BurgerIgredientsTab />
+				<div ref={tabsRef}className={`${style.tabs} mb-10`}>
+					<Tab
+				value="buns"
+				active={activeTab === "buns"}
+				onClick={()=>currentTab('buns',	bunsRef.current.scrollIntoView({ behavior: "smooth" }))}>
+				Булки
+					</Tab>
+					<Tab
+				value="sauces"
+				active={activeTab === "sauces"}
+				onClick={()=>currentTab('sauces',saucesRef.current.scrollIntoView({behavior:'smooth'}))}>
+				Соусы
+					</Tab>
+					<Tab
+				value="ingredients"
+				active={activeTab === "ingredients"}
+				onClick={()=>currentTab('ingredients',ingredientRef.current.scrollIntoView({behavior:'smooth'}))}>
+				Начинки
+					</Tab>
 				</div>
 				{loading ? (
      				 <p className={`${style.loadingBlock} text text_type_main-large`}>
@@ -51,8 +98,8 @@ const BurgerIngredients = () => {
       					  </span>
       				</p>
     				) : (
-				<div className={style.ingredientContainer}>
-					<section className={style.tabsBlock}>
+				<div className={style.ingredientContainer} onScroll={scroll}>
+					<section ref={bunsRef} className={style.tabsBlock}>
 						<h1  className={`${style.blockTitle} text text_type_main-medium`}>
 							Булки
 						</h1>
@@ -64,7 +111,7 @@ const BurgerIngredients = () => {
 							))}
 						</section>
 					</section>
-					<section className={style.tabsBlock}>
+					<section ref={saucesRef}className={style.tabsBlock}>
 					<h1 className={`${style.blockTitle} text text_type_main-medium`}>
 							Соусы
 						</h1>
@@ -76,7 +123,7 @@ const BurgerIngredients = () => {
 							))}
 						</section>
 					</section>
-					<div className={style.tabsBlock}>
+					<section ref={ingredientRef} className={style.tabsBlock}>
 						<h1 className={`${style.blockTitle} text text_type_main-medium`}>
 							Начинки
 						</h1>
@@ -87,7 +134,7 @@ const BurgerIngredients = () => {
 								</div>
 							))}
 						</section>
-					</div>
+					</section>
 				</div>
 					)}
 

@@ -3,7 +3,7 @@ import style from "./ingridient-details.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector} from "react-redux"
-import { setSelectedIngredient } from "../../../services/burger-ingredients/ingredient-details/action"
+import { setSelectedIngredient } from "../../../services/burger-ingredients/ingredient-details/reducer"
 
 const IngredientDetails = ({ title }) => {
 	const dispatch = useDispatch()

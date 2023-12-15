@@ -12,9 +12,14 @@
 .title {
 	text-align: start;
 }
+.tabs{
+	display: flex;
+}
 .tabsBlock {
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 20px;
+
 }
 .sectionBlock {
 	display: flex;

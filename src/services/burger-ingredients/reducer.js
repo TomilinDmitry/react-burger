@@ -1,40 +1,44 @@
-import { INGREDIENT_FAILED, INGREDIENT_LOADING, INGREDIENT_SUCCESS, SET_ACTIVE_TAB} from "./action"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-const initialState = {
-    data:[],
-    loading:false,
-    failed:null,
-    activeTab:'buns',
-}
-export const burgerReducer = (state=initialState,action) =>{
-    switch(action.type){
-        case INGREDIENT_LOADING:
-        return{
-            ...state,
-            loading:true,
-            failed:null,
-        }
-        case INGREDIENT_SUCCESS:
-        return{
-            ...state,
-            loading:false,
-            failed:null,
-            data:action.payload
-        }
-        case INGREDIENT_FAILED:
-            return{
-                ...state,
-                loading:false,
-                failed:action.payload,
 
-            }
-        case SET_ACTIVE_TAB:
-            return{
-                ...state,
-                activeTab:action.payload,
-
-            }
-        default:
-            return state
+export const getIngredient = createAsyncThunk('asyncIngredient',async()=>{
+    const response = await fetch ('https://norma.nomoreparties.space/api/ingredients');
+    if (response.ok){
+        const data =await response.json()
+        return data.data
     }
-}
+})
+
+const ingredientsSlice = createSlice ({
+    name:'ingredients',
+    initialState:{
+        data:[],
+        loading:false,
+        error:null,
+        activeTab:'buns',
+    },
+    reducers:{
+        setActiveTab (state,action){
+            state.activeTab = action.payload
+        }
+    },
+    extraReducers:(builder)=>{
+        builder
+        .addCase (getIngredient.pending,(state)=>{
+            state.loading = true;
+            state.error = null;
+        })
+        .addCase (getIngredient.fulfilled,(state,action) => {
+            state.data = action.payload;
+            state.error = null;
+            state.loading = false
+        })
+        .addCase (getIngredient.rejected, (state,action)=>{
+            state.error = action.error.message
+        })
+
+    }
+})
+
+export default ingredientsSlice.reducer
+export const {setActiveTab} = ingredientsSlice.actions
