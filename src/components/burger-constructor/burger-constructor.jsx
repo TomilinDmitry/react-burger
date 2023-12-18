@@ -24,7 +24,7 @@ function BurgerConstructor() {
       ]),
     );
   };
-  const { loading, orderName, error } = useSelector(
+  const { loading, orderName, error,draggableIngredient,draggableIngredients } = useSelector(
     (state) => state.order,
   );
   if (loading) {

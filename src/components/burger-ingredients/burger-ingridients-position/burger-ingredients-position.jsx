@@ -12,7 +12,7 @@ const IngredientCard = (props) => {
 	const currentCount = () => setCount(count + 1)
 	
 	return (
-		<section  className={style.container}>
+		<section draggable={true} className={style.container}>
 			<Counter count={count} size="default" extraClass="m-1" />
 			<img
 				onClick={currentCount}

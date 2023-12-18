@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
         name:"container",
         initialState:{
             bun:null,
-            ingredients:[],
+            draggedElement:null,
+            draggedElements:[],
             id:null,
         },
         reducers:{
@@ -12,14 +13,12 @@ import { v4 as uuidv4 } from 'uuid';
                 if (action.payload.type === "bun") {
                     state.bun = action.payload;
                   } else {
-                    state.ingredients.push(action.payload);
+                    state.draggableIngredients.push(action.payload);
                     state.id = uuidv4()
                   }
             },
-            deleteConstructorItem (state,action){
-                state.ingredients = state.ingredients.filter ((ingredient)=>ingredient.id !== action.payload)
-            }
+            
         }
     })
     export default consturctorSlice.reducer;
-    export const {addConstructorItem} = consturctorSlice.actions;
+    export const {addConstructorItem,setDraggedElement,deleteConstructorItem,setDraggedElements} = consturctorSlice.actions;

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import { getIngredient, setActiveTab } from "../../services/burger-ingredients/reducer"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/reducer"
+import { setDraggableIngredient, setDraggedElement } from "../../services/burger-constructor/reducer"
 
 
 
@@ -17,7 +18,14 @@ const BurgerIngredients = () => {
 
 	const {selectedIngredient} = useSelector(store=>store.selected)
 	const {data,loading,error,activeTab} = useSelector(store=>store.ingredients)
-	
+	// [draggableIngredient,setDraggableIngredient]
+
+	const handleDrag = (e, currentElement) => {
+		e.preventDefault();
+		setDraggedElement(currentElement);
+	  }
+
+
 	const currentTab = (tab) =>{
 		dispatch(setActiveTab(tab))
 	}
@@ -105,7 +113,7 @@ const BurgerIngredients = () => {
 						</h1>
 						<section className={style.sectionBlock}>
 							{filteredIngredient.buns.map((bun) => (
-								<div onClick={() => open(bun)} key={bun._id}>
+								<div draggable={true} onDrag={(e)=>handleDrag(e,bun)} onClick={() => open(bun)} key={bun._id}>
 									<IngredientCard {...bun} />
 								</div>
 							))}
@@ -117,7 +125,7 @@ const BurgerIngredients = () => {
 						</h1>
 						<section className={style.sectionBlock}>
 							{filteredIngredient.sauces.map((sauce) => (
-								<div onClick={() => open(sauce)} key={sauce._id}>
+								<div  draggable={true} onDrag={(e)=>handleDrag(e,sauce)} onClick={() => open(sauce)} key={sauce._id}>
 									<IngredientCard {...sauce} />
 								</div>
 							))}
@@ -129,7 +137,7 @@ const BurgerIngredients = () => {
 						</h1>
 						<section className={style.sectionBlock}>
 							{filteredIngredient.mains.map((main) => (
-								<div onClick={() => open(main)} key={main._id}>
+								<div draggable={true} onDrag={(e)=>handleDrag(e,main)} onClick={() => open(main)} key={main._id}>
 									<IngredientCard {...main} />
 								</div>
 							))}
