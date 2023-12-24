@@ -6,16 +6,21 @@ import {
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
+import { useSelector } from "react-redux"
 
 const IngredientCard = (props) => {
 	const [count, setCount] = useState(0)
-	const currentCount = () => setCount(count + 1)
+	const { draggedElement, draggedElements} = useSelector(
+		(state) => state.container,
+	  );
+	
+	
 	
 	return (
-		<section draggable={true} className={style.container}>
+		<section className={style.container}>
 			<Counter count={count} size="default" extraClass="m-1" />
 			<img
-				onClick={currentCount}
+				onClick={count}
 				src={props.image}
 				alt={props.name}
 			/>

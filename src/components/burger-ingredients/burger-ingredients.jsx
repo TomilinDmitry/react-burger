@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import { getIngredient, setActiveTab } from "../../services/burger-ingredients/reducer"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/reducer"
-import { setDraggableIngredient, setDraggedElement } from "../../services/burger-constructor/reducer"
+import { setDraggedElement } from "../../services/burger-constructor/reducer"
 
 
 
@@ -18,13 +18,13 @@ const BurgerIngredients = () => {
 
 	const {selectedIngredient} = useSelector(store=>store.selected)
 	const {data,loading,error,activeTab} = useSelector(store=>store.ingredients)
-	// [draggableIngredient,setDraggableIngredient]
+	
 
 	const handleDrag = (e, currentElement) => {
 		e.preventDefault();
-		setDraggedElement(currentElement);
+		dispatch(setDraggedElement(currentElement));
 	  }
-
+	
 
 	const currentTab = (tab) =>{
 		dispatch(setActiveTab(tab))
@@ -114,7 +114,7 @@ const BurgerIngredients = () => {
 						<section className={style.sectionBlock}>
 							{filteredIngredient.buns.map((bun) => (
 								<div draggable={true} onDrag={(e)=>handleDrag(e,bun)} onClick={() => open(bun)} key={bun._id}>
-									<IngredientCard {...bun} />
+									<IngredientCard  {...bun} />
 								</div>
 							))}
 						</section>

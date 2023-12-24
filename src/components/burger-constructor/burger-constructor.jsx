@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import style from './constructor.module.css';
 import {
   Button,
@@ -15,18 +15,33 @@ import { asyncOrder } from '../../services/async-action/async-action-ingredient'
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const { loading, orderName, error } = useSelector(
+    (state) => state.order,
+  );
+  const { draggedElements,bun } = useSelector(
+    (state) => state.container,
+  );
+  const checkBun = () =>{
+    return(
+      bun === null ? <p>Добавьте булки</p> : bun 
+    )
+  }
+  const totalOrderPrice = useMemo(() => {
+    if (bun === null){
+      return draggedElements.reduce((sum, ing) => sum + ing.price,0);
+    }else{
+      return draggedElements.reduce((sum, ing) => sum + ing.price,bun.price*2);
+    }
+  }, [draggedElements,bun]);
+
   const onSubmitOrder = () => {
     dispatch(
       asyncOrder([
-        '643d69a5c3f7b9001cfa093c',
-        '643d69a5c3f7b9001cfa093f',
-        '643d69a5c3f7b9001cfa093c',
+        ...draggedElements
       ]),
     );
   };
-  const { loading, orderName, error,draggableIngredient,draggableIngredients } = useSelector(
-    (state) => state.order,
-  );
+
   if (loading) {
     return (
       <p
@@ -44,39 +59,21 @@ function BurgerConstructor() {
       </p>
     );
   }
+ 
   return (
     <aside className={style.container}>
       <section className="mb-4 ml-8">
-        {/* <ConstructorElement
-					type="top"
-					isLocked={true}
-					text="Краторная булка N-200i (верх)"
-					price={200}
-					thumbnail={
-						"https://code.s3.yandex.net/react/code/bun-02.png"
-					}
-				/> */}
         <TopStubs />
       </section>
       <section className={`${style.freePositionBlock} mb-4 ml-8`}>
-        {/* <ConstructorPositions ingredients={ingredients} /> */}
         <CenterStubs />
       </section>
       <section className="pl-8">
-        {/* <ConstructorElement
-					type="bottom"
-					isLocked={true}
-					text="Краторная булка N-200i (низ)"
-					price={200}
-					thumbnail={
-						"https://code.s3.yandex.net/react/code/bun-02.png"
-					}
-				/> */}
         <BottomStubs />
       </section>
       <section className={style.bottomContainer}>
         <p className="text text_type_digits-medium mr-10">
-          0 <CurrencyIcon type="primary" />
+          {totalOrderPrice} <CurrencyIcon type="primary" />
         </p>
         <Button
           onClick={onSubmitOrder}

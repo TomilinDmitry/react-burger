@@ -5,6 +5,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
 import { orderClose } from "../../../services/burger-constructor/order-details/action"
+import { setBun, setDraggedElements } from "../../../services/burger-constructor/reducer"
 
 const OrderDetails = ({ title }, props) => {
 	const dispatch = useDispatch()
@@ -12,6 +13,8 @@ const OrderDetails = ({ title }, props) => {
 
 	const close = () => {
 		dispatch(orderClose())
+		dispatch(setDraggedElements([]));
+      	dispatch(setBun())
 	}
 	return (
 		<div className={style.mainContainer}>

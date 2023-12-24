@@ -1,10 +1,10 @@
 .container{
-    padding: 16px 24px;
     display: flex;
     align-items:center;
     justify-content: center;
     border-radius: var(--bottom-constructor-item-border-radius);
     background: var(--background-element);
+    /* border: 1px solid var(--background-element); */
     max-width: 536px;
     width: 100%;
     min-height: 80px;
@@ -14,4 +14,19 @@
     color: #F2F2F3;
     flex-grow: 1;
     box-sizing: border-box;
+}
+.element{
+    display: flex;
+	flex-direction: column;
+    list-style-type: none;
+}
+.list{
+    list-style: none;
+	display: flex;
+	align-items: center;  
+}
+.listElement{
+    margin-top: 10px;
+    max-width: 536px;
+    width: 100%;
 }

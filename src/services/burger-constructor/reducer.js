@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { v4 as uuidv4 } from 'uuid';
+
     export const consturctorSlice = createSlice ({
         name:"container",
         initialState:{
@@ -7,18 +7,23 @@ import { v4 as uuidv4 } from 'uuid';
             draggedElement:null,
             draggedElements:[],
             id:null,
+            count:0
         },
         reducers:{
-            addConstructorItem (state,action){
-                if (action.payload.type === "bun") {
-                    state.bun = action.payload;
-                  } else {
-                    state.draggableIngredients.push(action.payload);
-                    state.id = uuidv4()
-                  }
+            setDraggedElement (state,action){
+                if (action.payload.type !== 'bun'){
+                    state.draggedElement = action.payload
+                }else{
+                    state.bun = action.payload
+                }
             },
-            
+            setDraggedElements (state,action){
+                state.draggedElements = action.payload
+            },
+            setBun (state){
+                state.bun = null
+            }
         }
     })
     export default consturctorSlice.reducer;
-    export const {addConstructorItem,setDraggedElement,deleteConstructorItem,setDraggedElements} = consturctorSlice.actions;
+    export const {setDraggedElement,setDraggedElements,setBun} = consturctorSlice.actions;

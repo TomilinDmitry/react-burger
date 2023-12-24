@@ -1,42 +1,69 @@
-import React from 'react'
-import style from './center-stubs.module.css'
+import React from 'react';
+import style from './center-stubs.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setDraggedElement, setDraggedElements } from '../../../../services/burger-constructor/reducer';
-const CenterStubs = () => {
-  const dispatch = useDispatch()
+import {
+  ConstructorElement,
+  DragIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import {
 
-  const {draggedElement,draggedElements } = useSelector(
-    (state) => state.ingredients);
-    
-    const handleDropMiddle = (e) => {
-      e.preventDefault();
-      // Проверяем, что draggedElement не является null
-      if (draggedElement) {
-        // Обработка события окончания перетаскивания и перемещение элемента из "Начало" в "Середина"
-        // Например, вызов соответствующего Redux action.
-        dispatch(setDraggedElements([...draggedElements, draggedElement]));
-        dispatch(setDraggedElement(null));
-      }
-    };
+  setDraggedElements,
+} from '../../../../services/burger-constructor/reducer';
+// import ConstructorPositions from '../../../burger-constructor/burger-free-positions/free-positions-constuctor';
+const CenterStubs = () => {
+  const dispatch = useDispatch();
+
+  const { draggedElement, draggedElements} = useSelector(
+    (state) => state.container,
+  );
+
+  const handleDropMiddle = (e) => {
+    e.preventDefault();
+    // const isElementInArray = draggedElements.some(
+    //   (el) => el._id === draggedElement._id,
+    // );
+
+    if (draggedElement ) {
+      dispatch(
+        setDraggedElements([...draggedElements, draggedElement]),
+      );
+    }
+  };
+  const deleteIngredient = (index) => {
+    dispatch(
+      setDraggedElements(
+        draggedElements.filter((e, i) => i !== index),
+      ),
+    );
+  };
   return (
-    <div onDrop={handleDropMiddle} onDragOver={(e) => e.preventDefault()} className={style.container}>
-      {draggedElement && draggedElements.length > 0 ? (
-        <div>
-          {draggedElements.map((ingredient, index) => (
-            <div key={index}>
+    <div
+      onDrop={handleDropMiddle}
+      onDragOver={(e) => e.preventDefault()}
+      className={style.container}
+    >
+        {draggedElements.length > 0 ?(    
+      <div>
+        {draggedElements.map((ingredient, index) => (
+          <div draggable={true} key={index} className={style.element}>
+            <li className={`${style.list} mb-4`} key={index}>
+              <DragIcon type="primary" />
+              <div className={style.listElement}>
               <ConstructorElement
                 isLocked={false}
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
+                handleClose={()=>deleteIngredient(index)}
               />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Выберите начинку</p>
-      )}
+              </div>
+            </li>
+          </div>
+        ))}
+      </div>
+        ) : (
+          <p>Выберите начинку</p>
+        )}
     </div>
   );
 };
