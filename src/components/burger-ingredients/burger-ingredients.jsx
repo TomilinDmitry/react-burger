@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import { getIngredient, setActiveTab } from "../../services/burger-ingredients/reducer"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/reducer"
-import { setDraggedElement } from "../../services/burger-constructor/reducer"
+// import { setDraggedElement } from "../../services/burger-constructor/reducer"
+// import { useDrag } from "react-dnd"
 
 
 
@@ -20,10 +21,10 @@ const BurgerIngredients = () => {
 	const {data,loading,error,activeTab} = useSelector(store=>store.ingredients)
 	
 
-	const handleDrag = (e, currentElement) => {
-		e.preventDefault();
-		dispatch(setDraggedElement(currentElement));
-	  }
+	// const handleDrag = (e, currentElement) => {
+	// 	e.preventDefault();
+	// 	dispatch(setDraggedElement(currentElement));
+	//   }
 	
 
 	const currentTab = (tab) =>{
@@ -39,7 +40,9 @@ const BurgerIngredients = () => {
 	const bunsRef = useRef(null)
 	const saucesRef = useRef(null)
 	const ingredientRef = useRef(null)
+
 	
+
 	///Scroll parametr
 	const scroll = () =>{
 		const tabsRect = tabsRef.current.getBoundingClientRect()
@@ -54,10 +57,8 @@ const BurgerIngredients = () => {
 			currentTab('sauces')
 		}else if (ingredientRect.top >= tabsRect.top){
 			currentTab('ingredients')
-			
 		}
 	}
-
 
 	const filteredIngredient = useMemo(()=>{
 		return {
@@ -113,7 +114,7 @@ const BurgerIngredients = () => {
 						</h1>
 						<section className={style.sectionBlock}>
 							{filteredIngredient.buns.map((bun) => (
-								<div draggable={true} onDrag={(e)=>handleDrag(e,bun)} onClick={() => open(bun)} key={bun._id}>
+								<div onClick={() => open(bun)} key={bun._id}>
 									<IngredientCard  {...bun} />
 								</div>
 							))}
@@ -125,7 +126,7 @@ const BurgerIngredients = () => {
 						</h1>
 						<section className={style.sectionBlock}>
 							{filteredIngredient.sauces.map((sauce) => (
-								<div  draggable={true} onDrag={(e)=>handleDrag(e,sauce)} onClick={() => open(sauce)} key={sauce._id}>
+								<div onClick={() => open(sauce)} key={sauce._id}>
 									<IngredientCard {...sauce} />
 								</div>
 							))}
@@ -137,7 +138,7 @@ const BurgerIngredients = () => {
 						</h1>
 						<section className={style.sectionBlock}>
 							{filteredIngredient.mains.map((main) => (
-								<div draggable={true} onDrag={(e)=>handleDrag(e,main)} onClick={() => open(main)} key={main._id}>
+								<div onClick={() => open(main)} key={main._id}>
 									<IngredientCard {...main} />
 								</div>
 							))}

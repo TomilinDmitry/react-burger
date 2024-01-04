@@ -13,7 +13,7 @@ import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
 
-function BurgerConstructor() {
+function BurgerConstructor(index) {
   const dispatch = useDispatch();
   const { loading, orderName, error } = useSelector(
     (state) => state.order,
@@ -66,7 +66,7 @@ function BurgerConstructor() {
         <TopStubs />
       </section>
       <section className={`${style.freePositionBlock} mb-4 ml-8`}>
-        <CenterStubs />
+        <CenterStubs index={index}/>
       </section>
       <section className="pl-8">
         <BottomStubs />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import style from './center-stubs.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,28 +7,76 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import {
 
+  setDraggedElement,
   setDraggedElements,
 } from '../../../../services/burger-constructor/reducer';
+import { useDrag, useDrop } from 'react-dnd';
 // import ConstructorPositions from '../../../burger-constructor/burger-free-positions/free-positions-constuctor';
-const CenterStubs = () => {
-  const dispatch = useDispatch();
 
-  const { draggedElement, draggedElements} = useSelector(
+
+const CenterStubs = ({index}) => {
+  const dispatch = useDispatch();
+  const { draggedElements,draggedElement} = useSelector(
     (state) => state.container,
   );
+    const ref = useRef (null)
 
-  const handleDropMiddle = (e) => {
-    e.preventDefault();
-    // const isElementInArray = draggedElements.some(
-    //   (el) => el._id === draggedElement._id,
-    // );
-
-    if (draggedElement ) {
-      dispatch(
-        setDraggedElements([...draggedElements, draggedElement]),
-      );
-    }
+    const moveIngredient = (dragIndex, hoverIndex) => {
+    const dragIngredient = draggedElements[dragIndex];
+    const newIngredients = [...draggedElements];
+    newIngredients.splice(dragIndex, 1);
+    newIngredients.splice(hoverIndex, 0, dragIngredient);
+    dispatch(setDraggedElements(newIngredients));
   };
+
+  const [{ isHovered }, drop] = useDrop({
+    accept: 'ingredient',
+    drop: (item) => {
+      if(item.ingredient.type !== 'bun')
+        dispatch(setDraggedElements([...draggedElements, item.ingredient]));
+    }
+  });
+
+  const [{handlerId}, dropIng] = useDrop({
+    accept: 'item',
+    collect:(monitor) =>{
+      return{
+        handlerId:monitor.getHandlerId()
+      }
+    },
+    hover: (item,monitor) => {
+      if(!ref.current){
+        return
+      }
+
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      // Dragging upwards
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+
+      moveIngredient(dragIndex, hoverIndex);
+      item.index = hoverIndex;
+    },
+  });
+
   const deleteIngredient = (index) => {
     dispatch(
       setDraggedElements(
@@ -36,17 +84,27 @@ const CenterStubs = () => {
       ),
     );
   };
+
+  const [, dragIng] = useDrag({
+    type: 'item',
+    item:{type: 'item', index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+ dragIng(dropIng(ref));
+  
   return (
     <div
-      onDrop={handleDropMiddle}
-      onDragOver={(e) => e.preventDefault()}
+     ref={drop}
       className={style.container}
     >
         {draggedElements.length > 0 ?(    
-      <div>
+      <div >
         {draggedElements.map((ingredient, index) => (
-          <div draggable={true} key={index} className={style.element}>
-            <li className={`${style.list} mb-4`} key={index}>
+          <div ref={ref} key={index} className={style.element}>
+            <li  className={`${style.list} mb-4`} key={index}>
               <DragIcon type="primary" />
               <div className={style.listElement}>
               <ConstructorElement

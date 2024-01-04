@@ -7,14 +7,15 @@ import { createSlice } from "@reduxjs/toolkit"
             draggedElement:null,
             draggedElements:[],
             id:null,
-            count:0
         },
         reducers:{
             setDraggedElement (state,action){
                 if (action.payload.type !== 'bun'){
                     state.draggedElement = action.payload
+                    
                 }else{
                     state.bun = action.payload
+                    
                 }
             },
             setDraggedElements (state,action){

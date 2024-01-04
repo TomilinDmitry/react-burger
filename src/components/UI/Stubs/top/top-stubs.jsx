@@ -9,6 +9,7 @@ import {
   setDraggedElement,
   setDraggedElements,
 } from '../../../../services/burger-constructor/reducer';
+import { useDrop } from 'react-dnd';
 const TopStubs = () => {
   const dispatch = useDispatch();
 
@@ -16,24 +17,17 @@ const TopStubs = () => {
     (state) => state.container,
   );
 
-  const handleDropMiddle = (e) => {
-    e.preventDefault();
-
-    // if (draggedElement) {
-    //   dispatch(
-    //     setDraggedElements([...draggedElements, draggedElement]),
-    //   );
-    // }
-  };
-  const handleDragStart = (e) => {
-    // Предотвращаем стандартное поведение drag-and-drop браузера
-    e.preventDefault();
-    // Устанавливаем данные о перетаскиваемом элементе
-    dispatch(setDraggedElement(bun,draggedElement));
-  };
+  const [{ isHovered }, drop] = useDrop({
+    accept: 'ingredient',
+    drop: (item) => {
+      if (item.ingredient.type === 'bun'){
+        dispatch(setDraggedElement(item.ingredient, draggedElement));
+      }
+    }
+  });
   return (
     <div
-      // onDrop={handleDropMiddle}
+      ref={drop}
       onDragOver={(e) => e.preventDefault()}
       className={style.container}
     >
@@ -41,8 +35,7 @@ const TopStubs = () => {
         <div>
           <div
             draggable={true}
-            onDragStart={handleDragStart}
-            onDrop={handleDropMiddle}
+            onDragStart={() => dispatch(setDraggedElement(bun, draggedElement))}
             key={bun.id}
             className={style.element}
           >

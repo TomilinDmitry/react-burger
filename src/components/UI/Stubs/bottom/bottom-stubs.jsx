@@ -1,36 +1,30 @@
 import React from 'react'
 import style from './bottom-stubs.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setDraggedElements } from '../../../../services/burger-constructor/reducer';
+import {useDispatch, useSelector } from 'react-redux';
+import { ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
+import { setDraggedElement } from '../../../../services/burger-constructor/reducer';
+import { useDrop } from 'react-dnd';
 const BottomStubs = () => {
-  const dispatch = useDispatch();
-
-  const {bun,draggedElement,draggedElements} = useSelector(
+  const {bun,draggedElement} = useSelector(
     (state) => state.container,
   );
-
-  const handleDropMiddle = (e) => {
-    e.preventDefault();
-    const isElementInArray = draggedElements.some(
-      (el) => el._id === draggedElement._id,
-    );
-
-    if (draggedElement && !isElementInArray) {
-      dispatch(
-        setDraggedElements([...draggedElements, draggedElement]),
-      );
+  const dispatch=useDispatch()
+  const [{ isHovered }, drop] = useDrop({
+    accept: 'ingredient',
+    drop: (item) => {
+      if (item.ingredient.type === 'bun'){
+        dispatch(setDraggedElement(item.ingredient, draggedElement));
+      }
     }
-  };
+  });
   return (
     <div
-      onDrop={handleDropMiddle}
-      onDragOver={(e) => e.preventDefault()}
+    ref={drop}
       className={style.container}
     >
         {(bun) ? (   
       <div>
-          <div draggable={true} key={bun.id} className={style.element}>
+          <div key={bun.id} className={style.element}>
             <li className={`${style.list}`} key={bun.id}>
               <div className={style.listElement}>
               <ConstructorElement
