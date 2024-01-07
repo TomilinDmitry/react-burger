@@ -12,6 +12,8 @@ import CenterStubs from '../UI/Stubs/center/center-stubs';
 import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
+import { setDraggedElements } from '../../services/burger-constructor/reducer';
+import { useDrop } from 'react-dnd';
 
 function BurgerConstructor(index) {
   const dispatch = useDispatch();
@@ -21,11 +23,15 @@ function BurgerConstructor(index) {
   const { draggedElements,bun } = useSelector(
     (state) => state.container,
   );
-  const checkBun = () =>{
-    return(
-      bun === null ? <p>Добавьте булки</p> : bun 
-    )
-  }
+
+  const [, drop] = useDrop({
+    accept: 'ingredient',
+    drop: (item) => {
+      if(item.ingredient.type !== 'bun')
+        dispatch(setDraggedElements([...draggedElements, item.ingredient]));
+    },
+  });
+
   const totalOrderPrice = useMemo(() => {
     if (bun === null){
       return draggedElements.reduce((sum, ing) => sum + ing.price,0);
@@ -60,13 +66,15 @@ function BurgerConstructor(index) {
     );
   }
  
+ 
+
   return (
-    <aside className={style.container}>
+    <aside ref={drop} className={style.container}>
       <section className="mb-4 ml-8">
         <TopStubs />
       </section>
       <section className={`${style.freePositionBlock} mb-4 ml-8`}>
-        <CenterStubs index={index}/>
+        <CenterStubs/>
       </section>
       <section className="pl-8">
         <BottomStubs />
@@ -93,16 +101,5 @@ function BurgerConstructor(index) {
   );
 }
 
-BurgerConstructor.propTypes = {
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  text: PropTypes.string,
-  price: PropTypes.number,
-  thumbnail: PropTypes.string,
-  htmlType: PropTypes.string,
-  size: PropTypes.string,
-  title: PropTypes.string,
-  ingredients: PropTypes.array,
-};
 
 export default BurgerConstructor;

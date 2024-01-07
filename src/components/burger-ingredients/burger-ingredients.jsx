@@ -3,13 +3,12 @@ import style from "./style.module.css"
 import Modal from "../modal/modal"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
 import IngredientCard from "./burger-ingridients-position/burger-ingredients-position"
-// import PropTypes from "prop-types"
+import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
 import { getIngredient, setActiveTab } from "../../services/burger-ingredients/reducer"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/reducer"
-// import { setDraggedElement } from "../../services/burger-constructor/reducer"
-// import { useDrag } from "react-dnd"
+
 
 
 
@@ -19,13 +18,6 @@ const BurgerIngredients = () => {
 
 	const {selectedIngredient} = useSelector(store=>store.selected)
 	const {data,loading,error,activeTab} = useSelector(store=>store.ingredients)
-	
-
-	// const handleDrag = (e, currentElement) => {
-	// 	e.preventDefault();
-	// 	dispatch(setDraggedElement(currentElement));
-	//   }
-	
 
 	const currentTab = (tab) =>{
 		dispatch(setActiveTab(tab))
@@ -158,20 +150,20 @@ const BurgerIngredients = () => {
 		</div>
 	)
 }
-// BurgerIngredients.propTypes = {
-// 	dataInfo:PropTypes.arrayOf(
-// 		PropTypes.shape({
-// 		_id:PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       type: PropTypes.string.isRequired,
-//       proteins: PropTypes.number.isRequired,
-//       fat: PropTypes.number.isRequired,
-//       carbohydrates: PropTypes.number.isRequired,
-//       calories: PropTypes.number.isRequired,
-//       price: PropTypes.number.isRequired,
-//       image: PropTypes.string.isRequired,
-//     })
-//   ).isRequired,
-// 		}
+BurgerIngredients.propTypes = {
+	dataInfo:PropTypes.arrayOf(
+		PropTypes.shape({
+		_id:PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+		}
 
 export default BurgerIngredients

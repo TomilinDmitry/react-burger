@@ -1,29 +1,23 @@
 import React from 'react';
 import style from './top-stubs.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ConstructorElement,
-  DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import {
-  setDraggedElement,
-  setDraggedElements,
-} from '../../../../services/burger-constructor/reducer';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { setDraggedElement } from '../../../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 const TopStubs = () => {
   const dispatch = useDispatch();
 
-  const { bun, draggedElement, draggedElements } = useSelector(
+  const { bun, draggedElement } = useSelector(
     (state) => state.container,
   );
 
-  const [{ isHovered }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-      if (item.ingredient.type === 'bun'){
+      if (item.ingredient.type === 'bun') {
         dispatch(setDraggedElement(item.ingredient, draggedElement));
       }
-    }
+    },
   });
   return (
     <div
@@ -35,7 +29,9 @@ const TopStubs = () => {
         <div>
           <div
             draggable={true}
-            onDragStart={() => dispatch(setDraggedElement(bun, draggedElement))}
+            onDragStart={() =>
+              dispatch(setDraggedElement(bun, draggedElement))
+            }
             key={bun.id}
             className={style.element}
           >
