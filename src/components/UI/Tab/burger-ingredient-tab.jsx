@@ -1,9 +1,9 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveTab } from '../../../services/burger-ingredients/action';
+import style from './tabs.module.css'
 const BurgerIgredientsTab = () => {
-  // const [current, setCurrent] = useState("one")
   const { activeTab } = useSelector((store) => store.burger);
   const dispatch = useDispatch();
   const currentTab = (tab) => {
@@ -11,7 +11,7 @@ const BurgerIgredientsTab = () => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={style.container}>
       <Tab
         value="buns"
         active={activeTab === 'buns'}

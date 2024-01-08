@@ -1,21 +1,21 @@
 import React from "react"
 import style from "./modal-overlay.module.css"
 import PropTypes from "prop-types"
-import { useDispatch } from "react-redux"
-import { orderClose } from "../../../services/burger-constructor/order-details/action"
-import { setSelectedIngredient } from "../../../services/burger-ingredients/ingredient-details/reducer"
 
-const ModalOverlay = () => {
-	const dispatch = useDispatch()
-
+const ModalOverlay = ({closeOrderDetails,closeIngDetails,isOpen}) => {
 	const handleClick = () => {
-		dispatch(setSelectedIngredient(null))
-		dispatch(orderClose())
-	}
+		if (isOpen){
+			closeOrderDetails()
+		  }else{
+			closeIngDetails()
+		  }	}
 	return (
 		<div onClick={handleClick} className={style.modalContainer}></div>
 	)
 }
 ModalOverlay.propTypes = {
-}
+	closeOrderDetails: PropTypes.func,
+	closeIngDetails: PropTypes.func,
+	isOpen: PropTypes.bool,
+  };
 export default ModalOverlay

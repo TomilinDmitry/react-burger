@@ -2,14 +2,11 @@ import React from "react"
 import style from "./ingridient-details.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
-import { useDispatch, useSelector} from "react-redux"
-import { setSelectedIngredient } from "../../../services/burger-ingredients/ingredient-details/reducer"
 
-const IngredientDetails = ({ title }) => {
-	const dispatch = useDispatch()
-	const {selectedIngredient} = useSelector(store=>store.selected)
+const IngredientDetails = ({ title,selectedIngredient,closeIngDetails }) => {
+
 	const closeModal = () =>{
-		dispatch(setSelectedIngredient(null))
+		closeIngDetails()
 	}
 
 	return (
@@ -57,9 +54,17 @@ const IngredientDetails = ({ title }) => {
 	)
 }
 IngredientDetails.propTypes = {
-	closeModal:PropTypes.func.isRequired,
-	title:PropTypes.string,
-	dataInfo:PropTypes.object
-}
+	title: PropTypes.string,
+	selectedIngredient: PropTypes.shape({
+	  _id: PropTypes.string.isRequired,
+	  image: PropTypes.string.isRequired,
+	  name: PropTypes.string.isRequired,
+	  calories: PropTypes.number.isRequired,
+	  proteins: PropTypes.number.isRequired,
+	  fat: PropTypes.number.isRequired,
+	  carbohydrates: PropTypes.number.isRequired,
+	}),
+	closeIngDetails: PropTypes.func,
+  };
 
 export default IngredientDetails

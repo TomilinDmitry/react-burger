@@ -9,7 +9,6 @@ import React from "react"
 
 function AppHeader() {
 	return (
-		<>
 			<header>
 				<section className={style.container}>
 					<section>
@@ -68,7 +67,6 @@ function AppHeader() {
 					</nav>
 				</section>
 			</header>
-		</>
 	)
 }
 

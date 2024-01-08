@@ -1,11 +1,23 @@
-export const ApiUrl ='https://norma.nomoreparties.space/api/ingredients'
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const baseUrl ='https://norma.nomoreparties.space/api'
 
 const checkResponse = (res) =>{
     return res.ok ? res.json() : res.json().then((err)=>Promise.reject(err));
 };
 
+export const getIngredient = createAsyncThunk('asyncIngredient',async()=>{
+    const response = await fetch (`${baseUrl}/ingredients`);
+    if (response.ok){
+        const data = await checkResponse(response)
+        return data.data
+    }else{
+        console.error (`Произошла ошибка: ${response.status}`)
+    }
+})
+
 export const orderBurger = (data) => {
-    return fetch ('https://norma.nomoreparties.space/api/orders',{
+    return fetch (`${baseUrl}/orders`,{
         method:'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
@@ -18,8 +30,4 @@ export const orderBurger = (data) => {
             if (data?.success) return data;
             return Promise.reject(data)
         })
-        .catch((error) => {
-            console.error('Error during order:', error);
-            return Promise.reject(error);
-        });
     }

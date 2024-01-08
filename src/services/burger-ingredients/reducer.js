@@ -1,13 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-
-
-export const getIngredient = createAsyncThunk('asyncIngredient',async()=>{
-    const response = await fetch ('https://norma.nomoreparties.space/api/ingredients');
-    if (response.ok){
-        const data =await response.json()
-        return data.data
-    }
-})
+import {createSlice } from "@reduxjs/toolkit"
+import { getIngredient } from "../../utils/Api/api-ingredients";
 
 const ingredientsSlice = createSlice ({
     name:'ingredients',

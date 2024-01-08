@@ -83,12 +83,11 @@ const SortingIng = ({ index, ingredient }) => {
   return (
     <div
       ref={ref}
-      key={index}
       className={`${style.container}`}
       style={{ opacity }}
     >
-      <div key={index} className={style.element}>
-        <li className={`${style.list} mb-4`} key={index}>
+      <div className={style.element}>
+        <li className={`${style.list} mb-4`}>
           <DragIcon type="primary" />
           <div className={style.listElement}>
             <ConstructorElement

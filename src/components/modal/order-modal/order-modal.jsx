@@ -7,14 +7,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { orderClose } from "../../../services/burger-constructor/order-details/action"
 import { setBun, setDraggedElements } from "../../../services/burger-constructor/reducer"
 
-const OrderDetails = ({ title }, props) => {
-	const dispatch = useDispatch()
+const OrderDetails = ({ title,closeOrderDetails }) => {
 	const {orderNumber,orderName} = useSelector(state=> state.order)
 
-	const close = () => {
-		dispatch(orderClose())
-		dispatch(setDraggedElements([]));
-      	dispatch(setBun())
+	const closeModal = () => {
+		closeOrderDetails()
 	}
 	return (
 		<div className={style.mainContainer}>
@@ -23,11 +20,11 @@ const OrderDetails = ({ title }, props) => {
 					<h1>{title}</h1>
 				</section>
 
-				<section onClick={close}className={style.closeBtn}>
+				<section onClick={closeModal}className={style.closeBtn}>
 					<CloseIcon type="primary" />
 				</section>
 			</section>
-			<h1 className={style.orderTitle}>{props.title}</h1>
+			<h1 className={style.orderTitle}>{title}</h1>
 			<p className={`${style.order} text text_type_digits-large`}>
 				{orderNumber}
 			</p>
@@ -50,7 +47,7 @@ const OrderDetails = ({ title }, props) => {
 	)
 }
 OrderDetails.propTypes = {
-	title: PropTypes.string,
-	props: PropTypes.string,
+	title: PropTypes.string.isRequired,
+	closeOrderDetails: PropTypes.func,
 }
 export default OrderDetails

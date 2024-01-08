@@ -1,25 +1,24 @@
 import React, { useEffect } from 'react';
 import style from './modal.module.css';
 import PortalReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import ModalOverlay from './modal-overlay/modal-overlay';
-import { useDispatch} from 'react-redux';
-import { orderClose } from '../../services/burger-constructor/order-details/action';
-import { setSelectedIngredient } from '../../services/burger-ingredients/ingredient-details/reducer';
+import PropTypes from 'prop-types';
 
-const Modal = ({ children }) => {
-  const dispatch = useDispatch();
-  
-  const KeyDown = (e) => {
+const Modal = ({ children,closeOrderDetails,closeIngDetails,isOpen }) => {
+
+  const keyDownEsc = (e) => {
     if (e.key === 'Escape') {
-      dispatch(setSelectedIngredient(null));
-      dispatch(orderClose());
+      if (isOpen){
+        closeOrderDetails()
+      }else{
+        closeIngDetails()
+      }
     }
   };
   useEffect(() => {
-    document.addEventListener('keydown', KeyDown);
+    document.addEventListener('keydown', keyDownEsc);
     return () => {
-      document.removeEventListener('keydown', KeyDown);
+      document.removeEventListener('keydown', keyDownEsc);
     };
   });
   const modalRoot = document.getElementById('modal');
@@ -27,12 +26,16 @@ const Modal = ({ children }) => {
     <div className={style.container}>
       {children}
 
-      <ModalOverlay />
+      <ModalOverlay isOpen={isOpen} closeOrderDetails={closeOrderDetails}  closeIngDetails={closeIngDetails}/>
     </div>,
     modalRoot,
   );
 };
 Modal.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
+  closeOrderDetails: PropTypes.func,
+  closeIngDetails: PropTypes.func,
+  isOpen: PropTypes.bool,
 };
+
 export default Modal;

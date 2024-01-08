@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import style from './constructor.module.css';
 import {
   Button,
@@ -12,10 +12,10 @@ import CenterStubs from '../UI/Stubs/center/center-stubs';
 import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
-import { setDraggedElements } from '../../services/burger-constructor/reducer';
+import { setBun, setDraggedElements } from '../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 
-function BurgerConstructor(index) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
   const { loading, orderName, error } = useSelector(
     (state) => state.order,
@@ -23,7 +23,13 @@ function BurgerConstructor(index) {
   const { draggedElements,bun } = useSelector(
     (state) => state.container,
   );
+  const [isOpen, setIsOpen] = useState(false)
 
+  const onClose = () =>{
+    setIsOpen(false)
+    dispatch(setDraggedElements([]))
+    dispatch(setBun([]))
+  }
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
@@ -41,11 +47,16 @@ function BurgerConstructor(index) {
   }, [draggedElements,bun]);
 
   const onSubmitOrder = () => {
-    dispatch(
-      asyncOrder([
-        ...draggedElements
-      ]),
-    );
+    if (bun && draggedElements.length > 0 ){
+      setIsOpen(true)
+      dispatch(
+        asyncOrder([
+          ...draggedElements
+        ]),
+      );
+    }else{
+      alert('Добавьте обязательные ингредиенты')
+    }
   };
 
   if (loading) {
@@ -92,14 +103,18 @@ function BurgerConstructor(index) {
           Оформить заказ
         </Button>
       </section>
-      {orderName && (
-        <Modal onClick={(e) => e.stopPropagation()}>
-          <OrderDetails title="Детали заказа" />
+      {isOpen && orderName && (
+        <Modal isOpen={isOpen} closeOrderDetails = {onClose} onClick={(e) => e.stopPropagation()}>
+          <OrderDetails closeOrderDetails = {onClose} title="Детали заказа" />
         </Modal>
       )}
     </aside>
   );
 }
 
-
+BurgerConstructor.propTypes = {
+  loading: PropTypes.bool,
+  orderName: PropTypes.string,
+  error: PropTypes.string,
+};
 export default BurgerConstructor;

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef} from "react"
+import React, { useEffect, useMemo, useRef, useState} from "react"
 import style from "./style.module.css"
 import Modal from "../modal/modal"
 import IngredientDetails from "../modal/modal-ingredient/ingridient-details"
@@ -6,9 +6,9 @@ import IngredientCard from "./burger-ingridients-position/burger-ingredients-pos
 import PropTypes from "prop-types"
 import { useDispatch, useSelector } from "react-redux"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
-import { getIngredient, setActiveTab } from "../../services/burger-ingredients/reducer"
+import { setActiveTab } from "../../services/burger-ingredients/reducer"
 import { setSelectedIngredient } from "../../services/burger-ingredients/ingredient-details/reducer"
-
+import { getIngredient } from "../../utils/Api/api-ingredients"
 
 
 
@@ -16,8 +16,11 @@ const BurgerIngredients = () => {
 	
 	const dispatch = useDispatch();
 
-	const {selectedIngredient} = useSelector(store=>store.selected)
 	const {data,loading,error,activeTab} = useSelector(store=>store.ingredients)
+
+	const [isOpenIngDetails, setIsOpenIngDetails] = useState(false)
+
+	const [selectedIngredient, setSelectedIngredient] = useState(null);
 
 	const currentTab = (tab) =>{
 		dispatch(setActiveTab(tab))
@@ -51,17 +54,21 @@ const BurgerIngredients = () => {
 			currentTab('ingredients')
 		}
 	}
-
+	
 	const filteredIngredient = useMemo(()=>{
 		return {
 			buns: data.filter((ingredient) => ingredient.type === 'bun'),
  	 		sauces : data.filter((ingredient) => ingredient.type === 'sauce'),
    			mains : data.filter((ingredient) => ingredient.type === 'main'),
 				}},[data])
-
+				
 	const open = (ingredient) => {
-		dispatch(setSelectedIngredient(ingredient));
+	setIsOpenIngDetails(true)
+	setSelectedIngredient(ingredient);
 	}
+	const closeIngDetails = () => {
+	setIsOpenIngDetails(false)
+				}
 	if (error) {
 		return <p className={`${style.failedBlock} text text_type_main-large`}>Ошибка при загрузке данных{error}</p>;
 	  }	
@@ -139,10 +146,10 @@ const BurgerIngredients = () => {
 				</div>
 					)}
 
-				{selectedIngredient && (
+				{selectedIngredient && isOpenIngDetails && (
 					<>
-					<Modal onClick={(e) => e.stopPropagation()}>
-						<IngredientDetails title="Детали ингредиента"/>
+					<Modal closeIngDetails={closeIngDetails} onClick={(e) => e.stopPropagation()}>
+						<IngredientDetails closeIngDetails={closeIngDetails} selectedIngredient={selectedIngredient} title="Детали ингредиента"/>
 					</Modal>
 					</>
 				)}
@@ -151,19 +158,26 @@ const BurgerIngredients = () => {
 	)
 }
 BurgerIngredients.propTypes = {
-	dataInfo:PropTypes.arrayOf(
+	data: PropTypes.arrayOf(
 		PropTypes.shape({
-		_id:PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-		}
+		  _id: PropTypes.string.isRequired,
+		  name: PropTypes.string.isRequired,
+		  type: PropTypes.string.isRequired,
+		  proteins: PropTypes.number.isRequired,
+		  fat: PropTypes.number.isRequired,
+		  carbohydrates: PropTypes.number.isRequired,
+		  calories: PropTypes.number.isRequired,
+		  price: PropTypes.number.isRequired,
+		  image: PropTypes.string.isRequired,
+		})
+	  ),
+	  loading: PropTypes.bool,
+	  error: PropTypes.string,
+	  activeTab: PropTypes.string,
+	  setActiveTab: PropTypes.func,
+	  setSelectedIngredient: PropTypes.func,
+	  isOpenIngDetails: PropTypes.bool,
+	  setIsOpenIngDetails: PropTypes.func,
+	};
 
 export default BurgerIngredients
