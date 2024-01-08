@@ -14,7 +14,7 @@ aside {
 .freePositionBlock {
 	overflow-y: scroll;
 	width: 580px;
-	height: 380px;
+	max-height: 380px;
 	padding-right: 8px;
 }
 .freePositionBlock::-webkit-scrollbar {
@@ -32,4 +32,24 @@ aside {
 	margin-right: 16px;
 	align-items: center;
 	justify-content: end;
+}
+.loadingBlock{
+	display: flex;
+	align-items:center;
+	font-size: 36px;
+	width: 1000px;
+	span{
+		width:500px;
+	}
+	justify-content: center;
+}
+.failedBlock{
+	display: flex;
+	align-items:center;
+	font-size: 48px;
+	position: absolute;
+	color: red;
+	width: 700px;
+	top:40%;
+	left:35%
 }

@@ -1,4 +1,4 @@
-.App {
+.app {
 	text-align: center;
 	display: flex;
 	flex-direction: column;
@@ -29,9 +29,8 @@
 .App-link {
 	color: #61dafb;
 }
-.main-block{
+.mainblock{
 	display: flex;
-	align-items:center;
 }
 @keyframes App-logo-spin {
 	from {

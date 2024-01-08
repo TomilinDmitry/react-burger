@@ -3,7 +3,16 @@ import doneImg from "../../../images/done.svg"
 import style from "./modal.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
-const OrderDetails = ({ closeModal, title },props) => {
+import { useDispatch, useSelector } from "react-redux"
+import { orderClose } from "../../../services/burger-constructor/order-details/action"
+import { setBun, setDraggedElements } from "../../../services/burger-constructor/reducer"
+
+const OrderDetails = ({ title,closeOrderDetails }) => {
+	const {orderNumber,orderName} = useSelector(state=> state.order)
+
+	const closeModal = () => {
+		closeOrderDetails()
+	}
 	return (
 		<div className={style.mainContainer}>
 			<section className={style.overlayHeader}>
@@ -11,13 +20,13 @@ const OrderDetails = ({ closeModal, title },props) => {
 					<h1>{title}</h1>
 				</section>
 
-				<section onClick={closeModal} className={style.closeBtn}>
+				<section onClick={closeModal}className={style.closeBtn}>
 					<CloseIcon type="primary" />
 				</section>
 			</section>
-			<h1 className={style.orderTitle}>{props.title}</h1>
+			<h1 className={style.orderTitle}>{title}</h1>
 			<p className={`${style.order} text text_type_digits-large`}>
-				12890
+				{orderNumber}
 			</p>
 			<p className="text text_type_main-default mb-15">
 				Идентификатор заказа
@@ -26,20 +35,19 @@ const OrderDetails = ({ closeModal, title },props) => {
 				<img src={doneImg} alt="Выполнено!" />
 			</section>
 			<section className={style.footerTextBlock}>
-			<p className="text text_type_main-default mb-2">
-				Ваш заказ начали готовить
-			</p>
-			<p
-				className={`${style.footerText} text text_type_main-default`}>
-				Дождитесь готовности на орбинатльной станции
-			</p>
+				<p className="text text_type_main-default mb-2">
+					Ваш заказ начали готовить
+				</p>
+				<p
+					className={`${style.footerText} text text_type_main-default`}>
+					Дождитесь готовности на орбинатльной станции
+				</p>
 			</section>
 		</div>
 	)
 }
-OrderDetails.propTypes ={
-	closeModal:PropTypes.func.isRequired,
-	title:PropTypes.string,
-	props:PropTypes.string
+OrderDetails.propTypes = {
+	title: PropTypes.string.isRequired,
+	closeOrderDetails: PropTypes.func,
 }
 export default OrderDetails

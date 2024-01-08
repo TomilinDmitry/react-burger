@@ -4,7 +4,7 @@
 	align-items: center;
 	width: 720px;
 	height: 718px;
-	padding: 100px 40px 100px 40px;
+	padding: 60px 40px 100px 40px;
 	justify-content: center;
 	flex-shrink: 0;
 	position: absolute;
@@ -32,6 +32,7 @@
 }
 .footerText {
 	color: var(--text-dark-grey-secondary-text, #8585ad);
+	
 }
 .title {
 	margin-block-start: 0em;
@@ -50,4 +51,7 @@
 
 	cursor: pointer;
 	z-index: 1;
+}
+.footerTextBlock{
+	text-align: center;
 }

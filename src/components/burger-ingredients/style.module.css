@@ -1,66 +1,91 @@
 .container {
-	display: flex;
-	width: 600px;
-	flex-shrink: 0;
-	margin: 0% 40px 0% 22%;
+  display: flex;
+  width: 600px;
+  flex-shrink: 0;
+  margin: 0% 40px 0% 22%;
 }
 .breadContainer {
-	display: flex;
-	gap: 24px;
-	margin-bottom: 40px;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 40px;
 }
 .title {
-	text-align: start;
+  text-align: start;
+}
+.tabs {
+  display: flex;
 }
 .tabsBlock {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 .sectionBlock {
-	display: flex;
-	flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sectionBlock:hover {
+  cursor: grab;
 }
 .blockTitle {
-	display: flex;
-	align-items: start;
+  display: flex;
+  align-items: start;
 }
 
 .ingredientContainer {
-	display: flex;
-	width: 630px;
-	flex-wrap: wrap;
-	height: 545px;
-	overflow-y: scroll;
+  display: flex;
+  width: 630px;
+  flex-wrap: wrap;
+  height: 545px;
+  overflow-y: scroll;
 }
 .ingredientContainer::-webkit-scrollbar {
-	width: 8px;
+  width: 8px;
 }
 .ingredientContainer::-webkit-scrollbar-thumb {
-	background: #8585ad;
+  background: #8585ad;
 }
 .ingredientContainer::-webkit-scrollbar-track {
-	background: var(--interface-input, #2f2f37);
+  background: var(--interface-input, #2f2f37);
 }
-
+.loadingBlock {
+  display: flex;
+  justify-content: start;
+  font-size: 48px;
+  width: 1000px;
+  span {
+    width: 550px;
+  }
+}
+.failedBlock {
+  display: flex;
+  align-items: center;
+  font-size: 48px;
+  position: absolute;
+  color: red;
+  width: 700px;
+  top: 40%;
+  left: 35%;
+}
 @media screen and (width < 1600px) {
-	.main {
-		margin: 0% 40px 0% 10%;
-	}
+  .main {
+    margin: 0% 40px 0% 10%;
+  }
 }
 @media screen and (width < 1400px) {
-	.main {
-		margin: 0% 40px 0% 3%;
-	}
+  .main {
+    margin: 0% 40px 0% 3%;
+  }
 }
 @media screen and (width < 1300px) {
-	.container {
-		flex-direction: column;
-		align-items: center;
-	}
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 @media screen and (width < 750px) {
-	.container {
-		flex-direction: column;
-		align-items: start;
-	}
+  .container {
+    flex-direction: column;
+    align-items: start;
+  }
 }
