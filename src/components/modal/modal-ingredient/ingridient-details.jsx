@@ -1,24 +1,11 @@
 import React from "react"
 import style from "./ingridient-details.module.css"
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
 
-const IngredientDetails = ({ title,selectedIngredient,closeIngDetails }) => {
-
-	const closeModal = () =>{
-		closeIngDetails()
-	}
+const IngredientDetails = ({selectedIngredient}) => {
 
 	return (
 		<div className={style.mainContainer}>
-			<section className={style.overlayHeader}>
-				<section>
-					<h1>{title}</h1>
-				</section>
-				<section  className={style.closeBtn}>
-					<CloseIcon onClick = {closeModal}type="primary" />
-				</section>
-			</section>
 			{selectedIngredient &&(
 				<div key={selectedIngredient._id} className={style.modalContainerInfo}>
 					<section className="mb-4">
@@ -54,7 +41,6 @@ const IngredientDetails = ({ title,selectedIngredient,closeIngDetails }) => {
 	)
 }
 IngredientDetails.propTypes = {
-	title: PropTypes.string,
 	selectedIngredient: PropTypes.shape({
 	  _id: PropTypes.string.isRequired,
 	  image: PropTypes.string.isRequired,
@@ -64,7 +50,6 @@ IngredientDetails.propTypes = {
 	  fat: PropTypes.number.isRequired,
 	  carbohydrates: PropTypes.number.isRequired,
 	}),
-	closeIngDetails: PropTypes.func,
   };
 
 export default IngredientDetails

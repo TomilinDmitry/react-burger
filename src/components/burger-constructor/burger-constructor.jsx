@@ -12,7 +12,10 @@ import CenterStubs from '../UI/Stubs/center/center-stubs';
 import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
-import { setBun, setDraggedElements } from '../../services/burger-constructor/reducer';
+import {
+  setBun,
+  setDraggedElements,
+} from '../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 
 function BurgerConstructor() {
@@ -20,42 +23,43 @@ function BurgerConstructor() {
   const { loading, orderName, error } = useSelector(
     (state) => state.order,
   );
-  const { draggedElements,bun } = useSelector(
+  const { draggedElements, bun } = useSelector(
     (state) => state.container,
   );
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  const onClose = () =>{
-    setIsOpen(false)
-    dispatch(setDraggedElements([]))
-    dispatch(setBun([]))
-  }
+  const onClose = () => {
+    setIsOpen(false);
+    dispatch(setDraggedElements([]));
+    dispatch(setBun([]));
+  };
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-      if(item.ingredient.type !== 'bun')
-        dispatch(setDraggedElements([...draggedElements, item.ingredient]));
+      if (item.ingredient.type !== 'bun')
+        dispatch(
+          setDraggedElements([...draggedElements, item.ingredient]),
+        );
     },
   });
 
   const totalOrderPrice = useMemo(() => {
-    if (bun === null){
-      return draggedElements.reduce((sum, ing) => sum + ing.price,0);
-    }else{
-      return draggedElements.reduce((sum, ing) => sum + ing.price,bun.price*2);
+    if (bun === null) {
+      return draggedElements.reduce((sum, ing) => sum + ing.price, 0);
+    } else {
+      return draggedElements.reduce(
+        (sum, ing) => sum + ing.price,
+        bun.price * 2,
+      );
     }
-  }, [draggedElements,bun]);
+  }, [draggedElements, bun]);
 
   const onSubmitOrder = () => {
-    if (bun && draggedElements.length > 0 ){
-      setIsOpen(true)
-      dispatch(
-        asyncOrder([
-          ...draggedElements
-        ]),
-      );
-    }else{
-      alert('Добавьте обязательные ингредиенты')
+    if (bun && draggedElements.length > 0) {
+      setIsOpen(true);
+      dispatch(asyncOrder([...draggedElements]));
+    } else {
+      alert('Добавьте обязательные ингредиенты');
     }
   };
 
@@ -76,8 +80,6 @@ function BurgerConstructor() {
       </p>
     );
   }
- 
- 
 
   return (
     <aside ref={drop} className={style.container}>
@@ -85,7 +87,7 @@ function BurgerConstructor() {
         <TopStubs />
       </section>
       <section className={`${style.freePositionBlock} mb-4 ml-8`}>
-        <CenterStubs/>
+        <CenterStubs />
       </section>
       <section className="pl-8">
         <BottomStubs />
@@ -104,8 +106,12 @@ function BurgerConstructor() {
         </Button>
       </section>
       {isOpen && orderName && (
-        <Modal isOpen={isOpen} closeOrderDetails = {onClose} onClick={(e) => e.stopPropagation()}>
-          <OrderDetails closeOrderDetails = {onClose} title="Детали заказа" />
+        <Modal
+          onClick={(e) => e.stopPropagation()}
+          title="Детали заказа"
+          close={onClose}
+        >
+          <OrderDetails/>
         </Modal>
       )}
     </aside>
