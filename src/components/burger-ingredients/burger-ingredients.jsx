@@ -20,7 +20,7 @@ const BurgerIngredients = () => {
 
   const [selectedIngredient, setSelectedIngredient] = useState(null);
 
-  const currentTab = (tab) => {
+  const setCurrentTab = (tab) => {
     dispatch(setActiveTab(tab));
   };
 
@@ -43,11 +43,11 @@ const BurgerIngredients = () => {
       ingredientRef.current.getBoundingClientRect();
 
     if (bunsRect.top >= tabsRect.top) {
-      currentTab('buns');
+      setCurrentTab('buns');
     } else if (saucesRect.top >= tabsRect.top) {
-      currentTab('sauces');
+      setCurrentTab('sauces');
     } else if (ingredientRect.top >= tabsRect.top) {
-      currentTab('ingredients');
+      setCurrentTab('ingredients');
     }
   };
 
@@ -88,7 +88,7 @@ const BurgerIngredients = () => {
             value="buns"
             active={activeTab === 'buns'}
             onClick={() =>
-              currentTab(
+              setCurrentTab(
                 'buns',
                 bunsRef.current.scrollIntoView({
                   behavior: 'smooth',
@@ -102,7 +102,7 @@ const BurgerIngredients = () => {
             value="sauces"
             active={activeTab === 'sauces'}
             onClick={() =>
-              currentTab(
+              setCurrentTab(
                 'sauces',
                 saucesRef.current.scrollIntoView({
                   behavior: 'smooth',
@@ -116,7 +116,7 @@ const BurgerIngredients = () => {
             value="ingredients"
             active={activeTab === 'ingredients'}
             onClick={() =>
-              currentTab(
+              setCurrentTab(
                 'ingredients',
                 ingredientRef.current.scrollIntoView({
                   behavior: 'smooth',

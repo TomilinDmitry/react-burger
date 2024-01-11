@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { v4 as uuidv4 } from 'uuid';
 
     export const consturctorSlice = createSlice ({
         name:"container",
@@ -6,25 +7,28 @@ import { createSlice } from "@reduxjs/toolkit"
             bun:null,
             draggedElement:null,
             draggedElements:[],
-            id:null,
         },
-        reducers:{
-            setDraggedElement (state,action){
-                if (action.payload.type !== 'bun'){
-                    state.draggedElement = action.payload
-                    
-                }else{
-                    state.bun = action.payload
-                    
-                }
+        reducers: {
+            setDraggedElement(state, action) {
+              if (action.payload.type !== 'bun') {
+                state.draggedElement = action.payload
+              } else {
+                state.bun = action.payload;
+              }
             },
-            setDraggedElements (state,action){
-                state.draggedElements = action.payload
+            setDraggedElements:{
+            reducer: (state, action) => {
+                state.draggedElements.push(action.payload);
             },
-            setBun (state){
-                state.bun = null
-            }
-        }
-    })
+            prepare: (ingredient) => ({
+                payload: { ...ingredient, unId: uuidv4() }
+            })
+        },
+            setBun(state) {
+              state.bun = null;
+            },
+          },
+        });
+        
     export default consturctorSlice.reducer;
-    export const {setDraggedElement,setDraggedElements,setBun} = consturctorSlice.actions;
+    export const {setDraggedElement,setDraggedElements,setBun,addIngredient} = consturctorSlice.actions;

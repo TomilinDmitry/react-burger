@@ -16,7 +16,7 @@ export const getIngredient = createAsyncThunk('asyncIngredient',async()=>{
     }
 })
 
-export const orderBurger = (data) => {
+export const getOrderBurgerInfo = (data) => {
     return fetch (`${baseUrl}/orders`,{
         method:'POST',
         headers: {

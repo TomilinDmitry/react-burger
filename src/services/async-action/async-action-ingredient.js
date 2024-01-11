@@ -1,4 +1,4 @@
-import { orderBurger } from '../../utils/Api/api-ingredients';
+import { getOrderBurgerInfo } from '../../utils/Api/api-ingredients';
 import {
   orderFailed,
   orderLoading,
@@ -7,7 +7,7 @@ import {
 
 export const asyncOrder = (data) => (dispatch) => {
   dispatch(orderLoading());
-  orderBurger(data)
+  getOrderBurgerInfo(data)
     .then((data) => dispatch(orderSuccess(data)))
     .catch((error) => {
       dispatch(orderFailed(`${error}`));

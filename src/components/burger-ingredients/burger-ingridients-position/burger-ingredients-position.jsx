@@ -21,7 +21,7 @@ const IngredientCard = (props) => {
 		item:{ ingredient: props },
 	})
 
-  const ingredientsCounters = useMemo(() => {
+  const setIngredientsCounters = useMemo(() => {
     const counters = {};
 
     data.forEach((ingredient) => {
@@ -40,9 +40,9 @@ const IngredientCard = (props) => {
 
   return (
     <section ref={drag} className={style.container}>
-      {ingredientsCounters[props._id] > 0 && (
+      {setIngredientsCounters[props._id] > 0 && (
         <Counter
-          count={ingredientsCounters[props._id]}
+          count={setIngredientsCounters[props._id]}
           size="default"
           extraClass="m-1"
         />

@@ -38,7 +38,7 @@ function BurgerConstructor() {
     drop: (item) => {
       if (item.ingredient.type !== 'bun')
         dispatch(
-          setDraggedElements([...draggedElements, item.ingredient]),
+          setDraggedElements(item.ingredient),
         );
     },
   });

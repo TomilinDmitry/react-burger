@@ -11,15 +11,15 @@ const Modal = ({
   close,
   title
 }) => {
-  const keyDownEsc = (e) => {
+  const pressKeyEsc = (e) => {
     if (e.key === 'Escape') {
       close()
     }
   };
   useEffect(() => {
-    document.addEventListener('keydown', keyDownEsc);
+    document.addEventListener('keydown', pressKeyEsc);
     return () => {
-      document.removeEventListener('keydown', keyDownEsc);
+      document.removeEventListener('keydown', pressKeyEsc);
     };
   });
   const modalRoot = document.getElementById('modal');
