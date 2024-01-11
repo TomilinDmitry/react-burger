@@ -8,7 +8,7 @@ const CenterStubs = () => {
     <div>
       {draggedElements.length > 0 ? (
         draggedElements.map((ingredient, index) => (
-          <div key={console.log(ingredient.unId)}>
+          <div key={ingredient.unId}>
             <SortingIng index={index} ingredient={ingredient} />
           </div>
         ))

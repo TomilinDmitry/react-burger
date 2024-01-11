@@ -36,9 +36,8 @@ function BurgerConstructor() {
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-      if (item.ingredient.type !== 'bun')
         dispatch(
-          setDraggedElements(item.ingredient),
+          setDraggedElements(item),
         );
     },
   });

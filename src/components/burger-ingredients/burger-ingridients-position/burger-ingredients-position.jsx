@@ -17,8 +17,8 @@ const IngredientCard = (props) => {
   );
 
 	const [,drag] = useDrag({
-		type:'ingredient',
-		item:{ ingredient: props },
+		type:props.type === 'bun' ? 'bun': 'ingredient',
+		item: props,
 	})
 
   const setIngredientsCounters = useMemo(() => {

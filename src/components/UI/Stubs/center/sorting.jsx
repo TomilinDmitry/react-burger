@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './center-stubs.module.css';
-import { setDraggedElements } from '../../../../services/burger-constructor/reducer';
+import { moveIngredient, deleteIngredient } from '../../../../services/burger-constructor/reducer';
 import {
   ConstructorElement,
   DragIcon,
@@ -13,10 +13,9 @@ const SortingIng = ({ index, ingredient }) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
 
-  const { draggedElements } = useSelector((state) => state.container);
   const [{ isDragging }, dragIng] = useDrag({
     type: 'item',
-    item: { type: 'item', index },
+    item: { index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -57,28 +56,13 @@ const SortingIng = ({ index, ingredient }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      if (typeof hoverIndex === 'number') {
-        item.index = hoverIndex;
-      }
-
-      const moveIngredient = (dragIndex, hoverIndex) => {
-        const dragIngredient = draggedElements[dragIndex];
-        const newIngredients = [...draggedElements];
-        newIngredients.splice(dragIndex, 1);
-        newIngredients.splice(hoverIndex, 0, dragIngredient);
-        dispatch(setDraggedElements(newIngredients));
-      };
-      moveIngredient(dragIndex, hoverIndex);
+ 
+      dispatch(moveIngredient({dragIndex, hoverIndex}));
       item.index = hoverIndex;
     },
   });
-  const deleteIngredient = (index) => {
-    dispatch(
-      setDraggedElements(
-        draggedElements.filter((e, i) => i !== index),
-      ),
-    );
-  };
+
+
   dragIng(dropIng(ref));
   return (
     <div
@@ -95,7 +79,7 @@ const SortingIng = ({ index, ingredient }) => {
               text={ingredient.name}
               price={ingredient.price}
               thumbnail={ingredient.image}
-              handleClose={() => deleteIngredient(index)}
+              handleClose={() => dispatch(deleteIngredient(ingredient.unId))}
             />
           </div>
         </li>

@@ -2,21 +2,19 @@ import React from 'react';
 import style from './top-stubs.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { setDraggedElement } from '../../../../services/burger-constructor/reducer';
+import { setBun } from '../../../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 const TopStubs = () => {
   const dispatch = useDispatch();
 
-  const { bun, draggedElement } = useSelector(
+  const { bun } = useSelector(
     (state) => state.container,
   );
 
   const [, drop] = useDrop({
-    accept: 'ingredient',
+    accept: 'bun',
     drop: (item) => {
-      if (item.ingredient.type === 'bun') {
-        dispatch(setDraggedElement(item.ingredient, draggedElement));
-      }
+        dispatch(setBun(item));
     },
   });
   return (
@@ -28,11 +26,6 @@ const TopStubs = () => {
       {bun ? (
         <div>
           <div
-            draggable={true}
-            onDragStart={() =>
-              dispatch(setDraggedElement(bun, draggedElement))
-            }
-            key={bun.id}
             className={style.element}
           >
             <li className={`${style.list} mb-2`} key={bun.id}>
