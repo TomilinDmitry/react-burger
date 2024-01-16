@@ -1,29 +1,40 @@
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components"
-import React, { useState } from "react"
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveTab } from '../../../services/burger-ingredients/action';
+import style from './tabs.module.css';
 const BurgerIgredientsTab = () => {
-	const [current, setCurrent] = useState("one")
-	return (
-		<div style={{ display: "flex" }}>
-			<Tab
-				value="one"
-				active={current === "one"}
-				onClick={setCurrent}>
-				Булки
-			</Tab>
-			<Tab
-				value="two"
-				active={current === "two"}
-				onClick={setCurrent}>
-				Соусы
-			</Tab>
-			<Tab
-				value="three"
-				active={current === "three"}
-				onClick={setCurrent}>
-				Начинки
-			</Tab>
-		</div>
-	)
-}
+  const { activeTab } = useSelector((store) => store.burger);
+  const dispatch = useDispatch();
+  const currentTab = (tab) => {
+    dispatch(setActiveTab(tab));
+  };
 
-export default BurgerIgredientsTab
+  return (
+    <div className={style.container}>
+      <Tab
+        value="buns"
+        active={activeTab === 'buns'}
+        onClick={() => currentTab('buns')}
+      >
+        Булки
+      </Tab>
+      <Tab
+        value="sauces"
+        active={activeTab === 'sauces'}
+        onClick={() => currentTab('sauces')}
+      >
+        Соусы
+      </Tab>
+      <Tab
+        value="ingredients"
+        active={activeTab === 'ingedients'}
+        onClick={() => currentTab('ingedients')}
+      >
+        Начинки
+      </Tab>
+    </div>
+  );
+};
+
+export default BurgerIgredientsTab;

@@ -1,45 +1,38 @@
 import React from "react"
 import style from "./ingridient-details.module.css"
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import PropTypes from "prop-types"
-const IngredientDetails = ({ closeModal, title, dataInfo }) => {
+
+const IngredientDetails = ({selectedIngredient}) => {
+
 	return (
 		<div className={style.mainContainer}>
-			<section className={style.overlayHeader}>
-				<section>
-					<h1>{title}</h1>
-				</section>
-				<section onClick={closeModal} className={style.closeBtn}>
-					<CloseIcon type="primary" />
-				</section>
-			</section>
-			{dataInfo &&(
-				<div key={dataInfo._id} className={style.modalContainerInfo}>
+			{selectedIngredient &&(
+				<div key={selectedIngredient._id} className={style.modalContainerInfo}>
 					<section className="mb-4">
-						<img src={dataInfo.image} alt={dataInfo.data} />
+						<img src={selectedIngredient.image} alt={selectedIngredient.data} />
 					</section>
 					<p
 						className={`${style.nameProduct} text text_type_main-medium mb-8`}>
-						<span>{dataInfo.name}</span>
+						<span>{selectedIngredient.name}</span>
 					</p>
 
 					<div
 						className={`${style.textBlock} text text_type_main-medium mb-15`}>
 						<p className={style.block}>
 							<span>Калории,ккал</span>
-							<span>{dataInfo.calories}</span>
+							<span>{selectedIngredient.calories}</span>
 						</p>
 						<p className={style.block}>
 							<span>Белки,г</span>
-							<span>{dataInfo.proteins}</span>
+							<span>{selectedIngredient.proteins}</span>
 						</p>
 						<p className={style.block}>
 							<span>Жиры,г</span>
-							<span>{dataInfo.fat}</span>
+							<span>{selectedIngredient.fat}</span>
 						</p>
 						<p className={style.block}>
 							<span>Углеводы,г</span>
-							<span>{dataInfo.carbohydrates}</span>
+							<span>{selectedIngredient.carbohydrates}</span>
 						</p>
 					</div>
 				</div>
@@ -48,9 +41,15 @@ const IngredientDetails = ({ closeModal, title, dataInfo }) => {
 	)
 }
 IngredientDetails.propTypes = {
-	closeModal:PropTypes.func.isRequired,
-	title:PropTypes.string,
-	dataInfo:PropTypes.object
-}
+	selectedIngredient: PropTypes.shape({
+	  _id: PropTypes.string.isRequired,
+	  image: PropTypes.string.isRequired,
+	  name: PropTypes.string.isRequired,
+	  calories: PropTypes.number.isRequired,
+	  proteins: PropTypes.number.isRequired,
+	  fat: PropTypes.number.isRequired,
+	  carbohydrates: PropTypes.number.isRequired,
+	}),
+  };
 
 export default IngredientDetails

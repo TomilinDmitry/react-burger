@@ -1,96 +1,125 @@
-import React, { useEffect, useState } from "react"
-import style from "./constructor.module.css"
+import React, { useMemo, useState } from 'react';
+import style from './constructor.module.css';
 import {
-	Button,
-	ConstructorElement,
-	CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components"
-import ConstructorPositions from "./burger-free-positions/free-positions-constuctor"
-import Modal from "../modal/modal"
-import PropTypes from "prop-types"
-import OrderDetails from "../modal/order-modal/order-modal"
-import ModalOverlay from "../modal/modal-overlay/modal-overlay"
+  Button,
+  CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from '../modal/modal';
+import PropTypes from 'prop-types';
+import OrderDetails from '../modal/order-modal/order-modal';
+import TopStubs from '../UI/Stubs/top/top-stubs';
+import CenterStubs from '../UI/Stubs/center/center-stubs';
+import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncOrder } from '../../services/async-action/async-action-ingredient';
+import {
+  setBun,
+  setDraggedElements,
+} from '../../services/burger-constructor/reducer';
+import { useDrop } from 'react-dnd';
 
-function BurgerConstructor({ ingredients}) {
-	const [isOpen, setIsOpen] = useState(false)
-	
-	const open = () => {
-		setIsOpen(true)
-	}
-	
-	const close = () => {
-		setIsOpen(false)
-	}
-	
-	const KeyDown = (e) => {
-		if (e.key === "Escape") {
-			close()
-		}
-	}
-	useEffect(() => {
-		document.addEventListener("keydown", KeyDown)
-		return () => {
-			document.removeEventListener("keydown", KeyDown)
-		}
-	})
-	return (
-		<aside className={style.container}>
-			<section  className="mb-4 ml-8">
-				<ConstructorElement
-					type="top"
-					isLocked={true}
-					text="Краторная булка N-200i (верх)"
-					price={200}
-					thumbnail={
-						"https://code.s3.yandex.net/react/code/bun-02.png"
-					}
-				/>
-			</section>
-			<section className={style.freePositionBlock}>
-				<ConstructorPositions ingredients={ingredients} />
-			</section>
-			<section className="pl-8">
-				<ConstructorElement
-					type="bottom"
-					isLocked={true}
-					text="Краторная булка N-200i (низ)"
-					price={200}
-					thumbnail={
-						"https://code.s3.yandex.net/react/code/bun-02.png"
-					}
-				/>
-			</section>
-			<section className={style.bottomContainer}>
-				<p className="text text_type_digits-medium mr-10">
-					610 <CurrencyIcon type="primary" />
-				</p>
-				<Button
-					onClick={open}
-					htmlType="button"
-					type="primary"
-					size="medium">
-					Оформить заказ
-				</Button>
-			</section>
-			{isOpen && (
-				<Modal onClose={close} onClick={(e) => e.stopPropagation()}>
-					<OrderDetails title="Детали заказа" closeModal={close} />
-				</Modal>
-			)}
-		</aside>
-	)
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const { loading, orderName, error } = useSelector(
+    (state) => state.order,
+  );
+  const { draggedElements, bun } = useSelector(
+    (state) => state.container,
+  );
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClose = () => {
+    setIsOpen(false);
+    dispatch(setDraggedElements([]));
+    dispatch(setBun([]));
+  };
+  const [, drop] = useDrop({
+    accept: 'ingredient',
+    drop: (item) => {
+        dispatch(
+          setDraggedElements(item),
+        );
+    },
+  });
+
+  const totalOrderPrice = useMemo(() => {
+    if (bun === null) {
+      return draggedElements.reduce((sum, ing) => sum + ing.price, 0);
+    } else {
+      return draggedElements.reduce(
+        (sum, ing) => sum + ing.price,
+        bun.price * 2,
+      );
+    }
+  }, [draggedElements, bun]);
+
+  const onSubmitOrder = () => {
+    if (bun && draggedElements.length > 0) {
+      setIsOpen(true);
+      dispatch(asyncOrder([...draggedElements]));
+    } else {
+      alert('Добавьте обязательные ингредиенты');
+    }
+  };
+
+  if (loading) {
+    return (
+      <p
+        className={`${style.loadingBlock} text text_type_main-large`}
+      >
+        <span>Ожидайте,ваш заказ формируется....</span>
+      </p>
+    );
+  }
+
+  if (error) {
+    return (
+      <p className={`${style.failedBlock} text text_type_main-large`}>
+        Ошибка при формировании заказа:{error}
+      </p>
+    );
+  }
+
+  return (
+    <aside ref={drop} className={style.container}>
+      <section className="mb-4 ml-8">
+        <TopStubs />
+      </section>
+      <section className={`${style.freePositionBlock} mb-4 ml-8`}>
+        <CenterStubs />
+      </section>
+      <section className="pl-8">
+        <BottomStubs />
+      </section>
+      <section className={style.bottomContainer}>
+        <p className="text text_type_digits-medium mr-10">
+          {totalOrderPrice} <CurrencyIcon type="primary" />
+        </p>
+        <Button
+          onClick={onSubmitOrder}
+          htmlType="button"
+          type="primary"
+          size="medium"
+        >
+          Оформить заказ
+        </Button>
+      </section>
+      {isOpen && orderName && (
+        <Modal
+          onClick={(e) => e.stopPropagation()}
+          title="Детали заказа"
+          close={onClose}
+        >
+          <OrderDetails/>
+        </Modal>
+      )}
+    </aside>
+  );
 }
 
 BurgerConstructor.propTypes = {
-	type: PropTypes.string,
-	isLocked: PropTypes.bool,
-	text: PropTypes.string,
-	price: PropTypes.number,
-	thumbnail: PropTypes.string,
-	htmlType: PropTypes.string,
-	size: PropTypes.string,
-	title: PropTypes.string,
-	ingredients:PropTypes.array
-}
-
-export default BurgerConstructor
+  loading: PropTypes.bool,
+  orderName: PropTypes.string,
+  error: PropTypes.string,
+};
+export default BurgerConstructor;
