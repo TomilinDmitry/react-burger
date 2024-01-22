@@ -18,11 +18,11 @@ a {
 	align-items:center;
 	text-decoration: none;
 }
-.activeElement{
+.active{
 	display: flex;
 	color:#F2F2F3;
 }
-.navElement{
+.link{
 	color:#8585AD;
 }
 .container section {

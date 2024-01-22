@@ -3,7 +3,6 @@ import style from "./ingridient-details.module.css"
 import PropTypes from "prop-types"
 
 const IngredientDetails = ({selectedIngredient}) => {
-
 	return (
 		<div className={style.mainContainer}>
 			{selectedIngredient &&(

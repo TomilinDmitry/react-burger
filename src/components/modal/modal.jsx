@@ -9,11 +9,12 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const Modal = ({
   children,
   close,
-  title
+  title,
+  onClose
 }) => {
   const pressKeyEsc = (e) => {
     if (e.key === 'Escape') {
-      close()
+      onClose()
     }
   };
   useEffect(() => {
@@ -35,7 +36,7 @@ const Modal = ({
 			</section>
             {children}
       <ModalOverlay
-     close={close}
+     close={onClose}
       />
     </div>,
     modalRoot,

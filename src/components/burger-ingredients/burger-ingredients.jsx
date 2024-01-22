@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import style from './style.module.css';
-import Modal from '../modal/modal';
-import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
+// import Modal from '../modal/modal';
+// import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
 import IngredientCard from './burger-ingridients-position/burger-ingredients-position';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setActiveTab } from '../../services/burger-ingredients/reducer';
-import { getIngredient } from '../../utils/Api/api-ingredients';
+// import { getIngredient } from '../../utils/Api/api-ingredients';
+// import {  useLocation, useNavigate } from 'react-router-dom';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
@@ -15,8 +16,7 @@ const BurgerIngredients = () => {
   const { data, loading, error, activeTab } = useSelector(
     (store) => store.ingredients,
   );
-
-  const [openModal,setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const [selectedIngredient, setSelectedIngredient] = useState(null);
 
@@ -24,9 +24,6 @@ const BurgerIngredients = () => {
     dispatch(setActiveTab(tab));
   };
 
-  useEffect(() => {
-    dispatch(getIngredient());
-  }, [dispatch]);
 
   ///Refs
   const tabsRef = useRef(null);
@@ -65,9 +62,9 @@ const BurgerIngredients = () => {
     setOpenModal(true);
     setSelectedIngredient(ingredient);
   };
-  const onClose = ()=>{
-	setOpenModal(false)
-  }
+  const onClose = () => {
+    setOpenModal(false);
+  };
   if (error) {
     return (
       <p className={`${style.failedBlock} text text_type_main-large`}>
@@ -127,13 +124,13 @@ const BurgerIngredients = () => {
             Начинки
           </Tab>
         </div>
-        {loading ? (
+        {/* {loading ? (
           <p
             className={`${style.loadingBlock} text text_type_main-large`}
           >
             <span>Происходит загрузка данных, ожидайте....</span>
           </p>
-        ) : (
+        ) : ( */}
           <div
             className={style.ingredientContainer}
             onScroll={scroll}
@@ -181,21 +178,28 @@ const BurgerIngredients = () => {
               </section>
             </section>
           </div>
-        )}
+        {/* )} */}
 
-        {selectedIngredient && openModal && (
+        {/* {selectedIngredient && openModal && background && (
           <>
-            <Modal
-              close={onClose}
-              onClick={(e) => e.stopPropagation()}
-			  title="Детали ингредиента"
-            >
-              <IngredientDetails
-                selectedIngredient={selectedIngredient}
+            <Routes>
+              <Route
+                path="/ingredients/:ingredientId"
+                element={
+                  <Modal
+                    close={onClose}
+                    onClick={(e) => e.stopPropagation()}
+                    title="Детали ингредиента"
+                  >
+                    <IngredientDetails
+                      selectedIngredient={selectedIngredient}
+                    />
+                  </Modal>
+                }
               />
-            </Modal>
+            </Routes>
           </>
-        )}
+        )} */}
       </main>
     </div>
   );
