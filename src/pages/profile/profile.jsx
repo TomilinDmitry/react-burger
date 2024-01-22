@@ -1,12 +1,18 @@
 import { React, useState } from 'react';
 import style from './profile.module.css';
 import {
+  Button,
   EmailInput,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout, setNewInfoUser } from '../../services/users/action';
+import { Link } from 'react-router-dom';
+
 const Profile = () => {
-  const [emailValue, setEmailValue] = useState('Bezzy69@yandex.ru');
+  const {user} = useSelector(state=>state.user)
+  const [emailValue, setEmailValue] = useState(user.email);
   const onChangeEmail = (e) => {
     setEmailValue(e.target.value);
   };
@@ -14,9 +20,16 @@ const Profile = () => {
   const onChangePassword = (e) => {
     setPasswordValue(e.target.value);
   };
-  const [inputValue, setInputValue] = useState('Дмитрий');
+  const [inputValue, setInputValue] = useState(user.name);
 
   const [activeTab, setActiveTab] = useState('Профиль');
+  const dispatch = useDispatch()
+  const logoutProfile = () =>{
+    dispatch(logout())
+  }
+    const saveNewInfo = async() =>{
+      await dispatch(setNewInfoUser({email:emailValue,name:inputValue}))
+    } 
   return (
     <div className={style.container}>
       <div className={style.profileListBlock}>
@@ -37,7 +50,10 @@ const Profile = () => {
           >
             История заказов
           </li>
-          <button className={style.buttonExit}>Выход</button>
+            <Link to='/login'>
+           <button className={style.buttonExit} onClick={logoutProfile}>Выход</button>
+            </Link>
+          
         </ul>
       </div>
       <div className={style.inputBlock}>
@@ -65,6 +81,12 @@ const Profile = () => {
             onChange={onChangePassword}
           />
         </div>
+        {(inputValue !== user.name || emailValue !== user.email) && (
+        <div className={style.buttons}>
+          <button className={style.back}>Отмена</button>
+          <Button htmlType='button' onClick={saveNewInfo}>Сохранить</Button>
+        </div>
+        )}
       </div>
     </div>
   );

@@ -10,11 +10,10 @@ const Modal = ({
   children,
   close,
   title,
-  onClose
 }) => {
   const pressKeyEsc = (e) => {
     if (e.key === 'Escape') {
-      onClose()
+      close()
     }
   };
   useEffect(() => {
@@ -36,7 +35,7 @@ const Modal = ({
 			</section>
             {children}
       <ModalOverlay
-     close={onClose}
+     close={close}
       />
     </div>,
     modalRoot,

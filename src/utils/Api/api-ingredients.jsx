@@ -102,9 +102,32 @@ export const setNewPassword = (password,token) => {
       return Promise.reject(data);
     });
 };
-const register = (email,password,name) => {
+ export const updateInfo = (email,name) => {
+  const accessToken = localStorage.getItem('accessToken');
+    
+  if (!accessToken) {
+    return Promise.reject('No accessToken available');
+  }
 
-  console.log('Request data:', { email, password,name })
+  return fetch(`${baseUrl}/auth/user`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: accessToken,
+    },
+    body: JSON.stringify({
+      email: email,
+      name: name,
+      }),
+  })
+  .then(checkResponse)
+  .then((data) => {
+    if (data?.success) return data;
+    return Promise.reject(data);
+  });
+};
+
+const register = (email,password,name) => {
   return fetch(`${baseUrl}/auth/register`, {
     method: 'POST',
     headers: {
@@ -123,7 +146,6 @@ const register = (email,password,name) => {
     });
 };
 const login = (email,password) => {
-  console.log({email,password})
   return fetch(`${baseUrl}/auth/login`, {
     method: 'POST',
     headers: {
@@ -159,7 +181,6 @@ const logout = () => {
 };
   export const getUserProfile = () => {
     const accessToken = localStorage.getItem('accessToken');
-    console.log(accessToken)
     
       if (!accessToken) {
         return Promise.reject('No accessToken available');

@@ -10,9 +10,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   const location = useLocation();
 
   if (!isAuthChecked) {
-    // Запрос еще выполняется
-    // Выводим прелоадер в ПР
-    // Здесь возвращается просто null для экономии времени
     return null;
   }
 

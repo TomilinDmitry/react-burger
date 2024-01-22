@@ -56,7 +56,7 @@ const SortingIng = ({ index, ingredient }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
- 
+      
       dispatch(moveIngredient({dragIndex, hoverIndex}));
       item.index = hoverIndex;
     },
@@ -90,9 +90,9 @@ const SortingIng = ({ index, ingredient }) => {
 SortingIng.propTypes = {
   index: PropTypes.number.isRequired,
   ingredient: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    image: PropTypes.string,
   }).isRequired,
 };
 export default SortingIng;

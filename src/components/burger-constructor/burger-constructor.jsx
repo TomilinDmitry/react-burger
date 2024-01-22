@@ -30,9 +30,9 @@ function BurgerConstructor() {
 
   const onClose = () => {
     setIsOpen(false);
-    dispatch(setDraggedElements([]));
-    dispatch(setBun([]));
-  };
+    dispatch(setDraggedElements(null));
+    dispatch(setBun(null));
+  }
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {setUser, setAuthChecked} from "./user";
-import {api, getEmailForgotPassword, getUserProfile, setNewPassword} from "../../utils/Api/api-ingredients";
+import {api, getEmailForgotPassword, getUserProfile, setNewPassword, updateInfo} from "../../utils/Api/api-ingredients";
 
 export const getUser = () => {
     return (dispatch) => {
@@ -9,6 +9,14 @@ export const getUser = () => {
         });
     };
 };
+
+export const setNewInfoUser = createAsyncThunk(
+    "user/updateInfo",
+    async ({ name, email }) => {
+        const response = await updateInfo( email,name );
+        return response;
+    }
+)
 
 export const register = createAsyncThunk(
     "user/register",

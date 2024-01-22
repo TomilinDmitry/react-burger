@@ -6,17 +6,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './style.module.css';
 import React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getUser } from '../../services/users/action';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { checkUserAuth } from '../../services/users/action';
 
 function AppHeader() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const onClick = () => {
-    navigate('/profile');
-  };
- 
   return (
     <header>
       <section className={style.container}>
@@ -73,7 +66,6 @@ function AppHeader() {
           <a href="/#" className="pl-5 pr-5 pb-4 pt-4 mb-4 mt-4 ">
             <BurgerIcon type="primary" />
             <p
-              onClick={onClick}
               className={`${style.activeElement} text text_type_main-default ml-2`}
             >
               Конструктор

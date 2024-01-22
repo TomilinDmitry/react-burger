@@ -36,12 +36,10 @@ function App() {
   useEffect(() => {
     if (!loading) {
       dispatch(getIngredient());
+      dispatch(checkUserAuth());
     }
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(checkUserAuth());
-  }, []);
   return (
     <div className={style.app}>
       <AppHeader />
@@ -59,18 +57,21 @@ function App() {
               path="/login"
               element={<OnlyUnAuth component={<Login />} />}
             />
-            <Route path="/registr" element={<OnlyUnAuth component={<Registration />} />}/>
+            <Route
+              path="/registr"
+              element={<OnlyUnAuth component={<Registration />} />}
+            />
             <Route
               path="/forgot-password"
-              element={ <OnlyUnAuth component={<ForgotPassword />}/>}
+              element={<OnlyUnAuth component={<ForgotPassword />} />}
             />
             <Route
               path="/reset-password"
-              element={<OnlyUnAuth component={<ResetPassword />}/>}
+              element={<OnlyUnAuth component={<ResetPassword />} />}
             />
             <Route
               path="/profile"
-              element={<OnlyAuth element={<Profile />} />}
+              element={<OnlyAuth component={<Profile />} />}
             />
           </Routes>
         )}
