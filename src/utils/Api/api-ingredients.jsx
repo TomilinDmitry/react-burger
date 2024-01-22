@@ -102,7 +102,7 @@ export const setNewPassword = (password,token) => {
       return Promise.reject(data);
     });
 };
-const register = ({email,password,name}) => {
+const register = (email,password,name) => {
 
   console.log('Request data:', { email, password,name })
   return fetch(`${baseUrl}/auth/register`, {
@@ -111,11 +111,9 @@ const register = ({email,password,name}) => {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({
-      user:{
-        email: email,
-        password:password,
-        name: name,
-      }
+    email: email,
+    password:password,
+    name: name,
     }),
   })
     .then(checkResponse)
@@ -125,22 +123,20 @@ const register = ({email,password,name}) => {
     });
 };
 const login = (email,password) => {
+  console.log({email,password})
   return fetch(`${baseUrl}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({
-      user:{
-        email: email,
-        password:password,
-      },
+    email: email,
+    password:password,
     token:localStorage.getItem("refreshToken"),
     }),
   })
     .then(checkResponse)
     .then((data) => {
-      console.log(data)
       if (data?.success) return data;
       return Promise.reject(data);
     });

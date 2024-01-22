@@ -13,7 +13,7 @@ export const getUser = () => {
 export const register = createAsyncThunk(
     "user/register",
     async ({email,password,name}) =>{
-        const res = await api.register({email,password,name})
+        const res = await api.register(email,password,name)
         localStorage.setItem("accessToken", res.accessToken);
         return res.user
     }
@@ -21,10 +21,9 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
     "user/login",
     async ({email,password}) => {
-        const res = await api.login({email,password});
+        const res = await api.login(email,password);
         localStorage.setItem("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", res.refreshToken);
-        console.log(res)
         return res.user;
     }   
 );

@@ -41,7 +41,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkUserAuth());
-  }, [checkUserAuth]);
+  }, []);
   return (
     <div className={style.app}>
       <AppHeader />
