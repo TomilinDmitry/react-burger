@@ -40,13 +40,13 @@ const IngredientCard = (props) => {
   }, [data, bun, draggedElements]);
 
   return (
-      <Link
-        key={ingredientId}
-        to={`/ingredients/${ingredientId}`}
-        state={{ background: location }}
-        className={style.link}
-      >
-    <section ref={drag} className={style.container}>
+    <Link
+      key={ingredientId}
+      to={`/ingredients/${ingredientId}`}
+      state={{ background: location }}
+      className={style.link}
+    >
+      <section ref={drag} className={style.container}>
         {setIngredientsCounters[props._id] > 0 && (
           <Counter
             count={setIngredientsCounters[props._id]}
@@ -63,8 +63,8 @@ const IngredientCard = (props) => {
           <CurrencyIcon type="primary" className="ml-4" />
         </p>
         <p className="text text_type_main-default">{props.name}</p>
-    </section>
-      </Link>
+      </section>
+    </Link>
   );
 };
 IngredientCard.propTypes = {

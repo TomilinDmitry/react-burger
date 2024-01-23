@@ -41,7 +41,9 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={style.app}>
+    <div
+      className={`${style.app} ${background ? style.background : ''}`}
+    >
       <AppHeader />
       <main>
         {loading ? (
@@ -58,7 +60,7 @@ function App() {
               element={<OnlyUnAuth component={<Login />} />}
             />
             <Route
-              path="/registr"
+              path="/register"
               element={<OnlyUnAuth component={<Registration />} />}
             />
             <Route
@@ -80,7 +82,7 @@ function App() {
             <Route
               path="/ingredients/:ingredientId"
               element={
-                <Modal onClose={handleModalClose}>
+                <Modal close={handleModalClose}>
                   <IngredientDetails />
                 </Modal>
               }

@@ -27,6 +27,12 @@ const Profile = () => {
   const logoutProfile = () =>{
     dispatch(logout())
   }
+  const returnBack = () =>{
+    return (
+      setInputValue(user.name),
+      setEmailValue(user.email)
+      )
+  }
     const saveNewInfo = async() =>{
       await dispatch(setNewInfoUser({email:emailValue,name:inputValue}))
     } 
@@ -48,9 +54,11 @@ const Profile = () => {
             }`}
             onClick={() => setActiveTab('История заказов')}
           >
+            <Link to='/profile/orders' >
             История заказов
+            </Link>
           </li>
-            <Link to='/login'>
+            <Link to='/'>
            <button className={style.buttonExit} onClick={logoutProfile}>Выход</button>
             </Link>
           
@@ -83,7 +91,7 @@ const Profile = () => {
         </div>
         {(inputValue !== user.name || emailValue !== user.email) && (
         <div className={style.buttons}>
-          <button className={style.back}>Отмена</button>
+          <button className={style.back} onClick={returnBack}>Отмена</button>
           <Button htmlType='button' onClick={saveNewInfo}>Сохранить</Button>
         </div>
         )}

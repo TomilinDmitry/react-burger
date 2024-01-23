@@ -37,7 +37,7 @@ const Login = () => {
         <p className={style.newUser}>
           Вы — новый пользователь?{' '}
           <span>
-            <Link to="/registr">Зарегистрироваться</Link>
+            <Link to="/register">Зарегистрироваться</Link>
           </span>
         </p>
         <p className={style.forgotPassword}>

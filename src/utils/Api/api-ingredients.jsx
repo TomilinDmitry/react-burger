@@ -22,10 +22,16 @@ export const getIngredient = createAsyncThunk(
 );
 
 export const getOrderBurgerInfo = (data) => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (!accessToken) {
+    return Promise.reject('No accessToken available');
+  }
   return fetch(`${baseUrl}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
+      Authorization: accessToken,
     },
     body: JSON.stringify({
       ingredients: data,

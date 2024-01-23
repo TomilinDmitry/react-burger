@@ -13,25 +13,30 @@ import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
 import {
+  clearElements,
   setBun,
   setDraggedElements,
 } from '../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router-dom';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { loading, orderName, error } = useSelector(
     (state) => state.order,
   );
   const { draggedElements, bun } = useSelector(
     (state) => state.container,
   );
+  const {user} = useSelector(
+  state=>state.user
+  )
   const [isOpen, setIsOpen] = useState(false);
 
   const onClose = () => {
     setIsOpen(false);
-    dispatch(setDraggedElements(null));
-    dispatch(setBun(null));
+   dispatch(clearElements())
   }
   const [, drop] = useDrop({
     accept: 'ingredient',
@@ -54,11 +59,14 @@ function BurgerConstructor() {
   }, [draggedElements, bun]);
 
   const onSubmitOrder = () => {
-    if (bun && draggedElements.length > 0) {
+    if (bun && draggedElements.length > 0 ) {
       setIsOpen(true);
       dispatch(asyncOrder([...draggedElements]));
     } else {
-      alert('Добавьте обязательные ингредиенты');
+      alert('Добавьте обязательные ингредиенты')
+    }if (!user){
+      alert('Войдите в аккаунт')
+      navigate('/login')
     }
   };
 

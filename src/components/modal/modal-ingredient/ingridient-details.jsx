@@ -1,12 +1,25 @@
 import React from "react"
 import style from "./ingridient-details.module.css"
 import PropTypes from "prop-types"
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
-const IngredientDetails = ({selectedIngredient}) => {
+const IngredientDetails = () => {
+	const { data } = useSelector((store) => store.ingredients);
+
+  const ingredientId = window.location.pathname.split("/").pop();
+
+  const selectedIngredient = data.find(
+    (ingredient) => ingredient._id === ingredientId
+  );
+  const location = useLocation();
+  const isModalOnSite = location.state && location.state.background;
+
 	return (
-		<div className={style.mainContainer}>
+		<div className={`${isModalOnSite ? style.mainContainer : style.onLink}`}>
 			{selectedIngredient &&(
 				<div key={selectedIngredient._id} className={style.modalContainerInfo}>
+					<h1>Детали ингредиента</h1>
 					<section className="mb-4">
 						<img src={selectedIngredient.image} alt={selectedIngredient.data} />
 					</section>
