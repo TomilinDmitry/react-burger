@@ -108,7 +108,7 @@ export const setNewPassword = (password,token) => {
       return Promise.reject(data);
     });
 };
- export const updateInfo = (email,name) => {
+ export const updateInfo = (email,name,password) => {
   const accessToken = localStorage.getItem('accessToken');
     
   if (!accessToken) {
@@ -124,6 +124,7 @@ export const setNewPassword = (password,token) => {
     body: JSON.stringify({
       email: email,
       name: name,
+      password: password,
       }),
   })
   .then(checkResponse)
@@ -143,6 +144,7 @@ const register = (email,password,name) => {
     email: email,
     password:password,
     name: name,
+    token:localStorage.getItem("refreshToken")
     }),
   })
     .then(checkResponse)

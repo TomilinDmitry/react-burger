@@ -12,8 +12,9 @@ export const getUser = () => {
 
 export const setNewInfoUser = createAsyncThunk(
     "user/updateInfo",
-    async ({ name, email }) => {
-        const response = await updateInfo( email,name );
+    async ({ name, email,password }) => {
+        const response = await updateInfo( email,name,password );
+        console.log(response)
         return response;
     }
 )
@@ -23,6 +24,7 @@ export const register = createAsyncThunk(
     async ({email,password,name}) =>{
         const res = await api.register(email,password,name)
         localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
         return res.user
     }
 )

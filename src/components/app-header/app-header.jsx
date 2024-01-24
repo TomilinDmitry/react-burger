@@ -10,6 +10,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { checkUserAuth } from '../../services/users/action';
 
 function AppHeader() {
+  const navigate = useNavigate()
+  const onClick =() =>{
+    navigate('/')
+  }
   return (
     <header>
       <section className={style.container}>
@@ -41,7 +45,7 @@ function AppHeader() {
             </p>
           </NavLink>
         </section>
-        <section className={style.logo}>
+        <section onClick={onClick} className={style.logo}>
           <Logo />
         </section>
         <NavLink
@@ -59,7 +63,7 @@ function AppHeader() {
         </NavLink>
       </section>
       <section className={style.mediaContainer}>
-        <section>
+        <section onClick={onClick} >
           <Logo />
         </section>
         <nav className={style.navigation}>

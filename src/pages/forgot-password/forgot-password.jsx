@@ -15,7 +15,8 @@ const ForgotPassword = () => {
   };
 const dispatch = useDispatch()
 const navigate =useNavigate()
-  const onClick =async ()=>{
+  const onClick =async (e)=>{
+    e.preventDefault()
     const res = await dispatch(forgotPassword({ email: emailValue }));
     if (res.payload && res.payload.success) {
       navigate('/reset-password');
@@ -26,17 +27,14 @@ const navigate =useNavigate()
       <p className={style.forgotPasswordTitle}>
         Восстановление пароля
       </p>
-      <div className={style.inputBlock}>
+      <form  onSubmit={onClick} className={style.inputBlock}>
         <EmailInput
           placeholder="Укажите ваш e-mail"
           onChange={onChangeEmail}
           value={emailValue}
         />
-        {}
-        {/* <Link to="/reset-password"> */}
-          <Button htmlType="button" onClick={onClick}>Восстановить</Button>
-        {/* </Link> */}
-      </div>
+          <Button htmlType='submit' >Восстановить</Button>
+      </form>
       <div className={style.signInBlock}>
         <p className={style.signIn}>
           Вспомнили пароль?

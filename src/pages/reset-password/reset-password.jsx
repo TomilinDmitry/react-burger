@@ -19,7 +19,8 @@ const ResetPassword = () => {
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onClick = async () => {
+  const onClick = async (e) => {
+    e.preventDefault();
     const res = await dispatch(
       resetPassword({
         password: passwordValueFirst,
@@ -33,7 +34,7 @@ const ResetPassword = () => {
   return (
     <div className={style.container}>
       <p className={style.loginTitle}>Восстановление пароля</p>
-      <div className={style.inputBlock}>
+      <form onSubmit={onClick} className={style.inputBlock}>
         <PasswordInput
           onChange={onChangePasswordFirst}
           value={passwordValueFirst}
@@ -44,12 +45,9 @@ const ResetPassword = () => {
           value={valueInputSecond}
           placeholder="Введите код из письма"
         />
-        {/* <Link to="/login"> */}
-        <Button htmlType="button" onClick={onClick}>
-          Сохранить
-        </Button>
-        {/* </Link> */}
-      </div>
+
+        <Button htmlType="sumbit">Сохранить</Button>
+      </form>
       <div className={style.signInBlock}>
         <p className={style.signIn}>
           Вспомнили пароль?

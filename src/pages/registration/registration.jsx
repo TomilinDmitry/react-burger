@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../services/users/user';
-import { register } from '../../services/users/action';
+import { login, register } from '../../services/users/action';
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -22,15 +22,22 @@ const Registration = () => {
     setPasswordValue(e.target.value);
   };
   const [inputValue, setInputValue] = useState('');
-  
 
-  const onClick = () =>{
-    dispatch(register ({email: emailValue, password: passwordValue, name: inputValue }))
-  }
+  const onClick = (e) => {
+    e.preventDefault();
+    dispatch(
+      register({
+        email: emailValue,
+        password: passwordValue,
+        name: inputValue,
+      }),
+    );
+    dispatch(login({ email: emailValue, password: passwordValue }));
+  };
   return (
     <div className={style.container}>
       <p className={style.regTitle}>Регистрация</p>
-      <div className={style.inputBlock}>
+      <form onSubmit={onClick} className={style.inputBlock}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -46,8 +53,8 @@ const Registration = () => {
           value={passwordValue}
           onChange={onChangePassword}
         />
-      <Button htmlType="button" onClick={onClick}>Зарегистрироваться</Button>
-      </div>
+        <Button htmlType="submit">Зарегистрироваться</Button>
+      </form>
       <div className={style.signInBlock}>
         <p className={style.signIn}>
           Уже зарегистрированы?{' '}

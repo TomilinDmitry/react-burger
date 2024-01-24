@@ -18,21 +18,22 @@ const Login = () => {
   const onChangePassword = (e) => {
     setPasswordValue(e.target.value);
   };
-  const onClick = () =>{
+  const onClick = (e) =>{
+    e.preventDefault();
     dispatch(login({email:emailValue,password:passwordValue}))
   }
 
   return (
     <div className={style.container}>
       <p className={style.loginTitle}>Вход</p>
-      <div className={style.inputBlock}>
+      <form onSubmit={onClick}className={style.inputBlock}>
         <EmailInput onChange={onChangeEmail} value={emailValue} />
         <PasswordInput
           value={passwordValue}
           onChange={onChangePassword}
         />
-        <Button htmlType="button" onClick={onClick}>Войти</Button>
-      </div>
+        <Button htmlType='submit'>Войти</Button>
+      </form>
       <div className={style.newUserAndForgotPassword}>
         <p className={style.newUser}>
           Вы — новый пользователь?{' '}
