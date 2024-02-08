@@ -13,17 +13,26 @@ header {
 	display: flex;
 	align-items: center;
 }
+.leftBlock{
+	margin-right: 112px;
+}
+.logo{
+	margin-right: 288px;
+}
 a {
 	display: flex;
 	align-items:center;
 	text-decoration: none;
+	color:inherit
 }
-.activeElement{
+.active{
 	display: flex;
 	color:#F2F2F3;
+	width: 200px;
 }
-.navElement{
+.link{
 	color:#8585AD;
+	width: 200px;
 }
 .container section {
 	display: flex;

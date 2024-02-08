@@ -9,7 +9,8 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const Modal = ({
   children,
   close,
-  title
+  title,
+  isDirectLink
 }) => {
   const pressKeyEsc = (e) => {
     if (e.key === 'Escape') {
@@ -24,7 +25,7 @@ const Modal = ({
   });
   const modalRoot = document.getElementById('modal');
   return PortalReactDOM.createPortal(
-    <div className={style.container}>
+    <div className={`${style.container} ${isDirectLink ? style.directLinkModal : ''}`}>
      <section className={style.overlayHeader}>
 				<section className={style.title}>
 					<h1>{title}</h1>

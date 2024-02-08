@@ -29,9 +29,13 @@ import { v4 as uuidv4 } from 'uuid';
             },
             deleteIngredient(state, action) {
               state.draggedElements = state.draggedElements.filter(el => el.unId !== action.payload);
+            },
+            clearElements(state){
+              state.draggedElements = []
+              state.bun = null
             }
           },
         });
         
     export default consturctorSlice.reducer;
-    export const {setDraggedElements,setBun,moveIngredient, deleteIngredient } = consturctorSlice.actions;
+    export const {setDraggedElements,setBun,moveIngredient, deleteIngredient,clearElements } = consturctorSlice.actions;

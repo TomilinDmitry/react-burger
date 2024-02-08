@@ -9,6 +9,10 @@
 	margin-left: 16px;
 	position: relative;
 }
+.link{
+	text-decoration: none;
+	color:inherit;
+}
 .container img {
 	width: 240px;
 	height: 120px;

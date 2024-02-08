@@ -1,32 +1,24 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import style from './style.module.css';
-import Modal from '../modal/modal';
-import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
+// import Modal from '../modal/modal';
+// import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
 import IngredientCard from './burger-ingridients-position/burger-ingredients-position';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setActiveTab } from '../../services/burger-ingredients/reducer';
-import { getIngredient } from '../../utils/Api/api-ingredients';
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
-  const { data, loading, error, activeTab } = useSelector(
+  const { data, error, activeTab } = useSelector(
     (store) => store.ingredients,
   );
-
-  const [openModal,setOpenModal] = useState(false);
-
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [, setOpenModal] = useState(false);
 
   const setCurrentTab = (tab) => {
     dispatch(setActiveTab(tab));
   };
-
-  useEffect(() => {
-    dispatch(getIngredient());
-  }, [dispatch]);
 
   ///Refs
   const tabsRef = useRef(null);
@@ -61,13 +53,12 @@ const BurgerIngredients = () => {
     };
   }, [data]);
 
-  const open = (ingredient) => {
+  const open = () => {
     setOpenModal(true);
-    setSelectedIngredient(ingredient);
   };
-  const onClose = ()=>{
-	setOpenModal(false)
-  }
+  // const onClose = () => {
+  //   setOpenModal(false);
+  // };
   if (error) {
     return (
       <p className={`${style.failedBlock} text text_type_main-large`}>
@@ -127,75 +118,50 @@ const BurgerIngredients = () => {
             Начинки
           </Tab>
         </div>
-        {loading ? (
-          <p
-            className={`${style.loadingBlock} text text_type_main-large`}
-          >
-            <span>Происходит загрузка данных, ожидайте....</span>
-          </p>
-        ) : (
-          <div
-            className={style.ingredientContainer}
-            onScroll={scroll}
-          >
-            <section ref={bunsRef} className={style.tabsBlock}>
-              <h1
-                className={`${style.blockTitle} text text_type_main-medium`}
-              >
-                Булки
-              </h1>
-              <section className={style.sectionBlock}>
-                {filteredIngredient.buns.map((bun) => (
-                  <div onClick={() => open(bun)} key={bun._id}>
-                    <IngredientCard {...bun} />
-                  </div>
-                ))}
-              </section>
-            </section>
-            <section ref={saucesRef} className={style.tabsBlock}>
-              <h1
-                className={`${style.blockTitle} text text_type_main-medium`}
-              >
-                Соусы
-              </h1>
-              <section className={style.sectionBlock}>
-                {filteredIngredient.sauces.map((sauce) => (
-                  <div onClick={() => open(sauce)} key={sauce._id}>
-                    <IngredientCard {...sauce} />
-                  </div>
-                ))}
-              </section>
-            </section>
-            <section ref={ingredientRef} className={style.tabsBlock}>
-              <h1
-                className={`${style.blockTitle} text text_type_main-medium`}
-              >
-                Начинки
-              </h1>
-              <section className={style.sectionBlock}>
-                {filteredIngredient.mains.map((main) => (
-                  <div onClick={() => open(main)} key={main._id}>
-                    <IngredientCard {...main} />
-                  </div>
-                ))}
-              </section>
-            </section>
-          </div>
-        )}
-
-        {selectedIngredient && openModal && (
-          <>
-            <Modal
-              close={onClose}
-              onClick={(e) => e.stopPropagation()}
-			  title="Детали ингредиента"
+        <div className={style.ingredientContainer} onScroll={scroll}>
+          <section ref={bunsRef} className={style.tabsBlock}>
+            <h1
+              className={`${style.blockTitle} text text_type_main-medium`}
             >
-              <IngredientDetails
-                selectedIngredient={selectedIngredient}
-              />
-            </Modal>
-          </>
-        )}
+              Булки
+            </h1>
+            <section className={style.sectionBlock}>
+              {filteredIngredient.buns.map((bun) => (
+                <div onClick={() => open(bun)} key={bun._id}>
+                  <IngredientCard {...bun} />
+                </div>
+              ))}
+            </section>
+          </section>
+          <section ref={saucesRef} className={style.tabsBlock}>
+            <h1
+              className={`${style.blockTitle} text text_type_main-medium`}
+            >
+              Соусы
+            </h1>
+            <section className={style.sectionBlock}>
+              {filteredIngredient.sauces.map((sauce) => (
+                <div onClick={() => open(sauce)} key={sauce._id}>
+                  <IngredientCard {...sauce} />
+                </div>
+              ))}
+            </section>
+          </section>
+          <section ref={ingredientRef} className={style.tabsBlock}>
+            <h1
+              className={`${style.blockTitle} text text_type_main-medium`}
+            >
+              Начинки
+            </h1>
+            <section className={style.sectionBlock}>
+              {filteredIngredient.mains.map((main) => (
+                <div onClick={() => open(main)} key={main._id}>
+                  <IngredientCard {...main} />
+                </div>
+              ))}
+            </section>
+          </section>
+        </div>
       </main>
     </div>
   );
