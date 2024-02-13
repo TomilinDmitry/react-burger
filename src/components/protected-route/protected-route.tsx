@@ -1,21 +1,28 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { TUser } from '../../utils/Types/TUser';
+import { ReactNode } from 'react';
 
 type TProtectedProps = {
-  onlyUnAuth:boolean,
-  component:React.ReactNode
-  isAuthChecked?:boolean
-}
+  onlyUnAuth?: boolean;
+  component: ReactNode;
+  isAuthChecked?: boolean;
+};
 
-const Protected = ({ onlyUnAuth = false, component }:TProtectedProps) => {
+const Protected = ({
+  onlyUnAuth = false,
+  component,
+}: TProtectedProps) => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
   // при этом результат этой проверки не имеет значения, важно только,
   // что сам факт проверки имел место.
   const isAuthChecked = useSelector(
-    (store:{user:Pick<TProtectedProps,'isAuthChecked'>}) => store.user.isAuthChecked,
+    (store: { user: Pick<TProtectedProps, 'isAuthChecked'> }) =>
+      store.user.isAuthChecked,
   );
-  const user = useSelector((store:{user:{user:TUser}}) => store.user.user);
+  const user = useSelector(
+    (store: { user: { user: TUser } }) => store.user.user,
+  );
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -35,10 +42,13 @@ const Protected = ({ onlyUnAuth = false, component }:TProtectedProps) => {
 
   // !onlyUnAuth && user Пользователь авторизован и роут для авторизованного пользователя
 
-  return component;
+  return <>{component} ;</>;
 };
 
-export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }:TProtectedProps) => (
-  <Protected onlyUnAuth={true} component={component} />
-);
+export const OnlyAuth = ({ component }: TProtectedProps) => {
+  return <Protected onlyUnAuth={false} component={component} />;
+};
+
+export const OnlyUnAuth = ({ component }: TProtectedProps) => {
+  return <Protected onlyUnAuth={true} component={component} />;
+};

@@ -21,12 +21,8 @@ export const getIngredient = createAsyncThunk(
   'asyncIngredient',
   async () => {
     const response = await fetch(`${baseUrl}/ingredients`);
-    if (response.ok) {
       const data = await checkResponse<TElements[]>(response);
       return data.data;
-    } else {
-      console.error(`Произошла ошибка: ${response.status}`);
-    }
   },
 );
 
