@@ -1,11 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import style from './constructor.module.css';
 import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
-import PropTypes from 'prop-types';
 import OrderDetails from '../modal/order-modal/order-modal';
 import TopStubs from '../UI/Stubs/top/top-stubs';
 import CenterStubs from '../UI/Stubs/center/center-stubs';
@@ -14,59 +13,80 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
 import {
   clearElements,
-  setBun,
   setDraggedElements,
 } from '../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
+import { TUser } from '../../utils/Types/TUser';
+import { TElements } from '../../utils/Types/TElements';
 
-function BurgerConstructor() {
+
+export interface IRootState {
+  order: {
+    loading: boolean;
+    orderName: string;
+    error: string;
+  };
+  container: {
+    draggedElements:TElements[];
+    bun: TElements;
+  };
+  user: {
+    user: TUser;
+  };
+}
+
+const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const { loading, orderName, error } = useSelector(
-    (state) => state.order,
+    (state:IRootState) => state.order,
   );
+
   const { draggedElements, bun } = useSelector(
-    (state) => state.container,
+    (state:IRootState) => state.container,
   );
-  const {user} = useSelector(
-  state=>state.user
-  )
-  const [isOpen, setIsOpen] = useState(false);
+
+  const { user } = useSelector((state:IRootState) => state.user);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClose = () => {
     setIsOpen(false);
-   dispatch(clearElements())
-  }
+    //@ts-ignore
+    dispatch(clearElements());
+  };
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-        dispatch(
-          setDraggedElements(item),
-        );
+      //@ts-ignore
+      dispatch(setDraggedElements(item));
     },
   });
 
-  const totalOrderPrice = useMemo(() => {
+  const totalOrderPrice:number = useMemo(() => {
     if (bun === null) {
-      return draggedElements.reduce((sum, ing) => sum + ing.price, 0);
+      return draggedElements.reduce((sum:number, ing:TElements) => sum + ing.price, 0);
     } else {
       return draggedElements.reduce(
-        (sum, ing) => sum + ing.price,
+        (sum:number, ing:TElements) => sum + ing.price,
         bun.price * 2,
       );
     }
   }, [draggedElements, bun]);
 
   const onSubmitOrder = () => {
-    if (bun && draggedElements.length > 0 ) {
+    if (bun && draggedElements.length > 0) {
       setIsOpen(true);
+      //@ts-ignore
       dispatch(asyncOrder([...draggedElements]));
     } else {
-      alert('Добавьте обязательные ингредиенты')
-    }if (!user){
-      alert('Войдите в аккаунт')
-      navigate('/login')
+      alert('Добавьте обязательные ингредиенты');
+    }
+    if (!user) {
+      alert('Войдите в аккаунт');
+      navigate('/login');
     }
   };
 
@@ -114,20 +134,14 @@ function BurgerConstructor() {
       </section>
       {isOpen && orderName && (
         <Modal
-          onClick={(e) => e.stopPropagation()}
           title="Детали заказа"
           close={onClose}
         >
-          <OrderDetails/>
+          <OrderDetails />
         </Modal>
       )}
     </aside>
   );
 }
 
-BurgerConstructor.propTypes = {
-  loading: PropTypes.bool,
-  orderName: PropTypes.string,
-  error: PropTypes.string,
-};
 export default BurgerConstructor;

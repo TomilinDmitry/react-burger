@@ -1,45 +1,52 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import style from './style.module.css';
-// import Modal from '../modal/modal';
-// import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
 import IngredientCard from './burger-ingridients-position/burger-ingredients-position';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setActiveTab } from '../../services/burger-ingredients/reducer';
+import { TElements } from '../../utils/Types/TElements';
 
+export interface IBurgerIngredient {
+  ingredients: {
+    data: TElements[];
+    error: string;
+    activeTab: string;
+  };
+}
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
   const { data, error, activeTab } = useSelector(
-    (store) => store.ingredients,
+    (store: IBurgerIngredient) => store.ingredients,
   );
-  const [, setOpenModal] = useState(false);
+  const [, setOpenModal] = useState<boolean>(false);
 
-  const setCurrentTab = (tab) => {
+  const setCurrentTab = (tab: string) => {
     dispatch(setActiveTab(tab));
   };
 
   ///Refs
-  const tabsRef = useRef(null);
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const ingredientRef = useRef(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const bunsRef = useRef<HTMLDivElement>(null);
+  const saucesRef = useRef<HTMLDivElement>(null);
+  const ingredientRef = useRef<HTMLDivElement>(null);
 
   ///Scroll parametr
   const scroll = () => {
-    const tabsRect = tabsRef.current.getBoundingClientRect();
-    const bunsRect = bunsRef.current.getBoundingClientRect();
-    const saucesRect = saucesRef.current.getBoundingClientRect();
+    const tabsRect = tabsRef.current?.getBoundingClientRect();
+    const bunsRect = bunsRef.current?.getBoundingClientRect();
+    const saucesRect = saucesRef.current?.getBoundingClientRect();
     const ingredientRect =
-      ingredientRef.current.getBoundingClientRect();
+      ingredientRef.current?.getBoundingClientRect();
 
-    if (bunsRect.top >= tabsRect.top) {
-      setCurrentTab('buns');
-    } else if (saucesRect.top >= tabsRect.top) {
-      setCurrentTab('sauces');
-    } else if (ingredientRect.top >= tabsRect.top) {
-      setCurrentTab('ingredients');
+    if (tabsRect && bunsRect && saucesRect && ingredientRect) {
+      if (bunsRect.top >= tabsRect.top) {
+        setCurrentTab('buns');
+      } else if (saucesRect.top >= tabsRect.top) {
+        setCurrentTab('sauces');
+      } else if (ingredientRect.top >= tabsRect.top) {
+        setCurrentTab('ingredients');
+      }
     }
   };
 
@@ -53,12 +60,10 @@ const BurgerIngredients = () => {
     };
   }, [data]);
 
-  const open = () => {
+  const open = (ingredient: TElements) => {
     setOpenModal(true);
   };
-  // const onClose = () => {
-  //   setOpenModal(false);
-  // };
+
   if (error) {
     return (
       <p className={`${style.failedBlock} text text_type_main-large`}>
@@ -66,6 +71,7 @@ const BurgerIngredients = () => {
       </p>
     );
   }
+
   return (
     <div className={style.container}>
       <main className={style.main}>
@@ -78,42 +84,42 @@ const BurgerIngredients = () => {
           <Tab
             value="buns"
             active={activeTab === 'buns'}
-            onClick={() =>
-              setCurrentTab(
-                'buns',
+            onClick={() => {
+              if (bunsRef.current) {
                 bunsRef.current.scrollIntoView({
                   behavior: 'smooth',
-                }),
-              )
-            }
+                });
+              }
+              setCurrentTab('buns');
+            }}
           >
             Булки
           </Tab>
           <Tab
             value="sauces"
             active={activeTab === 'sauces'}
-            onClick={() =>
-              setCurrentTab(
-                'sauces',
+            onClick={() => {
+              if (saucesRef.current) {
                 saucesRef.current.scrollIntoView({
                   behavior: 'smooth',
-                }),
-              )
-            }
+                });
+              }
+              setCurrentTab('sauces');
+            }}
           >
             Соусы
           </Tab>
           <Tab
             value="ingredients"
             active={activeTab === 'ingredients'}
-            onClick={() =>
-              setCurrentTab(
-                'ingredients',
+            onClick={() => {
+              if (ingredientRef.current) {
                 ingredientRef.current.scrollIntoView({
                   behavior: 'smooth',
-                }),
-              )
-            }
+                });
+              }
+              setCurrentTab('ingredients');
+            }}
           >
             Начинки
           </Tab>
@@ -166,27 +172,4 @@ const BurgerIngredients = () => {
     </div>
   );
 };
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    }),
-  ),
-  loading: PropTypes.bool,
-  error: PropTypes.string,
-  activeTab: PropTypes.string,
-  setActiveTab: PropTypes.func,
-  setSelectedIngredient: PropTypes.func,
-  isOpenIngDetails: PropTypes.bool,
-  setIsOpenIngDetails: PropTypes.func,
-};
-
 export default BurgerIngredients;

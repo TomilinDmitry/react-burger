@@ -1,19 +1,37 @@
 import React, { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  DragSourceHookSpec,
+  DropTargetMonitor,
+  useDrag,
+  useDrop,
+} from 'react-dnd';
+import { useDispatch } from 'react-redux';
 import style from './center-stubs.module.css';
-import { moveIngredient, deleteIngredient } from '../../../../services/burger-constructor/reducer';
+import {
+  moveIngredient,
+  deleteIngredient,
+} from '../../../../services/burger-constructor/reducer';
 import {
   ConstructorElement,
   DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { TElements } from '../../../../utils/Types/TElements';
 
-const SortingIng = ({ index, ingredient }) => {
-  const ref = useRef(null);
+type TSortingIngProps = {
+  index: number;
+  ingredient: TElements;
+};
+type TDragObject = Pick<TSortingIngProps, 'index'>
+
+type TDragCollectedProps = {
+  isDragging:boolean
+}
+
+const SortingIng = ({ index, ingredient }: TSortingIngProps) => {
+  const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const [{ isDragging }, dragIng] = useDrag({
+  const [{ isDragging }, dragIng] = useDrag<TDragObject,unknown,TDragCollectedProps>({
     type: 'item',
     item: { index },
     collect: (monitor) => ({
@@ -21,33 +39,31 @@ const SortingIng = ({ index, ingredient }) => {
     }),
   });
   const opacity = isDragging ? 0 : 1;
-  const [{ handlerId }, dropIng] = useDrop({
+  const [{handlerId}, dropIng] = useDrop({
     accept: 'item',
     collect: (monitor) => {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover: (item, monitor) => {
+    hover: (item: { index: number }, monitor: DropTargetMonitor) => {
       if (!ref.current) {
         return;
       }
 
-      const dragIndex = item.index;
-      const hoverIndex = index;
+      const dragIndex: number = item.index;
+      const hoverIndex: number = index;
 
       if (dragIndex === hoverIndex) {
         return;
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      // Get vertical middle
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
-      // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -56,12 +72,11 @@ const SortingIng = ({ index, ingredient }) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      
-      dispatch(moveIngredient({dragIndex, hoverIndex}));
+      // @ts-ignore
+      dispatch(moveIngredient({ dragIndex, hoverIndex }));
       item.index = hoverIndex;
     },
   });
-
 
   dragIng(dropIng(ref));
   return (
@@ -79,20 +94,16 @@ const SortingIng = ({ index, ingredient }) => {
               text={ingredient.name}
               price={ingredient.price}
               thumbnail={ingredient.image}
-              handleClose={() => dispatch(deleteIngredient(ingredient.unId))}
+              // @ts-ignore
+              handleClose={() =>
+                // @ts-ignore
+                dispatch(deleteIngredient(ingredient.unId))
+              }
             />
           </div>
         </li>
       </div>
     </div>
   );
-};
-SortingIng.propTypes = {
-  index: PropTypes.number.isRequired,
-  ingredient: PropTypes.shape({
-    name: PropTypes.string,
-    price: PropTypes.number,
-    image: PropTypes.string,
-  }).isRequired,
 };
 export default SortingIng;

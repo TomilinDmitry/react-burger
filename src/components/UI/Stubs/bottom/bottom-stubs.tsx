@@ -4,14 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setBun } from '../../../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
+import { TElements } from '../../../../utils/Types/TElements';
+
+export interface IStubs{
+  container:{
+    bun:TElements
+  }
+}
 const BottomStubs = () => {
   const { bun} = useSelector(
-    (state) => state.container,
+    (state:IStubs) => state.container,
   );
   const dispatch = useDispatch();
   const [, drop] = useDrop({
     accept: 'bun',
     drop: item => {
+      //@ts-ignore
       dispatch(setBun(item))
     },
   });

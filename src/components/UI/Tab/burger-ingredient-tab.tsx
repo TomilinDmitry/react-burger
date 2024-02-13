@@ -1,12 +1,16 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveTab } from '../../../services/burger-ingredients/action';
+import { setActiveTab } from '../../../services/burger-ingredients/reducer';
 import style from './tabs.module.css';
+import { IBurgerIngredient } from '../../burger-ingredients/burger-ingredients';
+type TBurgerTab = Pick<IBurgerIngredient['ingredients'], 'activeTab'>;
 const BurgerIgredientsTab = () => {
-  const { activeTab } = useSelector((store) => store.burger);
+  const { activeTab } = useSelector(
+    (store: { burger: TBurgerTab }) => store.burger,
+  );
   const dispatch = useDispatch();
-  const currentTab = (tab) => {
+  const currentTab = (tab: string) => {
     dispatch(setActiveTab(tab));
   };
 

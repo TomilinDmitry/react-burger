@@ -7,7 +7,6 @@ import {
 import style from './style.module.css';
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { checkUserAuth } from '../../services/users/action';
 
 function AppHeader() {
   const navigate = useNavigate()

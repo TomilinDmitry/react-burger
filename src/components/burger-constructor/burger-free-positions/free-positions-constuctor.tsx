@@ -4,8 +4,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
 import style from './free-positions.module.css';
-import PropTypes from 'prop-types';
-const ConstructorPositions = ({ ingredients, isOpen }) => {
+import { TElements } from '../../../utils/Types/TElements';
+
+interface ConstructorPositionsProps {
+  ingredients: TElements[];
+  isOpen: () => void;
+}
+const ConstructorPositions = ({ ingredients, isOpen }:ConstructorPositionsProps) => {
   return (
     <ul className={style.container}>
       {ingredients.map((ingredient, index) => (
@@ -26,9 +31,6 @@ const ConstructorPositions = ({ ingredients, isOpen }) => {
     </ul>
   );
 };
-ConstructorPositions.propTypes = {
-  ingredients: PropTypes.array,
-  isOpen: PropTypes.func,
-};
+
 
 export default ConstructorPositions;

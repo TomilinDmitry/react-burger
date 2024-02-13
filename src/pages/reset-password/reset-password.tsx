@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import {ChangeEvent, FormEvent, useState } from 'react';
 import style from './reset-password.module.css';
 import {
   PasswordInput,
@@ -9,24 +9,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../services/users/action';
 const ResetPassword = () => {
-  const [passwordValueFirst, setPasswordValueFirst] = useState('');
-  const onChangePasswordFirst = (e) => {
+  const [passwordValueFirst, setPasswordValueFirst] = useState<string>('');
+  const onChangePasswordFirst = (e:ChangeEvent<HTMLInputElement>) => {
     setPasswordValueFirst(e.target.value);
   };
   const [valueInputSecond, setValueInputSecond] = useState('');
-  const onChangePasswordSecond = (e) => {
+  const onChangePasswordSecond = (e:ChangeEvent<HTMLInputElement>) => {
     setValueInputSecond(e.target.value);
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onClick = async (e) => {
+  const onClick = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await dispatch(
+      // @ts-ignore
       resetPassword({
         password: passwordValueFirst,
         token: valueInputSecond,
       }),
     );
+    // @ts-ignore
     if (res.payload && res.payload.success) {
       navigate('/login');
     }
@@ -46,7 +48,7 @@ const ResetPassword = () => {
           placeholder="Введите код из письма"
         />
 
-        <Button htmlType="sumbit">Сохранить</Button>
+        <Button htmlType='submit'>Сохранить</Button>
       </form>
       <div className={style.signInBlock}>
         <p className={style.signIn}>
