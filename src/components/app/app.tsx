@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from '../../utils/Types/hooks/typed-hooks';
 import style from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import {
@@ -32,13 +35,10 @@ function App() {
   const handleModalClose = () => {
     navigate(-1);
   };
-  //@ts-ignore
   const { loading } = useSelector((store) => store.ingredients);
   useEffect(() => {
     if (!loading) {
-      //@ts-ignore
       dispatch(getIngredient());
-      //@ts-ignore
       dispatch(checkUserAuth());
     }
   }, [dispatch]);

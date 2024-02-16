@@ -7,23 +7,23 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/Types/hooks/typed-hooks';
 
 import { login, register } from '../../services/users/action';
 
 const Registration = () => {
   const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState('');
-  const onChangeEmail = (e:ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
   const [passwordValue, setPasswordValue] = useState('');
-  const onChangePassword = (e:ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
   const [inputValue, setInputValue] = useState('');
 
-  const onClick = (e:FormEvent<HTMLFormElement>) => {
+  const onClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
       // @ts-ignore
@@ -59,7 +59,7 @@ const Registration = () => {
       </form>
       <div className={style.signInBlock}>
         <p className={style.signIn}>
-          Уже зарегистрированы?{' '}
+          Уже зарегистрированы?
           <span>
             <Link to="/login">Войти</Link>
           </span>

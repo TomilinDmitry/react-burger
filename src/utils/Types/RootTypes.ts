@@ -3,23 +3,23 @@ import { TUser } from './TUser';
 
 export type RootTypes = {
   ingredients: {
-    data: TElements[];
-    loading?: boolean;
-    error?: string | null;
+    data: TElements[]
+    loading: boolean
+    error?: string | null
     activeTab: string;
   };
   selected: {
-    selectedIngredient: TElements;
+    selectedIngredient: TElements | null
   };
   order: {
     data: TElements[];
     loading?: boolean;
     failed: boolean | null;
-    orderName: string;
-    orderNumber: number;
+    orderName: string | null;
+    orderNumber: number | null;
   };
   container: {
-    bun: TElements;
+    bun: TElements | null;
     draggedElements: TElements[];
   };
   user: {

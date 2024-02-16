@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 import { TUser } from '../../utils/Types/TUser';
 import { ReactNode } from 'react';
@@ -21,7 +21,7 @@ const Protected = ({
       store.user.isAuthChecked,
   );
   const user = useSelector(
-    (store: { user: { user: TUser } }) => store.user.user,
+    (store) => store.user.user,
   );
   const location = useLocation();
 

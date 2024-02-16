@@ -6,16 +6,15 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/Types/hooks/typed-hooks';
 import { logout, setNewInfoUser } from '../../services/users/action';
 import { Link } from 'react-router-dom';
-import { TUser } from '../../utils/Types/TUser';
 
 const Profile = () => {
   const { user } = useSelector(
-    (state: { user: { user: TUser } }) => state.user,
+    (state) => state.user,
   );
-  const [emailValue, setEmailValue] = useState(user.email);
+  const [emailValue, setEmailValue] = useState(user!.email);
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
@@ -23,16 +22,16 @@ const Profile = () => {
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
-  const [inputValue, setInputValue] = useState(user.name);
+  const [inputValue, setInputValue] = useState(user!.name);
 
   const [activeTab, setActiveTab] = useState('Профиль');
   const dispatch = useDispatch();
   const logoutProfile = () => {
-    // @ts-ignore
     dispatch(logout());
   };
   const returnBack = () => {
-    return setInputValue(user.name), setEmailValue(user.email);
+    // eslint-disable-next-line no-sequences
+    return setInputValue(user!.name), setEmailValue(user!.email);
   };
   const saveNewInfo = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -99,8 +98,8 @@ const Profile = () => {
             onChange={onChangePassword}
           />
         </div>
-        {(inputValue !== user.name ||
-          emailValue !== user.email ||
+        {(inputValue !== user!.name ||
+          emailValue !== user!.email ||
           passwordValue !== '12345qq') && (
           <div className={style.buttons}>
             <button className={style.back} onClick={returnBack}>

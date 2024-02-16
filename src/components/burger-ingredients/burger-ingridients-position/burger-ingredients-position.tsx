@@ -5,11 +5,10 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { TElements } from '../../../utils/Types/TElements';
-import { IBurgerIngredient } from '../burger-ingredients';
 
 interface IIngredientCardProps
   extends Pick<
@@ -18,13 +17,9 @@ interface IIngredientCardProps
   > {}
 
 const IngredientCard = (props: IIngredientCardProps) => {
-  const { data } = useSelector(
-    (store: IBurgerIngredient) => store.ingredients,
-  );
-  const { bun, draggedElements } = useSelector(
-    (state: {
-      container: { draggedElements: TElements[]; bun: TElements };
-    }) => state.container,
+  const { data } = useSelector((store) => store.ingredients);
+  const { draggedElements, bun } = useSelector(
+    (state) => state.container,
   );
   const ingredientId = props._id;
   const location = useLocation();

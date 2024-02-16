@@ -6,7 +6,7 @@ export const baseUrl = 'https://norma.nomoreparties.space/api';
 
 type TApiResponse<T> = {
   success: boolean;
-  data?: T;
+  data: T;
   refreshToken?: string;
   accessToken?: string;
 };

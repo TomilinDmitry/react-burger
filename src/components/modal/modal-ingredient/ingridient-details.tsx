@@ -1,19 +1,13 @@
 import React from 'react';
 import style from './ingridient-details.module.css';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import {
+  useSelector,
+} from '../../../utils/Types/hooks/typed-hooks';
 import { useLocation } from 'react-router-dom';
-import { TElements } from '../../../utils/Types/TElements';
-
-interface IIngredientsState {
-	ingredients: {
-	  data: TElements[];
-	};
-  }
 
 const IngredientDetails = () => {
   const { data } = useSelector(
-    (store:IIngredientsState) =>
+    (store) =>
       store.ingredients,
   );
 

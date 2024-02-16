@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import style from './constructor.module.css';
 import {
   Button,
@@ -9,7 +9,10 @@ import OrderDetails from '../modal/order-modal/order-modal';
 import TopStubs from '../UI/Stubs/top/top-stubs';
 import CenterStubs from '../UI/Stubs/center/center-stubs';
 import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from '../../utils/Types/hooks/typed-hooks';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
 import {
   clearElements,
@@ -17,44 +20,26 @@ import {
 } from '../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
-import { TUser } from '../../utils/Types/TUser';
 import { TElements } from '../../utils/Types/TElements';
-
-
-export interface IRootState {
-  order: {
-    loading: boolean;
-    orderName: string;
-    error: string;
-  };
-  container: {
-    draggedElements:TElements[];
-    bun: TElements;
-  };
-  user: {
-    user: TUser;
-  };
-}
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, orderName, error } = useSelector(
-    (state:IRootState) => state.order,
+  const { loading, orderName, failed } = useSelector(
+    (state) => state.order,
   );
 
   const { draggedElements, bun } = useSelector(
-    (state:IRootState) => state.container,
+    (state) => state.container,
   );
 
-  const { user } = useSelector((state:IRootState) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClose = () => {
     setIsOpen(false);
-    //@ts-ignore
     dispatch(clearElements());
   };
   const [, drop] = useDrop({
@@ -70,7 +55,7 @@ const BurgerConstructor = () => {
       return draggedElements.reduce((sum:number, ing:TElements) => sum + ing.price, 0);
     } else {
       return draggedElements.reduce(
-        (sum:number, ing:TElements) => sum + ing.price,
+        (sum, ing:TElements) => sum + ing.price,
         bun.price * 2,
       );
     }
@@ -100,10 +85,10 @@ const BurgerConstructor = () => {
     );
   }
 
-  if (error) {
+  if (failed) {
     return (
       <p className={`${style.failedBlock} text text_type_main-large`}>
-        Ошибка при формировании заказа:{error}
+        Ошибка при формировании заказа:{failed}
       </p>
     );
   }

@@ -1,19 +1,16 @@
 import React from 'react';
 import style from './bottom-stubs.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from '../../../../utils/Types/hooks/typed-hooks';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setBun } from '../../../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
-import { TElements } from '../../../../utils/Types/TElements';
 
-export interface IStubs{
-  container:{
-    bun:TElements
-  }
-}
 const BottomStubs = () => {
   const { bun} = useSelector(
-    (state:IStubs) => state.container,
+    (state) => state.container,
   );
   const dispatch = useDispatch();
   const [, drop] = useDrop({

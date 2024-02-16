@@ -5,7 +5,6 @@ import {
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './style.module.css';
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 function AppHeader() {

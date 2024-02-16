@@ -1,11 +1,6 @@
 import React, { useRef } from 'react';
-import {
-  DragSourceHookSpec,
-  DropTargetMonitor,
-  useDrag,
-  useDrop,
-} from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
+import { useDispatch } from '../../../../utils/Types/hooks/typed-hooks';
 import style from './center-stubs.module.css';
 import {
   moveIngredient,
@@ -21,17 +16,21 @@ type TSortingIngProps = {
   index: number;
   ingredient: TElements;
 };
-type TDragObject = Pick<TSortingIngProps, 'index'>
+type TDragObject = Pick<TSortingIngProps, 'index'>;
 
 type TDragCollectedProps = {
-  isDragging:boolean
-}
+  isDragging: boolean;
+};
 
 const SortingIng = ({ index, ingredient }: TSortingIngProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const [{ isDragging }, dragIng] = useDrag<TDragObject,unknown,TDragCollectedProps>({
+  const [{ isDragging }, dragIng] = useDrag<
+    TDragObject,
+    unknown,
+    TDragCollectedProps
+  >({
     type: 'item',
     item: { index },
     collect: (monitor) => ({
@@ -39,7 +38,7 @@ const SortingIng = ({ index, ingredient }: TSortingIngProps) => {
     }),
   });
   const opacity = isDragging ? 0 : 1;
-  const [{handlerId}, dropIng] = useDrop({
+  const [{ handlerId }, dropIng] = useDrop({
     accept: 'item',
     collect: (monitor) => {
       return {
@@ -72,7 +71,6 @@ const SortingIng = ({ index, ingredient }: TSortingIngProps) => {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      // @ts-ignore
       dispatch(moveIngredient({ dragIndex, hoverIndex }));
       item.index = hoverIndex;
     },

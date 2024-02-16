@@ -1,14 +1,17 @@
 import {createSlice } from "@reduxjs/toolkit"
 import { getIngredient } from "../../utils/Api/api-ingredients";
+import { RootTypes } from "../../utils/Types/RootTypes";
+type IngredientsState = RootTypes["ingredients"];
+const initialState: IngredientsState = {
+    data: [], 
+    loading: false,
+    error: null,
+    activeTab: 'buns',
+};
 
-const ingredientsSlice = createSlice ({
+const ingredientsSlice= createSlice ({
     name:'ingredients',
-    initialState:{
-        data:[],
-        loading:false,
-        error:null,
-        activeTab:'buns',
-    },
+    initialState,
     reducers:{
         setActiveTab (state,action){
             state.activeTab = action.payload

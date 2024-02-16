@@ -7,7 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { login } from '../../services/users/action';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/Types/hooks/typed-hooks';
 const Login = () => {
   const dispatch = useDispatch();
   const [emailValue, setEmailValue] = useState<string>('');

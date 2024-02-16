@@ -1,14 +1,9 @@
 import React from 'react';
 import doneImg from '../../../images/done.svg';
 import style from './modal.module.css';
-import { useSelector } from 'react-redux';
-type TOrderState = {
-  order: {
-    orderNumber:number
-  }
-}
+import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 const OrderDetails = () => {
-  const { orderNumber } = useSelector((state:TOrderState) => state.order);
+  const { orderNumber } = useSelector((state) => state.order);
 
   return (
     <div className={style.mainContainer}>

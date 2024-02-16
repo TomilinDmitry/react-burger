@@ -6,7 +6,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/Types/hooks/typed-hooks';
 import { resetPassword } from '../../services/users/action';
 const ResetPassword = () => {
   const [passwordValueFirst, setPasswordValueFirst] = useState<string>('');

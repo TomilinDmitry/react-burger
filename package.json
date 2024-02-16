@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react": "^18.2.38"
+    "@types/react": "^18.2.38",
+    "@types/uuid": "^9.0.8"
   }
 }

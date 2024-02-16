@@ -1,7 +1,10 @@
 import { useMemo, useRef, useState } from 'react';
 import style from './style.module.css';
 import IngredientCard from './burger-ingridients-position/burger-ingredients-position';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from '../../utils/Types/hooks/typed-hooks';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setActiveTab } from '../../services/burger-ingredients/reducer';
 import { TElements } from '../../utils/Types/TElements';
@@ -17,7 +20,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
 
   const { data, error, activeTab } = useSelector(
-    (store: IBurgerIngredient) => store.ingredients,
+    (store) => store.ingredients,
   );
   const [, setOpenModal] = useState<boolean>(false);
 
