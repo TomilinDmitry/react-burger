@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import style from './profile.module.css';
 import {
   Button,
@@ -6,21 +6,23 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../utils/Types/hooks/typed-hooks';
 import { logout, setNewInfoUser } from '../../services/users/action';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.user);
-  const [emailValue, setEmailValue] = useState(user.email);
-  const onChangeEmail = (e) => {
+  const { user } = useSelector(
+    (state) => state.user,
+  );
+  const [emailValue, setEmailValue] = useState(user!.email);
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
   const [passwordValue, setPasswordValue] = useState('12345qq');
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
-  const [inputValue, setInputValue] = useState(user.name);
+  const [inputValue, setInputValue] = useState(user!.name);
 
   const [activeTab, setActiveTab] = useState('Профиль');
   const dispatch = useDispatch();
@@ -28,12 +30,18 @@ const Profile = () => {
     dispatch(logout());
   };
   const returnBack = () => {
-    return setInputValue(user.name), setEmailValue(user.email);
+    // eslint-disable-next-line no-sequences
+    return setInputValue(user!.name), setEmailValue(user!.email);
   };
-  const saveNewInfo = async (e) => {
+  const saveNewInfo = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(
-      setNewInfoUser({ email: emailValue, name: inputValue, password:passwordValue}),
+      // @ts-ignore
+      setNewInfoUser({
+        email: emailValue,
+        name: inputValue,
+        password: passwordValue,
+      }),
     );
   };
   return (
@@ -81,7 +89,6 @@ const Profile = () => {
         <EmailInput
           onChange={onChangeEmail}
           value={emailValue}
-          icon="EditIcon"
           placeholder="Логин"
         />
         <div className={style.passwordInput}>
@@ -91,7 +98,9 @@ const Profile = () => {
             onChange={onChangePassword}
           />
         </div>
-        {(inputValue !== user.name || emailValue !== user.email || passwordValue !== '12345qq') && (
+        {(inputValue !== user!.name ||
+          emailValue !== user!.email ||
+          passwordValue !== '12345qq') && (
           <div className={style.buttons}>
             <button className={style.back} onClick={returnBack}>
               Отмена

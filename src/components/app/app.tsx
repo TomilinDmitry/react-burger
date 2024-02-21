@@ -1,5 +1,8 @@
-import { React, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import {
+  useSelector,
+  useDispatch,
+} from '../../utils/Types/hooks/typed-hooks';
 import style from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import {

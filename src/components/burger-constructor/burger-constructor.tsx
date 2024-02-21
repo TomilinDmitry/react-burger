@@ -5,68 +5,73 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
-import PropTypes from 'prop-types';
 import OrderDetails from '../modal/order-modal/order-modal';
 import TopStubs from '../UI/Stubs/top/top-stubs';
 import CenterStubs from '../UI/Stubs/center/center-stubs';
 import BottomStubs from '../UI/Stubs/bottom/bottom-stubs';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useSelector,
+  useDispatch,
+} from '../../utils/Types/hooks/typed-hooks';
 import { asyncOrder } from '../../services/async-action/async-action-ingredient';
 import {
   clearElements,
-  setBun,
   setDraggedElements,
 } from '../../services/burger-constructor/reducer';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
+import { TElements } from '../../utils/Types/TElements';
 
-function BurgerConstructor() {
+const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const { loading, orderName, error } = useSelector(
+  const navigate = useNavigate();
+
+  const { loading, orderName, failed } = useSelector(
     (state) => state.order,
   );
+
   const { draggedElements, bun } = useSelector(
     (state) => state.container,
   );
-  const {user} = useSelector(
-  state=>state.user
-  )
-  const [isOpen, setIsOpen] = useState(false);
+
+  const { user } = useSelector((state) => state.user);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClose = () => {
     setIsOpen(false);
-   dispatch(clearElements())
-  }
+    dispatch(clearElements());
+  };
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-        dispatch(
-          setDraggedElements(item),
-        );
+      //@ts-ignore
+      dispatch(setDraggedElements(item));
     },
   });
 
-  const totalOrderPrice = useMemo(() => {
+  const totalOrderPrice:number = useMemo(() => {
     if (bun === null) {
-      return draggedElements.reduce((sum, ing) => sum + ing.price, 0);
+      return draggedElements.reduce((sum:number, ing:TElements) => sum + ing.price, 0);
     } else {
       return draggedElements.reduce(
-        (sum, ing) => sum + ing.price,
+        (sum, ing:TElements) => sum + ing.price,
         bun.price * 2,
       );
     }
   }, [draggedElements, bun]);
 
   const onSubmitOrder = () => {
-    if (bun && draggedElements.length > 0 ) {
+    if (bun && draggedElements.length > 0) {
       setIsOpen(true);
+      //@ts-ignore
       dispatch(asyncOrder([...draggedElements]));
     } else {
-      alert('Добавьте обязательные ингредиенты')
-    }if (!user){
-      alert('Войдите в аккаунт')
-      navigate('/login')
+      alert('Добавьте обязательные ингредиенты');
+    }
+    if (!user) {
+      alert('Войдите в аккаунт');
+      navigate('/login');
     }
   };
 
@@ -80,10 +85,10 @@ function BurgerConstructor() {
     );
   }
 
-  if (error) {
+  if (failed) {
     return (
       <p className={`${style.failedBlock} text text_type_main-large`}>
-        Ошибка при формировании заказа:{error}
+        Ошибка при формировании заказа:{failed}
       </p>
     );
   }
@@ -114,20 +119,14 @@ function BurgerConstructor() {
       </section>
       {isOpen && orderName && (
         <Modal
-          onClick={(e) => e.stopPropagation()}
           title="Детали заказа"
           close={onClose}
         >
-          <OrderDetails/>
+          <OrderDetails />
         </Modal>
       )}
     </aside>
   );
 }
 
-BurgerConstructor.propTypes = {
-  loading: PropTypes.bool,
-  orderName: PropTypes.string,
-  error: PropTypes.string,
-};
 export default BurgerConstructor;

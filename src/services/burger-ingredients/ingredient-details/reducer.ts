@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { RootTypes } from "../../../utils/Types/RootTypes";
+type IngredientsState = RootTypes["selected"];
+const initialState:IngredientsState = {
+    selectedIngredient:null,
+}
 const selectedIngSlice = createSlice({
 name:'selected',
-initialState:{
-    selectedIngredient:null,
-},
+initialState,
 reducers:{
     setSelectedIngredient (state,action) {
         state.selectedIngredient = action.payload

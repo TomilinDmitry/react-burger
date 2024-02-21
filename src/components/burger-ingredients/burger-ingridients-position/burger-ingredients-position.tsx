@@ -5,14 +5,20 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
+import { TElements } from '../../../utils/Types/TElements';
 
-const IngredientCard = (props) => {
+interface IIngredientCardProps
+  extends Pick<
+    TElements,
+    'image' | 'name' | 'price' | '_id' | 'type'
+  > {}
+
+const IngredientCard = (props: IIngredientCardProps) => {
   const { data } = useSelector((store) => store.ingredients);
-  const { bun, draggedElements } = useSelector(
+  const { draggedElements, bun } = useSelector(
     (state) => state.container,
   );
   const ingredientId = props._id;
@@ -24,7 +30,7 @@ const IngredientCard = (props) => {
   });
 
   const setIngredientsCounters = useMemo(() => {
-    const counters = {};
+    const counters: { [key: string]: number } = {};
 
     data.forEach((ingredient) => {
       counters[ingredient._id] = counters[ingredient._id] || 0;
@@ -60,17 +66,11 @@ const IngredientCard = (props) => {
           className={`${style.paragraph} text text_type_digits-default m-1`}
         >
           {props.price}
-          <CurrencyIcon type="primary" className="ml-4" />
+          <CurrencyIcon type="primary" />
         </p>
         <p className="text text_type_main-default">{props.name}</p>
       </section>
     </Link>
   );
 };
-IngredientCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-};
-
 export default IngredientCard;

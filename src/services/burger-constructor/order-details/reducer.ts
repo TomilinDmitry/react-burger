@@ -1,13 +1,14 @@
 import { ORDER_CLOSE, ORDER_FAILED, ORDER_LOADING, ORDER_SUCCESS } from "./action"
- 
-const initialState = {
+ import { RootTypes } from "../../../utils/Types/RootTypes"
+import { PayloadAction } from "@reduxjs/toolkit"
+const initialState:RootTypes['order'] = {
     data:[],
     loading:false,
     failed:null,
     orderName: null,
     orderNumber: null,
 }
-export const orderReducer = (state=initialState,action) =>{
+export const orderReducer = (state=initialState,action:PayloadAction<any>) =>{
     switch(action.type){
         case ORDER_LOADING:
         return{

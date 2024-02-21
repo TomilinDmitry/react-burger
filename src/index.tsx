@@ -10,9 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 const store = configureStore({
   reducer: rootReducer,
 });
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
-);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 root.render(
   <React.StrictMode>
@@ -24,3 +22,5 @@ root.render(
   </React.StrictMode>,
 );
 export default store;
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;

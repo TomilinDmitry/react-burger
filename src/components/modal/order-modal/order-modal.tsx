@@ -1,11 +1,10 @@
 import React from 'react';
 import doneImg from '../../../images/done.svg';
 import style from './modal.module.css';
-import { useSelector } from 'react-redux';
-
+import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 const OrderDetails = () => {
   const { orderNumber } = useSelector((state) => state.order);
- 
+
   return (
     <div className={style.mainContainer}>
       <p className={`${style.order} text text_type_digits-large`}>
