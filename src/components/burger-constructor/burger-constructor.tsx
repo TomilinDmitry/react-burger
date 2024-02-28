@@ -85,7 +85,7 @@ const BurgerConstructor = () => {
     );
   }
 
-  if (failed) {
+  if (failed === true) {
     return (
       <p className={`${style.failedBlock} text text_type_main-large`}>
         Ошибка при формировании заказа:{failed}

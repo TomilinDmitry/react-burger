@@ -14,10 +14,7 @@ import {
 import Home from '../../pages/home/home';
 import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
 import Modal from '../modal/modal';
-import {
-  getIngredient,
-  getOrderList,
-} from '../../utils/Api/api-ingredients';
+import { getIngredient } from '../../utils/Api/api-ingredients';
 import Login from '../../pages/login/login';
 import Registration from '../../pages/registration/registration';
 

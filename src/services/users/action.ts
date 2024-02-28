@@ -1,14 +1,13 @@
-import {Dispatch, createAsyncThunk} from "@reduxjs/toolkit";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 import {setUser, setAuthChecked} from "./user";
 import {api, getEmailForgotPassword, getUserProfile, setNewPassword, updateInfo} from "../../utils/Api/api-ingredients";
+import { AppDispatch } from "../..";
 import { TUser } from "../../utils/Types/TUser";
-
+import { TToken } from "../../utils/Types/TToken";
 export const getUser = () => {
-    
-    return (dispatch:Dispatch) => {
+    return (dispatch:AppDispatch) => {
         return getUserProfile().then((res) => {
-            // @ts-ignore
-            dispatch(setUser(res.user));
+            dispatch(setUser(res));
         });
     };
 };
@@ -26,20 +25,18 @@ export const register = createAsyncThunk(
     "user/register",
     async ({email,password,name}:TUser) =>{
         const res = await api.register(email,password,name)
-        localStorage.setItem("accessToken", res.accessToken!);
-        localStorage.setItem("refreshToken", res.refreshToken!);
-        // @ts-ignore
-        return res.user
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        return res
     }
 )
 export const login = createAsyncThunk(
     "user/login",
     async ({email,password}:TUser) => {
         const res = await api.login(email,password);
-        localStorage.setItem("accessToken", res.accessToken!);
-        localStorage.setItem("refreshToken", res.refreshToken!);
-        // @ts-ignore
-        return res.user;
+        localStorage.setItem("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        return res;
     }   
 );
 export const forgotPassword = createAsyncThunk(
@@ -58,8 +55,7 @@ export const resetPassword = createAsyncThunk(
 )
 
 export const checkUserAuth = () => {
-    // @ts-ignore
-    return (dispatch) => {
+    return (dispatch:AppDispatch) => {
         if (localStorage.getItem("accessToken")) {
             dispatch(getUser())
                 .catch(() => {

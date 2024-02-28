@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux';
+import { AppDispatch } from '../..';
 import { getOrderBurgerInfo } from '../../utils/Api/api-ingredients';
 import { TElements } from '../../utils/Types/TElements';
 import {
@@ -8,12 +8,14 @@ import {
 } from '../burger-constructor/order-details/action';
 
 export const asyncOrder =
-  (data: TElements[]) =>
-  (dispatch:Dispatch) => {
+  (data: TElements[]) => (dispatch: AppDispatch) => {
     dispatch(orderLoading());
     getOrderBurgerInfo(data)
-    // @ts-ignore
-      .then((data) => dispatch(orderSuccess(data)))
+      .then((data) =>
+        dispatch(
+          orderSuccess(data),
+        ),
+      )
       .catch((error: string) => {
         dispatch(orderFailed(`${error}`));
       });
