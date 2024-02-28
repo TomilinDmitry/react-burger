@@ -14,7 +14,10 @@ import {
 import Home from '../../pages/home/home';
 import IngredientDetails from '../modal/modal-ingredient/ingridient-details';
 import Modal from '../modal/modal';
-import { getIngredient } from '../../utils/Api/api-ingredients';
+import {
+  getIngredient,
+  getOrderList,
+} from '../../utils/Api/api-ingredients';
 import Login from '../../pages/login/login';
 import Registration from '../../pages/registration/registration';
 
@@ -26,6 +29,9 @@ import {
   OnlyUnAuth,
 } from '../protected-route/protected-route';
 import { checkUserAuth } from '../../services/users/action';
+import Feed from '../../pages/feed/feed';
+import FeedDetails from '../../pages/feedDetails';
+import OrdersHistory from '../../pages/ordersHistory';
 
 function App() {
   const dispatch = useDispatch();
@@ -75,9 +81,19 @@ function App() {
               element={<OnlyUnAuth component={<ResetPassword />} />}
             />
             <Route
+              path="/profile/orders"
+              element={<OnlyAuth component={<OrdersHistory />} />}
+            />
+            <Route
+              path="/profile/orders/id"
+              element={<OnlyAuth component={<FeedDetails />} />}
+            />
+            <Route
               path="/profile"
               element={<OnlyAuth component={<Profile />} />}
             />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/id" element={<FeedDetails />} />
           </Routes>
         )}
         {background && (

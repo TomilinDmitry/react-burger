@@ -11,7 +11,9 @@ type TApiResponse<T> = {
   accessToken?: string;
 };
 
-const checkResponse = <T>(res: Response): Promise<TApiResponse<T>> => {
+const checkResponse = <T>(
+  res: Response,
+): Promise<TApiResponse<T>> => {
   return res.ok
     ? res.json()
     : res.json().then((err) => Promise.reject(err));
@@ -21,12 +23,24 @@ export const getIngredient = createAsyncThunk(
   'asyncIngredient',
   async () => {
     const response = await fetch(`${baseUrl}/ingredients`);
-      const data = await checkResponse<TElements[]>(response);
-      return data.data;
+    const data = await checkResponse<TElements[]>(response);
+    return data.data;
+  },
+);
+export const getOrderList = createAsyncThunk(
+  'asyncOrdersList',
+  async () => {
+    const response = await fetch(
+      `wss://norma.nomoreparties.space/orders/all`,
+    );
+    const data = await checkResponse(response);
+    return data.data;
   },
 );
 
-export const getOrderBurgerInfo = (data: TElements[]): Promise<TApiResponse<any>> => {
+export const getOrderBurgerInfo = (
+  data: TElements[],
+): Promise<TApiResponse<any>> => {
   const accessToken = localStorage.getItem('accessToken');
 
   if (!accessToken) {
@@ -51,34 +65,41 @@ export const getOrderBurgerInfo = (data: TElements[]): Promise<TApiResponse<any>
 
 export const refreshToken = (): Promise<TApiResponse<any>> => {
   return fetch(`${baseUrl}/auth/token`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
+      'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({
-      token: localStorage.getItem("refreshToken"),
+      token: localStorage.getItem('refreshToken'),
     }),
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url: string, options: RequestInit): Promise<TApiResponse<any>> => {
+export const fetchWithRefresh = async (
+  url: string,
+  options: RequestInit,
+): Promise<TApiResponse<any>> => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
-  } catch (err:any) {
-    if (err.message === "jwt expired") {
+  } catch (err: any) {
+    if (err.message === 'jwt expired') {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem("refreshToken", refreshData.refreshToken!);
-      localStorage.setItem("accessToken", refreshData.accessToken!);
+      localStorage.setItem('refreshToken', refreshData.refreshToken!);
+      localStorage.setItem('accessToken', refreshData.accessToken!);
       if (options.headers) {
         if (refreshData.accessToken !== undefined) {
-          (options.headers as { [key: string]: string }).authorization = refreshData.accessToken;
+          (
+            options.headers as { [key: string]: string }
+          ).authorization = refreshData.accessToken;
         }
       } else {
-        options.headers = { authorization: refreshData.accessToken || '' };
+        options.headers = {
+          authorization: refreshData.accessToken || '',
+        };
       }
       const res = await fetch(url, options);
       return await checkResponse(res);
@@ -88,7 +109,9 @@ export const fetchWithRefresh = async (url: string, options: RequestInit): Promi
   }
 };
 
-export const getEmailForgotPassword = (email: string): Promise<TApiResponse<any>> => {
+export const getEmailForgotPassword = (
+  email: string,
+): Promise<TApiResponse<any>> => {
   return fetch(`${baseUrl}/password-reset`, {
     method: 'POST',
     headers: {
@@ -105,7 +128,10 @@ export const getEmailForgotPassword = (email: string): Promise<TApiResponse<any>
     });
 };
 
-export const setNewPassword = (password: string, token: string): Promise<TApiResponse<any>> => {
+export const setNewPassword = (
+  password: string,
+  token: string,
+): Promise<TApiResponse<any>> => {
   return fetch(`${baseUrl}/password-reset/reset`, {
     method: 'POST',
     headers: {
@@ -123,7 +149,11 @@ export const setNewPassword = (password: string, token: string): Promise<TApiRes
     });
 };
 
-export const updateInfo = (email: string, name: string, password: string): Promise<TApiResponse<any>> => {
+export const updateInfo = (
+  email: string,
+  name: string,
+  password: string,
+): Promise<TApiResponse<any>> => {
   const accessToken = localStorage.getItem('accessToken');
 
   if (!accessToken) {
@@ -149,7 +179,11 @@ export const updateInfo = (email: string, name: string, password: string): Promi
     });
 };
 
-export const register = (email: string, name: string, password: string): Promise<TApiResponse<any>> => {
+export const register = (
+  email: string,
+  name: string,
+  password: string,
+): Promise<TApiResponse<any>> => {
   return fetch(`${baseUrl}/auth/register`, {
     method: 'POST',
     headers: {
@@ -159,7 +193,7 @@ export const register = (email: string, name: string, password: string): Promise
       email: email,
       password: password,
       name: name,
-      token: localStorage.getItem("refreshToken")
+      token: localStorage.getItem('refreshToken'),
     }),
   })
     .then(checkResponse)
@@ -169,7 +203,10 @@ export const register = (email: string, name: string, password: string): Promise
     });
 };
 
-export const login = (email: string, password: string): Promise<TApiResponse<TUser>> => {
+export const login = (
+  email: string,
+  password: string,
+): Promise<TApiResponse<TUser>> => {
   return fetch(`${baseUrl}/auth/login`, {
     method: 'POST',
     headers: {
@@ -178,7 +215,7 @@ export const login = (email: string, password: string): Promise<TApiResponse<TUs
     body: JSON.stringify({
       email: email,
       password: password,
-      token: localStorage.getItem("refreshToken"),
+      token: localStorage.getItem('refreshToken'),
     }),
   })
     .then(checkResponse<TUser>)
@@ -195,7 +232,7 @@ export const logout = (): Promise<TApiResponse<any>> => {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({
-      token: localStorage.getItem("refreshToken"),
+      token: localStorage.getItem('refreshToken'),
     }),
   })
     .then(checkResponse)
@@ -230,5 +267,5 @@ export const getUserProfile = (): Promise<TApiResponse<TUser>> => {
 export const api = {
   register,
   login,
-  logout
+  logout,
 };

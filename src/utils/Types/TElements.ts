@@ -1,3 +1,5 @@
+import { RootState } from "../.."
+
 export type TElements = {
     unId: string
     id:string,
@@ -14,3 +16,6 @@ export type TElements = {
     image_large: string,
     __v: number,
 }
+export type TElementsWithOrderNumber = TElements & {
+    orderNumber: RootState['order']['orderNumber'];
+};

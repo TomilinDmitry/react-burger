@@ -8,10 +8,10 @@ import style from './style.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 function AppHeader() {
-  const navigate = useNavigate()
-  const onClick =() =>{
-    navigate('/')
-  }
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate('/');
+  };
   return (
     <header>
       <section className={style.container}>
@@ -30,7 +30,7 @@ function AppHeader() {
             </p>
           </NavLink>
           <NavLink
-          to='/order'
+            to="/feed"
             className={({ isActive }) =>
               `pl-5 pr-5 pb-4 pt-4 mb-4 mt-4 ${
                 isActive ? style.active : style.link
@@ -61,7 +61,7 @@ function AppHeader() {
         </NavLink>
       </section>
       <section className={style.mediaContainer}>
-        <section onClick={onClick} >
+        <section onClick={onClick}>
           <Logo />
         </section>
         <nav className={style.navigation}>

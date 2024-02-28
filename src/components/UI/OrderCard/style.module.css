@@ -1,0 +1,76 @@
+.orderCard {
+  display: flex;
+  flex-direction: column;
+  max-width: 844px;
+  padding: 24px;
+  border-radius: 40px;
+  border: 2px solid rgba(76, 76, 255, 1);
+  gap: 24px;
+  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
+    0px 0px 2px 0px rgba(0, 0, 0, 0.06),
+    0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+    margin-right: 8px;
+}
+.orderNumberBlock {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 0;
+}
+.orderNumber {
+  font-size: 28px;
+}
+.time {
+  color: rgba(133, 133, 173, 1);
+}
+.titleOrderCard span {
+  display: flex;
+  text-align: left;
+  color: rgba(242, 242, 243, 1);
+}
+.ingredientsOrder {
+  display: flex;
+  justify-content: space-between;
+}
+.ingredientIcons {
+  display: flex;
+  position: relative;
+  max-width: 436px;
+  width: 436px;
+  margin-right: 24px;
+}
+.icons {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  padding: 4px 0px 4px 0px;
+}
+.element1 {
+  z-index: 5;
+}
+.element2 {
+  position: absolute;
+  left: 45px;
+  z-index: 4;
+}
+.element3 {
+  position: absolute;
+  z-index: 3;
+  left: 90px;
+}
+.element4 {
+  position: absolute;
+  z-index: 2;
+  left: 135px;
+}
+.orderPrice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.link{
+  display: block;
+}
+.orderStatus{
+  margin-top: 8px;
+}

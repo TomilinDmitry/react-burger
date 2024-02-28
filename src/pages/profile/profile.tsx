@@ -6,14 +6,15 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from '../../utils/Types/hooks/typed-hooks';
-import { logout, setNewInfoUser } from '../../services/users/action';
-import { Link } from 'react-router-dom';
+import {
+  useSelector,
+  useDispatch,
+} from '../../utils/Types/hooks/typed-hooks';
+import { setNewInfoUser } from '../../services/users/action';
+import ProfileNavigation from '../../components/UI/ProfileTabs';
 
 const Profile = () => {
-  const { user } = useSelector(
-    (state) => state.user,
-  );
+  const { user } = useSelector((state) => state.user);
   const [emailValue, setEmailValue] = useState(user!.email);
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
@@ -24,11 +25,7 @@ const Profile = () => {
   };
   const [inputValue, setInputValue] = useState(user!.name);
 
-  const [activeTab, setActiveTab] = useState('Профиль');
   const dispatch = useDispatch();
-  const logoutProfile = () => {
-    dispatch(logout());
-  };
   const returnBack = () => {
     // eslint-disable-next-line no-sequences
     return setInputValue(user!.name), setEmailValue(user!.email);
@@ -47,32 +44,7 @@ const Profile = () => {
   return (
     <div className={style.container}>
       <div className={style.profileListBlock}>
-        <ul className={style.profileList}>
-          <li
-            className={`${style.element} ${
-              activeTab === 'Профиль' ? style.active : ''
-            }`}
-            onClick={() => setActiveTab('Профиль')}
-          >
-            Профиль
-          </li>
-          <li
-            className={`${style.element} ${
-              activeTab === 'История заказов' ? style.active : ''
-            }`}
-            onClick={() => setActiveTab('История заказов')}
-          >
-            <Link to="/profile/orders">История заказов</Link>
-          </li>
-          <Link to="/">
-            <button
-              className={style.buttonExit}
-              onClick={logoutProfile}
-            >
-              Выход
-            </button>
-          </Link>
-        </ul>
+        <ProfileNavigation />
       </div>
       <form onSubmit={saveNewInfo} className={style.inputBlock}>
         <Input

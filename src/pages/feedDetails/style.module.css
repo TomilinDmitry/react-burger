@@ -1,0 +1,47 @@
+.container {
+  margin: 0 auto;
+  margin-top: 122px;
+  max-width: 640px;
+  width: 640px;
+  max-height: 620px;
+  height: 620px;
+}
+.title {
+  display: flex;
+  margin-bottom: 12px;
+}
+.status {
+  color: rgba(0, 204, 204, 1);
+  display: flex;
+  margin-bottom: 60px;
+}
+.structure {
+  display: flex;
+  margin-bottom: 24px;
+}
+.burgerIngedientStructure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+  max-height: 275px;
+  height: 275px;
+  margin-bottom: 40px;
+}
+.orderTime {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.time {
+  color: rgba(133, 133, 173, 1);
+}
+.orderTime span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+p {
+  margin: 0;
+}

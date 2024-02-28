@@ -1,0 +1,54 @@
+.profileListBlock {
+  margin-left: 340px;
+  margin-right: 60px;
+}
+.element {
+  display: flex;
+  width: 320px;
+  height: 64px;
+  text-align: left;
+  list-style: none;
+  font-family: JetBrains Mono;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0em;
+  color: rgba(133, 133, 173, 1);
+  cursor: pointer;
+}
+.element.active {
+  color: rgba(242, 242, 243, 1);
+}
+.notActiveElement {
+  color: rgba(133, 133, 173, 1);
+  width: 320px;
+  height: 64px;
+  text-align: left;
+  list-style: none;
+  font-family: JetBrains Mono;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0em;
+}
+.buttonExit {
+  width: 320px;
+  height: 64px;
+  background-color: inherit;
+  color: rgba(133, 133, 173, 1);
+  font-family: JetBrains Mono;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  border: 0px;
+  padding: 0;
+  cursor: pointer;
+}
+.buttonExit:hover {
+  color: rgba(242, 242, 243, 1);
+}
+a {
+  color: inherit;
+}

@@ -6,54 +6,6 @@
   margin-left: 340px;
   margin-right: 60px;
 }
-.element {
-  width: 320px;
-  height: 64px;
-  text-align: left;
-  list-style: none;
-
-  font-family: JetBrains Mono;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: 0em;
-  color: rgba(133, 133, 173, 1);
-  cursor: pointer;
-}
-.element.active {
-  color: rgba(242, 242, 243, 1);
-}
-.notActiveElement {
-  color: rgba(133, 133, 173, 1);
-  width: 320px;
-  height: 64px;
-  text-align: left;
-  list-style: none;
-  font-family: JetBrains Mono;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: 0em;
-}
-.buttonExit {
-  width: 320px;
-  height: 64px;
-  background-color: inherit;
-  color: rgba(133, 133, 173, 1);
-  font-family: JetBrains Mono;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: left;
-  border: 0px;
-  padding: 0;
-  cursor: pointer;
-}
-.buttonExit:hover{
-  color: rgba(242, 242, 243, 1)
-}
-
 .inputBlock {
   display: flex;
   align-items: flex-end;
@@ -61,21 +13,21 @@
   flex-direction: column;
   margin-bottom: 80px;
 }
-a{
-  color:inherit
+a {
+  color: inherit;
 }
-.back{
-color:rgba(76, 76, 255, 1);
-background:0;
-font-family: JetBrains Mono;
-font-size: 16px;
-font-weight: 400;
-line-height: 24px;
-letter-spacing: 0em;
-text-align: center;
-border:0;
-width: 74px;
-height:56px;
-margin-right: 20px;
-cursor: pointer;
+.back {
+  color: rgba(76, 76, 255, 1);
+  background: 0;
+  font-family: JetBrains Mono;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  border: 0;
+  width: 74px;
+  height: 56px;
+  margin-right: 20px;
+  cursor: pointer;
 }

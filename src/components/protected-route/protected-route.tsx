@@ -1,6 +1,5 @@
 import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 import { Navigate, useLocation } from 'react-router-dom';
-import { TUser } from '../../utils/Types/TUser';
 import { ReactNode } from 'react';
 
 type TProtectedProps = {
@@ -20,9 +19,7 @@ const Protected = ({
     (store: { user: Pick<TProtectedProps, 'isAuthChecked'> }) =>
       store.user.isAuthChecked,
   );
-  const user = useSelector(
-    (store) => store.user.user,
-  );
+  const user = useSelector((store) => store.user.user);
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -42,7 +39,7 @@ const Protected = ({
 
   // !onlyUnAuth && user Пользователь авторизован и роут для авторизованного пользователя
 
-  return <>{component} ;</>;
+  return <>{component}</>;
 };
 
 export const OnlyAuth = ({ component }: TProtectedProps) => {
