@@ -5,8 +5,21 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useLocation } from 'react-router';
+import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 
 const FeedDetails = () => {
+  // const { data } = useSelector(
+  //   (store) =>
+  //     store.ingredients,
+  // );
+  // const ingredientId = window.location.pathname.split('/').pop();
+
+  // const selectedOrder = data.find(
+  //   (ingredient) => ingredient._id === ingredientId,
+  // );
+  // const location = useLocation();
+
   const today = new Date();
   const yesterday = new Date(
     today.getFullYear(),

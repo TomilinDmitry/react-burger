@@ -109,10 +109,10 @@ export const getEmailForgotPassword = (
       email: email,
     }),
   })
-    .then(checkResponse<TUser>)
+    .then(checkResponse<TServerResponse<TUser>>)
     .then((data) => {
-      return data;
-      // return Promise.reject(data);
+      if (data?.success) return data;
+      return Promise.reject(data);
     });
 };
 

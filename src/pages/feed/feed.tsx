@@ -2,25 +2,20 @@ import React from 'react';
 import style from './feed.module.css';
 import OrderCard from '../../components/UI/OrderCard';
 import { Link } from 'react-router-dom';
+import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 
 const Feed = () => {
+  const {orderList} = useSelector(state=>state.getOrderList)
   return (
     <div className={style.container}>
       <section className={style.title}>Лента заказов</section>
       <div className={style.mainContainer}>
         <div className={style.orderBlock}>
-          <Link key={'id'} to={`/feed/id`} className={style.link}>
-            <OrderCard />
+        {orderList.map(order => (
+          <Link key={order.id} to={`/profile/orders/${order.id}`} className={style.link}>
+            <OrderCard order={order}  />
           </Link>
-          <Link key={'id'} to={`/feed/id`} className={style.link}>
-            <OrderCard />
-          </Link>
-          <Link key={'id'} to={`/feed/id`} className={style.link}>
-            <OrderCard />
-          </Link>
-          <Link key={'id'} to={`/feed/id`} className={style.link}>
-            <OrderCard />
-          </Link>
+        ))}
         </div>
         <div className={style.orderCounter}>
           <div className={style.readyAndAtWorkOrders}>

@@ -82,7 +82,7 @@ function App() {
               element={<OnlyAuth component={<OrdersHistory />} />}
             />
             <Route
-              path="/profile/orders/id"
+              path="/profile/orders/:id"
               element={<OnlyAuth component={<FeedDetails />} />}
             />
             <Route
@@ -90,7 +90,7 @@ function App() {
               element={<OnlyAuth component={<Profile />} />}
             />
             <Route path="/feed" element={<Feed />} />
-            <Route path="/feed/id" element={<FeedDetails />} />
+            <Route path="/feed/:id" element={<FeedDetails />} />
           </Routes>
         )}
         {background && (

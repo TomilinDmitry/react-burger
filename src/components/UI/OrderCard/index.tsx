@@ -5,32 +5,32 @@ import {
 import React from 'react';
 import style from './style.module.css';
 import bun_1 from '../../../images/ingredient preview.svg';
+import { TElements } from '../../../utils/Types/TElements';
+import { IGetOrder } from '../../../services/get-order/slice';
 interface IorderCardProps {
   showStatus?: boolean;
-  status?: string;
+  order: IGetOrder
 }
-const OrderCard = ({ showStatus, status }: IorderCardProps) => {
+const OrderCard = ({ showStatus, order }: IorderCardProps) => {
   return (
     <div className={style.orderCard}>
       <p className={style.orderNumberBlock}>
         <span
           className={`text text_type_digits-default ${style.orderNumber}`}
         >
-          #034535
+          {order.number}
         </span>
         <span className={style.time}>
           <FormattedDate date={new Date()} />
         </span>
       </p>
       <section className={style.titleOrderCard}>
-        <span className="text text_type_main-medium">
-          Death Star Starship Main бургер
-        </span>
-        {showStatus && status && (
+        <span className="text text_type_main-medium">{order.status}</span>
+        {showStatus && order.status && (
           <span
             className={`text text_type_main-medium ${style.orderStatus}`}
           >
-            {status}
+            {order.status}
           </span>
         )}
       </section>

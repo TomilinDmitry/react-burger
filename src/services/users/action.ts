@@ -3,7 +3,6 @@ import {setUser, setAuthChecked} from "./user";
 import {api, getEmailForgotPassword, getUserProfile, setNewPassword, updateInfo} from "../../utils/Api/api-ingredients";
 import { AppDispatch } from "../..";
 import { TUser } from "../../utils/Types/TUser";
-import { TToken } from "../../utils/Types/TToken";
 export const getUser = () => {
     return (dispatch:AppDispatch) => {
         return getUserProfile().then((res) => {
