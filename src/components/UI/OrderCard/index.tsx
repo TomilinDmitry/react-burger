@@ -2,79 +2,79 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import style from './style.module.css';
 import bun_1 from '../../../images/ingredient preview.svg';
 
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
-import { IOrderList } from '../../../services/get-order/slice';
+import {
+  Order,
+  OrdersPayload,
+} from '../../../services/get-order/slice';
+import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
+
 interface IorderCardProps {
   showStatus?: boolean;
-  order: IOrderList
+  order: Order;
 }
+
 const OrderCard = ({ showStatus, order }: IorderCardProps) => {
   const location = useLocation();
-  const number = order.order.number
+  const number = order.number;
+  const ingredients = useSelector((state) => state.ingredients.data);
+  const price = order.ingredients.reduce((acc, item) => {
+    const foundIngredient = ingredients.find(
+      (ingredient) => ingredient._id === item,
+    );
+    return acc + (foundIngredient!.price ?? 0) ;
+  }, 0);
   return (
     <Link
-    key={number}
-    to={`/feed/${number}`}
-    state={{ background: location }}
-    className={style.link}
-  >
-    <div className={style.orderCard}>
-      <p className={style.orderNumberBlock}>
-        <span
-          className={`text text_type_digits-default ${style.orderNumber}`}
-        >
-          {order.order.number}
-        </span>
-        <span className={style.time}>
-          <FormattedDate date={new Date()} />
-        </span>
-      </p>
-      <section className={style.titleOrderCard}>
-        <span className="text text_type_main-medium">{order.order.status}</span>
-        {showStatus && order.order.status && (
+      key={number}
+      to={`/feed/${number}`}
+      state={{ background: location }}
+      className={style.link}
+    >
+      <div className={style.orderCard}>
+        <p className={style.orderNumberBlock}>
           <span
-            className={`text text_type_main-medium ${style.orderStatus}`}
+            className={`text text_type_digits-default ${style.orderNumber}`}
           >
-            {order.order.status}
+            #{order.number}
           </span>
-        )}
-      </section>
-      <div className={style.ingredientsOrder}>
-        <div className={style.ingredientIcons}>
-          <img
-            className={`${style.icons} ${style.element1}`}
-            src={bun_1}
-            alt="bun"
-          />
-          <img
-            className={`${style.icons} ${style.element2}`}
-            src={bun_1}
-            alt="bun"
-          />
-          <img
-            className={`${style.icons} ${style.element3}`}
-            src={bun_1}
-            alt="bun"
-          />
-          <img
-            className={`${style.icons} ${style.element4}`}
-            src={bun_1}
-            alt="bun"
-          />
+          <span className={style.time}>
+            <FormattedDate date={new Date(order.createdAt)} />
+          </span>
+        </p>
+        <section className={style.titleOrderCard}>
+          <span className="text text_type_main-medium">
+            {order.name}
+          </span>
+          {showStatus && order.status && (
+            <span
+              className={`text text_type_main-medium ${style.orderStatus}`}
+            >
+              {order.status}
+            </span>
+          )}
+        </section>
+        <div className={style.ingredientsOrder}>
+          <div className={style.ingredientIcons}>
+            <img
+              className={`${style.icons} ${style.element1}`}
+              src={bun_1}
+              alt="bun"
+            />
+          </div>
+          <span
+            className={`text text_type_digits-default ${style.orderPrice}`}
+          >
+            {price}
+            <CurrencyIcon type="primary" />
+          </span>
         </div>
-        <span
-          className={`text text_type_digits-default ${style.orderPrice}`}
-        >
-          480
-          <CurrencyIcon type="primary" />
-        </span>
       </div>
-    </div>
     </Link>
   );
 };

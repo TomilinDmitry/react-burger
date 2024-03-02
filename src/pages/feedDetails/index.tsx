@@ -8,23 +8,24 @@ import {
 import { useLocation } from 'react-router';
 import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 import { TElements } from '../../utils/Types/TElements';
-import { IOrderList } from '../../services/get-order/slice';
+import { Order } from '../../services/get-order/slice';
 
-type TProps = {
-  order:IOrderList
-};
-
-const FeedDetails = ({ order }: TProps) => {
-  const { data } = useSelector(
+type TOrder={
+order:Order
+}
+const FeedDetails = ({order}:TOrder) => {
+  const { orders } = useSelector(
     (store) =>
-      store.ingredients,
+      store.getOrderList,
   );
-  const ingredientId = window.location.pathname.split('/').pop();
 
-  const selectedOrder = data.find(
-    (ingredient) => ingredient._id === ingredientId,
+  const number = window.location.pathname.split('/').pop();
+
+  const selectedOrder = orders.find(
+    (order) => order._id === number,
   );
   const location = useLocation();
+  const isModalOnSite = location.state && location.state.background;
 
   const today = new Date();
   const yesterday = new Date(
@@ -36,7 +37,13 @@ const FeedDetails = ({ order }: TProps) => {
     0,
   );
   return (
-    <div className={style.container}>
+   <div
+      className={`${
+        isModalOnSite ? style.container : style.onLink
+      }`}
+    >
+      {selectedOrder && (
+        <>
       <p className={`text text_type_digits-default mb-10`}>#034533</p>
       <p className={`text text_type_main-medium ${style.title}`}>
         Black Hole Singularity острый бургер
@@ -48,14 +55,9 @@ const FeedDetails = ({ order }: TProps) => {
         Состав:
       </p>
       <div className={style.burgerIngedientStructure}>
-        <IngredientElementStructure />
-        <IngredientElementStructure />
-        <IngredientElementStructure />
-        <IngredientElementStructure />
-        <IngredientElementStructure />
-        <IngredientElementStructure />
-        <IngredientElementStructure />
-        <IngredientElementStructure />
+        {order.ingredients.map((ing)=>(
+          <IngredientElementStructure key={ing} />
+        ))}
       </div>
       <p className={style.orderTime}>
         <span className={style.time}>
@@ -65,6 +67,8 @@ const FeedDetails = ({ order }: TProps) => {
           510 <CurrencyIcon type="primary" />
         </span>
       </p>
+      </>
+      )}
     </div>
   );
 };

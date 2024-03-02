@@ -58,7 +58,9 @@
 .orderList {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   align-items: flex-start;
+  max-height: 160px;
   margin: 0;
   gap: 8px;
 }
@@ -95,6 +97,6 @@
     0px 0px 16px rgba(51, 51, 255, 0.25);
   color: rgba(242, 242, 243, 1);
 }
-.link{
+.link {
   display: block;
 }

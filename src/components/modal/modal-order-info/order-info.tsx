@@ -3,14 +3,15 @@ import style from './order-info.module.css';
 import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 import { useLocation } from 'react-router-dom';
 import IngredientElementStructure from '../../UI/IngredientElementStructure';
+import FeedDetails from '../../../pages/feedDetails';
 
 const OrderDetailsModal = () => {
-  const { orderList } = useSelector((store) => store.getOrderList);
+  const { orders } = useSelector((store) => store.getOrderList);
 
   const number = window.location.pathname.split('/').pop();
 
-  const selectedOrder = orderList.find(
-    (order) => (order.order.number = number),
+  const selectedOrder = orders.find(
+    (order) => order.number === number,
   );
   const location = useLocation();
   const isModalOnSite = location.state && location.state.background;
@@ -23,12 +24,10 @@ const OrderDetailsModal = () => {
     >
       {selectedOrder && (
         <div
-          // key={selectedOrder.order.id}
+          key={selectedOrder._id}
           className={style.modalContainerInfo}
         >
-          {orderList.map((order) => (
-            <IngredientElementStructure order={order} />
-          ))}
+          <FeedDetails order={selectedOrder} />
         </div>
       )}
     </div>

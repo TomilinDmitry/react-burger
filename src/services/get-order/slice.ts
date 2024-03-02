@@ -1,28 +1,32 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TElements } from '../../utils/Types/TElements';
 
-export interface IOrder {
-  id: string;
-  createdAt: string;
-  ingredients: TElements[];
-  number: string|undefined;
+export interface Order {
+  _id: string;
+  ingredients: string[];
   status: string;
+  name: string;
+  createdAt: string;
   updatedAt: string;
+  number: number|string|undefined;
 }
-export interface IOrderList{
-success:boolean
-order:IOrder
-total:number,
-totalToday:number
+export interface OrdersPayload {
+  orders: Order[];
+  total: number;
+  totalToday: number;
+}
+interface OrdersState {
+  orders: Order[];
+  total: number;
+  totalToday: number;
+  connectingError: string | null;
+  wsConnected: boolean;
 }
 
-type TState = {
-  wsConnected: boolean;
-  orderList:IOrderList[] ;
-  connectingError: string | null;
-};
-const initialState: TState = {
-  orderList: [],
+const initialState: OrdersState = {
+  orders: [],
+  total: 0,
+  totalToday: 0,
   connectingError: null,
   wsConnected: false,
 };
@@ -37,8 +41,10 @@ export const getOrderSlice = createSlice({
     wsConnectionError: (state, action: PayloadAction<string>) => {
       state.connectingError = action.payload;
     },
-    wsMessage: (state, action: PayloadAction<IOrder>) => {
-      state.orderList = [...state.orderList, { success: true, order: action.payload, total: 0, totalToday: 0 }];
+    wsMessage: (state, action: PayloadAction<OrdersPayload>) => {
+      state.orders = action.payload.orders;
+      state.total = action.payload.total;
+      state.totalToday = action.payload.totalToday;
       state.connectingError = null;
     },
     wsDisconnect: (state) => {

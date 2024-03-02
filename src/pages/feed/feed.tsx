@@ -2,16 +2,17 @@ import React from 'react';
 import style from './feed.module.css';
 import OrderCard from '../../components/UI/OrderCard';
 import { useSelector } from '../../utils/Types/hooks/typed-hooks';
-import { wsMessage } from '../../services/get-order/slice';
 const Feed = () => {
-  const { orderList } = useSelector((state) => state.getOrderList);
+  const { orders, total, totalToday } = useSelector(
+    (state) => state.getOrderList,
+  );
   return (
     <div className={style.container}>
       <section className={style.title}>Лента заказов</section>
       <div className={style.mainContainer}>
         <div className={style.orderBlock}>
-          {orderList.map((order) => (
-            <OrderCard order={order} key={order.order.id} />
+          {orders.map((order) => (
+            <OrderCard order={order} key={order._id} />
           ))}
         </div>
         <div className={style.orderCounter}>
@@ -19,34 +20,27 @@ const Feed = () => {
             <div className={style.readyOrder}>
               <span className={style.titleReadyOrder}>Готовы:</span>
               <p className={style.orderList}>
-                {orderList.map((order) => (
+                {orders.slice(-10).map((order) => (
                   <span
                     className="text text_type_digits-default"
-                    key={order.order.id}
+                    key={order._id}
                   >
-                    {order.order.number}
+                    {order.number}
                   </span>
                 ))}
               </p>
             </div>
             <div className={style.atWork}>
-              <span className={style.titleReadyOrder}>Готовы:</span>
+              <span className={style.titleReadyOrder}>Готовятся:</span>
               <p className={style.orderListAtWork}>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
+                {orders.slice(-10).map((order) => (
+                  <span
+                    className="text text_type_digits-default"
+                    key={order._id}
+                  >
+                    {order.status !== 'done' ? order.number : ''}
+                  </span>
+                ))}
               </p>
             </div>
           </div>
@@ -59,7 +53,7 @@ const Feed = () => {
             <span
               className={`text text_type_digits-large ${style.ordersForAllTimeCounter}`}
             >
-              28 752
+              {totalToday}
             </span>
           </p>
           <p className={style.ordersForAllTimeBlock}>
@@ -71,7 +65,7 @@ const Feed = () => {
             <span
               className={`text text_type_digits-large ${style.ordersForAllTimeCounter}`}
             >
-              138
+              {totalToday}
             </span>
           </p>
         </div>

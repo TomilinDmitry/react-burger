@@ -9,8 +9,8 @@ export const baseUrl = 'https://norma.nomoreparties.space/api';
 
 type TServerResponse<T> = {
   success: boolean;
-  data:T
-  order:T
+  data: T;
+  order: T;
 } & T;
 
 const checkResponse = <T>(res: Response): Promise<T> => {
@@ -23,7 +23,9 @@ export const getIngredient = createAsyncThunk(
   'asyncIngredient',
   async () => {
     const response = await fetch(`${baseUrl}/ingredients`);
-    const data = await checkResponse<TServerResponse<TElements[]>>(response);
+    const data = await checkResponse<TServerResponse<TElements[]>>(
+      response,
+    );
     return data.data;
   },
 );
@@ -48,7 +50,6 @@ export const getOrderBurgerInfo = (
   })
     .then(checkResponse<TServerResponse<TOrderInfo>>)
     .then((data) => {
-      console.log(data);
       if (data?.success) return data.order;
       return Promise.reject(data);
     });

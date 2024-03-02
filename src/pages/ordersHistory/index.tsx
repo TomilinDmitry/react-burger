@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 
 const OrdersHistory = () => {
-const {orderList} = useSelector(state=>state.getOrderList)
+const {orders} = useSelector(state=>state.getOrderList)
   return (
     <div className={style.container}>
       <div className={style.profileListBlock}>

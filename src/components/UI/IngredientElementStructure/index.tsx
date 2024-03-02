@@ -2,10 +2,11 @@ import React from 'react';
 import style from './style.module.css';
 import bun_1 from '../../../images/ingredient preview.svg';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IOrderList } from '../../../services/get-order/slice';
+import { Order } from '../../../services/get-order/slice';
+
 
 type TIngredientELementProps = {
-  order?:IOrderList
+  order?: Order
 }
 const IngredientElementStructure = ({order}:TIngredientELementProps) => {
   return (
@@ -18,7 +19,7 @@ const IngredientElementStructure = ({order}:TIngredientELementProps) => {
       <p
         className={`${style.ingredientName} text text_type_main-default`}
       >
-        {order?.order.number}
+        {order!.number}
       </p>
       <p
         className={`${style.countIngredients} text text_type_main-default`}

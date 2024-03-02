@@ -100,14 +100,14 @@ function App() {
         )}
         {background && (
           <Routes>
-            <Route
+            {/* <Route
               path="/ingredients/:ingredientId"
               element={
                 <Modal close={handleModalClose}>
                   <IngredientDetails />
                 </Modal>
               }
-            />
+            /> */}
             <Route
               path="/feed/:number"
               element={
