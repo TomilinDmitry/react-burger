@@ -31,7 +31,7 @@ function AppHeader() {
             }
           >
             <BurgerIcon type="primary" />
-            <p className={`text text_type_main-default ml-2`}>
+            <p className={`text text_type_main-default ml-2`} onClick={disconnectSocket}>
               Конструктор
             </p>
           </NavLink>

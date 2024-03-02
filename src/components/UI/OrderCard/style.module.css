@@ -9,7 +9,7 @@
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.04),
     0px 0px 2px 0px rgba(0, 0, 0, 0.06),
     0px 4px 8px 0px rgba(0, 0, 0, 0.04);
-    margin-right: 8px;
+  margin-right: 8px;
 }
 .orderNumberBlock {
   display: flex;
@@ -68,9 +68,11 @@
   align-items: center;
   gap: 8px;
 }
-.link{
+.link {
   display: block;
+  text-decoration: none;
+  color: inherit;
 }
-.orderStatus{
+.orderStatus {
   margin-top: 8px;
 }

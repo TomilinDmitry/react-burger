@@ -1,42 +1,32 @@
 import React from 'react';
 import style from './feed.module.css';
 import OrderCard from '../../components/UI/OrderCard';
-import { Link } from 'react-router-dom';
 import { useSelector } from '../../utils/Types/hooks/typed-hooks';
-
+import { wsMessage } from '../../services/get-order/slice';
 const Feed = () => {
-  const {orderList} = useSelector(state=>state.getOrderList)
+  const { orderList } = useSelector((state) => state.getOrderList);
   return (
     <div className={style.container}>
       <section className={style.title}>Лента заказов</section>
       <div className={style.mainContainer}>
         <div className={style.orderBlock}>
-        {orderList.map(order => (
-          <Link key={order.id} to={`/profile/orders/${order.id}`} className={style.link}>
-            <OrderCard order={order}  />
-          </Link>
-        ))}
+          {orderList.map((order) => (
+            <OrderCard order={order} key={order.order.id} />
+          ))}
         </div>
         <div className={style.orderCounter}>
           <div className={style.readyAndAtWorkOrders}>
             <div className={style.readyOrder}>
               <span className={style.titleReadyOrder}>Готовы:</span>
               <p className={style.orderList}>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
-                <span className="text text_type_digits-default">
-                  034533
-                </span>
+                {orderList.map((order) => (
+                  <span
+                    className="text text_type_digits-default"
+                    key={order.order.id}
+                  >
+                    {order.order.number}
+                  </span>
+                ))}
               </p>
             </div>
             <div className={style.atWork}>

@@ -5,32 +5,42 @@ import {
 import React from 'react';
 import style from './style.module.css';
 import bun_1 from '../../../images/ingredient preview.svg';
-import { TElements } from '../../../utils/Types/TElements';
-import { IGetOrder } from '../../../services/get-order/slice';
+
+import { useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
+import { IOrderList } from '../../../services/get-order/slice';
 interface IorderCardProps {
   showStatus?: boolean;
-  order: IGetOrder
+  order: IOrderList
 }
 const OrderCard = ({ showStatus, order }: IorderCardProps) => {
+  const location = useLocation();
+  const number = order.order.number
   return (
+    <Link
+    key={number}
+    to={`/feed/${number}`}
+    state={{ background: location }}
+    className={style.link}
+  >
     <div className={style.orderCard}>
       <p className={style.orderNumberBlock}>
         <span
           className={`text text_type_digits-default ${style.orderNumber}`}
         >
-          {order.number}
+          {order.order.number}
         </span>
         <span className={style.time}>
           <FormattedDate date={new Date()} />
         </span>
       </p>
       <section className={style.titleOrderCard}>
-        <span className="text text_type_main-medium">{order.status}</span>
-        {showStatus && order.status && (
+        <span className="text text_type_main-medium">{order.order.status}</span>
+        {showStatus && order.order.status && (
           <span
             className={`text text_type_main-medium ${style.orderStatus}`}
           >
-            {order.status}
+            {order.order.status}
           </span>
         )}
       </section>
@@ -65,6 +75,7 @@ const OrderCard = ({ showStatus, order }: IorderCardProps) => {
         </span>
       </div>
     </div>
+    </Link>
   );
 };
 

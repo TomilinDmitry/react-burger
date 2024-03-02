@@ -29,6 +29,8 @@ import { checkUserAuth } from '../../services/users/action';
 import Feed from '../../pages/feed/feed';
 import FeedDetails from '../../pages/feedDetails';
 import OrdersHistory from '../../pages/ordersHistory';
+import OrderDetails from '../modal/order-modal/order-modal';
+import OrderDetailsModal from '../modal/modal-order-info/order-info';
 
 function App() {
   const dispatch = useDispatch();
@@ -82,15 +84,18 @@ function App() {
               element={<OnlyAuth component={<OrdersHistory />} />}
             />
             <Route
-              path="/profile/orders/:id"
-              element={<OnlyAuth component={<FeedDetails />} />}
+              path="/profile/orders/:number"
+              element={<OnlyAuth component={<OrderDetailsModal />} />}
             />
             <Route
               path="/profile"
               element={<OnlyAuth component={<Profile />} />}
             />
             <Route path="/feed" element={<Feed />} />
-            <Route path="/feed/:id" element={<FeedDetails />} />
+            <Route
+              path="/feed/:number"
+              element={<OrderDetailsModal />}
+            />
           </Routes>
         )}
         {background && (
@@ -100,6 +105,14 @@ function App() {
               element={
                 <Modal close={handleModalClose}>
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path="/feed/:number"
+              element={
+                <Modal close={handleModalClose}>
+                  <OrderDetailsModal />
                 </Modal>
               }
             />
