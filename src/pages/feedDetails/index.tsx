@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
 import style from './style.module.css';
 
@@ -6,7 +7,6 @@ import {
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useParams } from 'react-router';
-import bun from '../../images/ingredient preview.svg';
 import {
   useDispatch,
   useSelector,
@@ -20,6 +20,7 @@ const FeedDetails = () => {
   const dispatch = useDispatch();
 
   const ingredients = useSelector((store) => store.ingredients.data);
+  // const orderNumber = useSelector((store)=> store.currentOrderSlice.order)
 
   const { number } = useParams();
   const selectedOrder = useSelector((state) => {
@@ -65,7 +66,6 @@ const FeedDetails = () => {
     }
   }, []);
   const isModalOnSite = location.state && location.state.background;
-
   return (
     <div
       className={`${isModalOnSite ? style.container : style.onLink}`}
@@ -92,6 +92,7 @@ const FeedDetails = () => {
       >
         {selectedIngredients.map((ing) => (
           <IngredientElementStructure
+            key={ing._id}
             ing={ing}
             count={idCounts[ing._id]}
           />

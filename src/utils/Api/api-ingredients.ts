@@ -13,6 +13,11 @@ type TServerResponse<T> = {
   order: T;
 } & T;
 
+export interface LoginResponse {
+  user: TUser;
+  accessToken: string;
+  refreshToken: string;
+}
 const checkResponse = <T>(res: Response): Promise<T> => {
   return res.ok
     ? res.json()
@@ -195,7 +200,7 @@ export const register = (
 export const login = (
   email: string,
   password: string,
-): Promise<TUser & TToken> => {
+): Promise<LoginResponse> => {
   return fetch(`${baseUrl}/auth/login`, {
     method: 'POST',
     headers: {
@@ -207,7 +212,7 @@ export const login = (
       token: localStorage.getItem('refreshToken'),
     }),
   })
-    .then(checkResponse<TServerResponse<TUser & TToken>>)
+    .then(checkResponse<TServerResponse<LoginResponse>>)
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);

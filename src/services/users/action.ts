@@ -11,6 +11,7 @@ import {
 import { AppDispatch } from '../..';
 import { TUser } from '../../utils/Types/TUser';
 export const getUser = () => {
+  
   return (dispatch: AppDispatch) => {
     return getUserProfile().then((res) => {
       dispatch(setUser(res));
@@ -21,13 +22,13 @@ export const fetchOrderById = createAsyncThunk(
   'orders/fetchOrderById',
   async (order: number) => {
     const response = await getOrderByNumber(order);
-    return response.number;
+    return response;
   },
 );
 export const setNewInfoUser = createAsyncThunk(
   'user/updateInfo',
   async ({ name, email, password }: TUser) => {
-    const response = await updateInfo(email, name, password);
+    const response = await updateInfo(email, name!, password);
     return response;
   },
 );
@@ -35,7 +36,7 @@ export const setNewInfoUser = createAsyncThunk(
 export const register = createAsyncThunk(
   'user/register',
   async ({ email, password, name }: TUser) => {
-    const res = await api.register(email, password, name);
+    const res = await api.register(email, password, name!);
     localStorage.setItem('accessToken', res.accessToken);
     localStorage.setItem('refreshToken', res.refreshToken);
     return res;

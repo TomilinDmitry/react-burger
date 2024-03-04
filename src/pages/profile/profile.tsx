@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import style from './profile.module.css';
 import {
   Button,
@@ -15,25 +15,32 @@ import ProfileNavigation from '../../components/UI/ProfileTabs';
 
 const Profile = () => {
   const { user } = useSelector((state) => state.user);
-  const [emailValue, setEmailValue] = useState(user!.email);
+  const dispatch = useDispatch();
+  const [emailValue, setEmailValue] = useState<string>('');
+  const [passwordValue, setPasswordValue] =
+    useState<string>('12345qq');
+  const [inputValue, setInputValue] = useState<string>('');
+  useEffect(() => {
+    if (user) {
+      setEmailValue(user.email || '');
+      setInputValue(user.name || '');
+    }
+  }, [user]);
+
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
-  const [passwordValue, setPasswordValue] = useState('12345qq');
+
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
-  const [inputValue, setInputValue] = useState(user!.name);
-
-  const dispatch = useDispatch();
-  const returnBack = () => {
-    // eslint-disable-next-line no-sequences
-    return setInputValue(user!.name), setEmailValue(user!.email);
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
+
   const saveNewInfo = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(
-      // @ts-ignore
       setNewInfoUser({
         email: emailValue,
         name: inputValue,
@@ -41,6 +48,12 @@ const Profile = () => {
       }),
     );
   };
+
+  const returnBack = () => {
+    setInputValue(user?.name || '');
+    setEmailValue(user?.email || '');
+  };
+
   return (
     <div className={style.container}>
       <div className={style.profileListBlock}>
@@ -48,14 +61,14 @@ const Profile = () => {
       </div>
       <form onSubmit={saveNewInfo} className={style.inputBlock}>
         <Input
-          type={'text'}
-          placeholder={'Имя'}
-          onChange={(e) => setInputValue(e.target.value)}
+          type="text"
+          placeholder="Имя"
+          onChange={onChangeName}
           value={inputValue}
-          name={'name'}
+          name="name"
           error={false}
-          errorText={'Ошибка'}
-          size={'default'}
+          errorText="Ошибка"
+          size="default"
           icon="EditIcon"
         />
         <EmailInput
@@ -70,11 +83,15 @@ const Profile = () => {
             onChange={onChangePassword}
           />
         </div>
-        {(inputValue !== user!.name ||
-          emailValue !== user!.email ||
+        {(inputValue !== user?.name ||
+          emailValue !== user?.email ||
           passwordValue !== '12345qq') && (
           <div className={style.buttons}>
-            <button className={style.back} onClick={returnBack}>
+            <button
+              type="button"
+              className={style.back}
+              onClick={returnBack}
+            >
               Отмена
             </button>
             <Button htmlType="submit">Сохранить</Button>

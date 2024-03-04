@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, logout } from './action';
-import { RootTypes } from '../../utils/Types/RootTypes';
 
-type IngredientsState = RootTypes['user'];
+import { TUser } from '../../utils/Types/TUser';
+
+type IngredientsState = {
+  user: TUser | null;
+  isAuthChecked: boolean;
+};
 const initialState: IngredientsState = {
   user: null,
   isAuthChecked: false,
@@ -16,13 +20,13 @@ export const userSlice = createSlice({
       state.isAuthChecked = action.payload;
     },
     setUser: (state, action) => {
-      state.user = action.payload;
+      state.user = action.payload.user;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = action.payload.user;
         state.isAuthChecked = true;
       })
       .addCase(logout.fulfilled, (state) => {

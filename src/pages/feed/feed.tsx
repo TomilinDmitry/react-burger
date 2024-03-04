@@ -6,26 +6,37 @@ import {
   useSelector,
 } from '../../utils/Types/hooks/typed-hooks';
 import { connect, disconnect } from '../../services/socket/action';
+import { Link, useLocation } from 'react-router-dom';
 const Feed = () => {
   const { orders, total, totalToday } = useSelector(
     (state) => state.getOrderList,
   );
-  const LIVE_ORDER_URL = 'wss://norma.nomoreparties.space/orders/all';
-  const dispatch = useDispatch();
+  const FEED_ORDER_URL = 'wss://norma.nomoreparties.space/orders/all';
 
+  const dispatch = useDispatch();
+  const location = useLocation();
   useEffect(() => {
-    dispatch(connect(LIVE_ORDER_URL));
+    dispatch(connect(FEED_ORDER_URL));
     return () => {
       dispatch(disconnect());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className={style.container}>
       <section className={style.title}>Лента заказов</section>
       <div className={style.mainContainer}>
         <div className={style.orderBlock}>
           {orders.map((order) => (
-            <OrderCard order={order} key={order._id} />
+            <Link
+              key={order.number}
+              to={`/feed/${order.number}`}
+              state={{ background: location }}
+              className={style.link}
+            >
+              <OrderCard order={order} key={order._id} />
+            </Link>
           ))}
         </div>
         <div className={style.orderCounter}>
@@ -53,7 +64,7 @@ const Feed = () => {
                     className="text text_type_digits-default"
                     key={order._id}
                   >
-                    {order.status !== 'done' ? order.number : ''}
+                    {order.status === 'pending' ? order.number : ''}
                   </span>
                 ))}
               </p>
