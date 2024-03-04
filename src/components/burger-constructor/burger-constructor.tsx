@@ -50,12 +50,15 @@ const BurgerConstructor = () => {
     },
   });
 
-  const totalOrderPrice:number = useMemo(() => {
+  const totalOrderPrice: number = useMemo(() => {
     if (bun === null) {
-      return draggedElements.reduce((sum:number, ing:TElements) => sum + ing.price, 0);
+      return draggedElements.reduce(
+        (sum: number, ing: TElements) => sum + ing.price,
+        0,
+      );
     } else {
       return draggedElements.reduce(
-        (sum, ing:TElements) => sum + ing.price,
+        (sum, ing: TElements) => sum + ing.price,
         bun.price * 2,
       );
     }
@@ -65,7 +68,7 @@ const BurgerConstructor = () => {
     if (bun && draggedElements.length > 0) {
       setIsOpen(true);
       //@ts-ignore
-      dispatch(asyncOrder([...draggedElements]));
+      dispatch(asyncOrder([...draggedElements,bun]));
     } else {
       alert('Добавьте обязательные ингредиенты');
     }
@@ -118,15 +121,12 @@ const BurgerConstructor = () => {
         </Button>
       </section>
       {isOpen && orderName && (
-        <Modal
-          title="Детали заказа"
-          close={onClose}
-        >
+        <Modal title="Детали заказа" close={onClose}>
           <OrderDetails />
         </Modal>
       )}
     </aside>
   );
-}
+};
 
 export default BurgerConstructor;

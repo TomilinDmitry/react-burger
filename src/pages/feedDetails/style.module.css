@@ -1,6 +1,6 @@
 .container {
   margin: 0 auto;
-  margin-top: 122px;
+  margin-top: -100px;
   max-width: 640px;
   width: 640px;
   max-height: 620px;
@@ -25,7 +25,7 @@
   flex-direction: column;
   gap: 16px;
   overflow-y: scroll;
-  max-height: 275px;
+  max-height: 205px;
   height: 275px;
   margin-bottom: 40px;
 }
@@ -44,4 +44,35 @@
 }
 p {
   margin: 0;
+}
+.ingredientCard {
+  display: flex;
+  width: 608px;
+  height: 64px;
+  border: 2px;
+  gap: 16px;
+}
+.ingredientCard img {
+  display: flex;
+  margin-left: -25px;
+  width: 112px;
+  height: 56px;
+}
+.ingredientName {
+  display: flex;
+  align-items: center;
+  max-width: 414px;
+  width: 414px;
+}
+.countIngredients{
+    display: flex;
+    align-items:center;
+    gap: 8px;
+    width: 98px;
+}
+.onLink{
+  width: 600px;
+}
+.onLinkStructure{
+height: 500px;
 }

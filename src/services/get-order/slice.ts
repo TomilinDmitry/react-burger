@@ -8,7 +8,7 @@ export interface Order {
   name: string;
   createdAt: string;
   updatedAt: string;
-  number: number|string|undefined;
+  number: number
 }
 export interface OrdersPayload {
   orders: Order[];

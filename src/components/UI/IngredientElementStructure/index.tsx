@@ -1,30 +1,35 @@
 import React from 'react';
 import style from './style.module.css';
-import bun_1 from '../../../images/ingredient preview.svg';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Order } from '../../../services/get-order/slice';
 
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { TElements } from '../../../utils/Types/TElements';
 
 type TIngredientELementProps = {
-  order?: Order
-}
-const IngredientElementStructure = ({order}:TIngredientELementProps) => {
+  ing: TElements;
+  count?: number;
+};
+const IngredientElementStructure = ({
+  ing,
+  count,
+}: TIngredientELementProps) => {
+
   return (
     <div className={style.ingredientCard}>
       <img
         className={`${style.icons} ${style.element1}`}
-        src={bun_1}
-        alt="bun"
+        src={ing.image_mobile}
+        alt="Ingredient"
       />
       <p
         className={`${style.ingredientName} text text_type_main-default`}
       >
-        {order!.number}
+        {ing.name}
       </p>
       <p
         className={`${style.countIngredients} text text_type_main-default`}
       >
-        2 x 20 <CurrencyIcon type="primary" />
+        {count} x {ing.price} <CurrencyIcon type="primary" />
       </p>
     </div>
   );

@@ -29,7 +29,6 @@ import { checkUserAuth } from '../../services/users/action';
 import Feed from '../../pages/feed/feed';
 import FeedDetails from '../../pages/feedDetails';
 import OrdersHistory from '../../pages/ordersHistory';
-import OrderDetails from '../modal/order-modal/order-modal';
 import OrderDetailsModal from '../modal/modal-order-info/order-info';
 
 function App() {
@@ -85,7 +84,7 @@ function App() {
             />
             <Route
               path="/profile/orders/:number"
-              element={<OnlyAuth component={<OrderDetailsModal />} />}
+              element={<OnlyAuth component={<FeedDetails />} />}
             />
             <Route
               path="/profile"
@@ -100,14 +99,14 @@ function App() {
         )}
         {background && (
           <Routes>
-            {/* <Route
+            <Route
               path="/ingredients/:ingredientId"
               element={
                 <Modal close={handleModalClose}>
                   <IngredientDetails />
                 </Modal>
               }
-            /> */}
+            />
             <Route
               path="/feed/:number"
               element={

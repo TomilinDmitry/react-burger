@@ -18,7 +18,7 @@
 	align-content: center;
 	align-items: center;
 	justify-content: center;
-	gap: 350px;
+	margin: 0 auto;
 	position: absolute;
   	top: 20px;
 	z-index: 2;

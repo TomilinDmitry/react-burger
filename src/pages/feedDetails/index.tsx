@@ -1,76 +1,113 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import style from './style.module.css';
-import IngredientElementStructure from '../../components/UI/IngredientElementStructure';
+
 import {
   CurrencyIcon,
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useLocation } from 'react-router';
-import { useSelector } from '../../utils/Types/hooks/typed-hooks';
+import { useLocation, useParams } from 'react-router';
+import bun from '../../images/ingredient preview.svg';
+import {
+  useDispatch,
+  useSelector,
+} from '../../utils/Types/hooks/typed-hooks';
+import { fetchOrderById } from '../../services/users/action';
+import IngredientElementStructure from '../../components/UI/IngredientElementStructure';
 import { TElements } from '../../utils/Types/TElements';
-import { Order } from '../../services/get-order/slice';
 
-type TOrder={
-order:Order
-}
-const FeedDetails = ({order}:TOrder) => {
-  const { orders } = useSelector(
-    (store) =>
-      store.getOrderList,
-  );
-
-  const number = window.location.pathname.split('/').pop();
-
-  const selectedOrder = orders.find(
-    (order) => order._id === number,
-  );
+const FeedDetails = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const ingredients = useSelector((store) => store.ingredients.data);
+
+  const { number } = useParams();
+  const selectedOrder = useSelector((state) => {
+    if (number !== undefined) {
+      let order = state.getOrderList.orders.find(
+        (o) => o.number === +number,
+      );
+      return order;
+    } else {
+      return state.currentOrderSlice.order;
+    }
+  });
+  const selectedIngredientIds = selectedOrder?.ingredients;
+
+  const idCounts: { [key: string]: number } = {};
+
+  selectedIngredientIds?.forEach((id) => {
+    if (
+      id === '643d69a5c3f7b9001cfa093d' ||
+      id === '643d69a5c3f7b9001cfa093с'
+    ) {
+      idCounts[id] = (idCounts[id] || 0) + 2;
+    } else {
+      idCounts[id] = (idCounts[id] || 0) + 1;
+    }
+  });
+  const selectedIngredients = ingredients.filter((ingredient) =>
+    selectedIngredientIds?.includes(ingredient._id),
+  );
+  const totalOrderPrice: number = useMemo(() => {
+    return selectedIngredients.reduce(
+      (sum: number, ing: TElements) =>
+        sum + ing.price * idCounts[ing._id],
+      0,
+    );
+  }, [selectedIngredients]);
+
+  useEffect(() => {
+    if (!selectedOrder && number !== undefined) {
+      dispatch(fetchOrderById(+number));
+    } else {
+      <p>Ожидайте....</p>;
+    }
+  }, []);
   const isModalOnSite = location.state && location.state.background;
 
-  const today = new Date();
-  const yesterday = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate() - 1,
-    today.getHours(),
-    today.getMinutes() - 1,
-    0,
-  );
   return (
-   <div
-      className={`${
-        isModalOnSite ? style.container : style.onLink
-      }`}
+    <div
+      className={`${isModalOnSite ? style.container : style.onLink}`}
     >
-      {selectedOrder && (
-        <>
-      <p className={`text text_type_digits-default mb-10`}>#034533</p>
+      <p className={`text text_type_digits-default mb-10`}>
+        #{number}
+      </p>
       <p className={`text text_type_main-medium ${style.title}`}>
-        Black Hole Singularity острый бургер
+        {selectedOrder?.name}
       </p>
       <p className={`${style.status} text text_type_main-default`}>
-        Выполнен
+        {selectedOrder?.status}
       </p>
       <p className={`text text_type_main-medium ${style.structure}`}>
         Состав:
       </p>
-      <div className={style.burgerIngedientStructure}>
-        {order.ingredients.map((ing)=>(
-          <IngredientElementStructure key={ing} />
+
+      <div
+        className={`${
+          isModalOnSite
+            ? style.burgerIngedientStructure
+            : style.onLinkStructure
+        }`}
+      >
+        {selectedIngredients.map((ing) => (
+          <IngredientElementStructure
+            ing={ing}
+            count={idCounts[ing._id]}
+          />
         ))}
       </div>
       <p className={style.orderTime}>
         <span className={style.time}>
-          <FormattedDate date={yesterday} />
+          {selectedOrder?.createdAt && (
+            <FormattedDate date={new Date(selectedOrder.createdAt)} />
+          )}
         </span>
         <span>
-          510 <CurrencyIcon type="primary" />
+          {totalOrderPrice} <CurrencyIcon type="primary" />
         </span>
       </p>
-      </>
-      )}
     </div>
   );
 };
-
 export default FeedDetails;

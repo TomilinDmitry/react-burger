@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from './feed.module.css';
 import OrderCard from '../../components/UI/OrderCard';
-import { useSelector } from '../../utils/Types/hooks/typed-hooks';
+import {
+  useDispatch,
+  useSelector,
+} from '../../utils/Types/hooks/typed-hooks';
+import { connect, disconnect } from '../../services/socket/action';
 const Feed = () => {
   const { orders, total, totalToday } = useSelector(
     (state) => state.getOrderList,
   );
+  const LIVE_ORDER_URL = 'wss://norma.nomoreparties.space/orders/all';
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(connect(LIVE_ORDER_URL));
+    return () => {
+      dispatch(disconnect());
+    };
+  }, []);
   return (
     <div className={style.container}>
       <section className={style.title}>Лента заказов</section>
@@ -31,7 +44,9 @@ const Feed = () => {
               </p>
             </div>
             <div className={style.atWork}>
-              <span className={style.titleReadyOrder}>Готовятся:</span>
+              <span className={style.titleReadyOrder}>
+                Готовятся:
+              </span>
               <p className={style.orderListAtWork}>
                 {orders.slice(-10).map((order) => (
                   <span
@@ -53,7 +68,7 @@ const Feed = () => {
             <span
               className={`text text_type_digits-large ${style.ordersForAllTimeCounter}`}
             >
-              {totalToday}
+              {total}
             </span>
           </p>
           <p className={style.ordersForAllTimeBlock}>

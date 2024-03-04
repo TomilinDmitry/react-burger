@@ -1,5 +1,5 @@
 
 export type TOrderInfo = {
-  name: string;
+  name?: string;
   number: number;
 };

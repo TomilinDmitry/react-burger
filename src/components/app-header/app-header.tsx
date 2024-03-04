@@ -6,14 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './style.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../utils/Types/hooks/typed-hooks';
-import { connect, disconnect } from '../../services/socket/action';
 
 function AppHeader() {
-  const LIVE_ORDER_URL = 'wss://norma.nomoreparties.space/orders/all'
-  const dispatch = useDispatch()
-    const connectSocket = () => dispatch(connect(LIVE_ORDER_URL))
-    const disconnectSocket = () => dispatch(disconnect())
+
   const navigate = useNavigate();
   const onClick = () => {
     navigate('/');
@@ -31,7 +26,7 @@ function AppHeader() {
             }
           >
             <BurgerIcon type="primary" />
-            <p className={`text text_type_main-default ml-2`} onClick={disconnectSocket}>
+            <p className={`text text_type_main-default ml-2`} >
               Конструктор
             </p>
           </NavLink>
@@ -44,7 +39,7 @@ function AppHeader() {
             }
           >
             <ListIcon type="secondary" />
-            <p className={`text text_type_main-default ml-2`} onClick={connectSocket}>
+            <p className={`text text_type_main-default ml-2`}>
               Лента заказов
             </p>
           </NavLink>

@@ -252,7 +252,21 @@ export const getUserProfile = (): Promise<TUser> => {
       return Promise.reject(data);
     });
 };
-
+export const getOrderByNumber = (
+  number: number,
+): Promise<TOrderInfo> => {
+  return fetch(`${baseUrl}/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+  })
+    .then(checkResponse<TServerResponse<TOrderInfo>>)
+    .then((data) => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    });
+};
 export const api = {
   register,
   login,
