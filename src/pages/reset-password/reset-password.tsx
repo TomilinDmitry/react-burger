@@ -22,13 +22,13 @@ const ResetPassword = () => {
   const onClick = async (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await dispatch(
-      // @ts-ignore
+
       resetPassword({
         password: passwordValueFirst,
         token: valueInputSecond,
       }),
     );
-    // @ts-ignore
+      // @ts-ignore
     if (res.payload && res.payload.success) {
       navigate('/login');
     }

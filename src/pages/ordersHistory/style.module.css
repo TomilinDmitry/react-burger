@@ -1,0 +1,22 @@
+.container {
+  /* margin-top: 120px; */
+  display: flex;
+}
+.profileListBlock {
+  margin-top: 120px;
+  margin-left: 340px;
+  margin-right: 60px;
+}
+.orderCardBlock {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+  width: 844px;
+  height: 750px;
+  max-height: 1000px;
+}
+.link {
+  display: block;
+}

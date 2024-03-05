@@ -1,0 +1,25 @@
+.ingredientCard {
+    display: flex;
+    width: 608px;
+    height: 64px;
+    border: 2px;
+    gap: 16px;
+  }
+  .ingredientCard img {
+    display: flex;
+    margin-left: -25px;
+    width: 112px;
+    height: 56px;
+  }
+  .ingredientName {
+    display: flex;
+    align-items: center;
+    max-width: 414px;
+    width: 414px;
+  }
+  .countIngredients{
+      display: flex;
+      align-items:center;
+      gap: 8px;
+      width: 130px;
+  }

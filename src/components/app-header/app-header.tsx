@@ -6,12 +6,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './style.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 
 function AppHeader() {
-  const navigate = useNavigate()
-  const onClick =() =>{
-    navigate('/')
-  }
+  const nameUser = useSelector((state) => state.user.user?.name);
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate('/');
+  };
   return (
     <header>
       <section className={style.container}>
@@ -30,7 +32,7 @@ function AppHeader() {
             </p>
           </NavLink>
           <NavLink
-          to='/order'
+            to="/feed"
             className={({ isActive }) =>
               `pl-5 pr-5 pb-4 pt-4 mb-4 mt-4 ${
                 isActive ? style.active : style.link
@@ -56,12 +58,12 @@ function AppHeader() {
         >
           <ProfileIcon type="secondary" />
           <p className={`text text_type_main-default ml-2`}>
-            Личный кабинет
+            {nameUser ? nameUser : 'Личный кабинет'}{' '}
           </p>
         </NavLink>
       </section>
       <section className={style.mediaContainer}>
-        <section onClick={onClick} >
+        <section onClick={onClick}>
           <Logo />
         </section>
         <nav className={style.navigation}>

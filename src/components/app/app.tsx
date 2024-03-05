@@ -26,6 +26,9 @@ import {
   OnlyUnAuth,
 } from '../protected-route/protected-route';
 import { checkUserAuth } from '../../services/users/action';
+import Feed from '../../pages/feed/feed';
+import OrderDetailsModal from '../modal/modal-order-info/order-info';
+import OrdersHistory from '../../pages/ordersHistory';
 
 function App() {
   const dispatch = useDispatch();
@@ -75,8 +78,21 @@ function App() {
               element={<OnlyUnAuth component={<ResetPassword />} />}
             />
             <Route
+              path="/profile/orders"
+              element={<OnlyAuth component={<OrdersHistory />} />}
+            />
+            <Route
+              path="/profile/order/:number"
+              element={<OnlyAuth component={<OrderDetailsModal />} />}
+            />
+            <Route
               path="/profile"
               element={<OnlyAuth component={<Profile />} />}
+            />
+            <Route path="/feed" element={<Feed />} />
+            <Route
+              path="/feed/:number"
+              element={<OrderDetailsModal />}
             />
           </Routes>
         )}
@@ -87,6 +103,22 @@ function App() {
               element={
                 <Modal close={handleModalClose}>
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route
+              path="/feed/:number"
+              element={
+                <Modal close={handleModalClose}>
+                  <OrderDetailsModal />
+                </Modal>
+              }
+            />
+            <Route
+              path="/profile/order/:number"
+              element={
+                <Modal close={handleModalClose}>
+                  <OrderDetailsModal />
                 </Modal>
               }
             />

@@ -1,15 +1,10 @@
 import React from 'react';
 import style from './ingridient-details.module.css';
-import {
-  useSelector,
-} from '../../../utils/Types/hooks/typed-hooks';
+import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 import { useLocation } from 'react-router-dom';
 
 const IngredientDetails = () => {
-  const { data } = useSelector(
-    (store) =>
-      store.ingredients,
-  );
+  const { data } = useSelector((store) => store.ingredients);
 
   const ingredientId = window.location.pathname.split('/').pop();
 
@@ -68,6 +63,5 @@ const IngredientDetails = () => {
     </div>
   );
 };
-
 
 export default IngredientDetails;

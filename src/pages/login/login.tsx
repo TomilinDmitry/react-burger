@@ -20,7 +20,6 @@ const Login = () => {
   };
   const onClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // @ts-ignore
     dispatch(login({ email: emailValue, password: passwordValue }));
   };
 
