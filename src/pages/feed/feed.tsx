@@ -20,8 +20,7 @@ const Feed = () => {
     return () => {
       dispatch(disconnect());
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={style.container}>

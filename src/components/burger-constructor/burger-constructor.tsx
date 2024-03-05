@@ -45,7 +45,7 @@ const BurgerConstructor = () => {
   const [, drop] = useDrop({
     accept: 'ingredient',
     drop: (item) => {
-      //@ts-ignore
+      // @ts-ignore
       dispatch(setDraggedElements(item));
     },
   });
@@ -67,7 +67,6 @@ const BurgerConstructor = () => {
   const onSubmitOrder = () => {
     if (bun && draggedElements.length > 0) {
       setIsOpen(true);
-      //@ts-ignore
       dispatch(asyncOrder([...draggedElements,bun]));
     } else {
       alert('Добавьте обязательные ингредиенты');

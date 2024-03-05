@@ -10,7 +10,7 @@ export interface Order {
 }
 
 export type TPayload = {
-  order: Order;
+  orders: Order[];
 };
 
 type OrdersState = {
@@ -26,7 +26,7 @@ export const currentOrderSlice = createSlice({
   initialState,
   reducers: {
     currentOrder: (state, action: PayloadAction<TPayload>) => {
-      state.order = action.payload.order;
+      state.order = action.payload.orders[0];
     },
   },
 });

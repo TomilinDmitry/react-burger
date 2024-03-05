@@ -13,7 +13,6 @@ const IngredientElementStructure = ({
   ing,
   count,
 }: TIngredientELementProps) => {
-
   return (
     <div className={style.ingredientCard}>
       <img

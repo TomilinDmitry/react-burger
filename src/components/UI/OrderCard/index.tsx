@@ -5,20 +5,18 @@ import {
 import React, { useMemo } from 'react';
 import style from './style.module.css';
 
-import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import { Order } from '../../../services/get-order/slice';
 import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
 import { TElements } from '../../../utils/Types/TElements';
 
 interface IorderCardProps {
-  showStatus?: boolean;
+  showStatus?: string;
   order: Order;
 }
 
 const OrderCard = ({ showStatus, order }: IorderCardProps) => {
   const ingredients = useSelector((state) => state.ingredients.data);
-
+  const maxIngredient = 6;
   const selectedIngredientIds = order.ingredients;
   const selectedIngredients = ingredients.filter((ingredient) =>
     selectedIngredientIds?.includes(ingredient._id),
@@ -27,10 +25,10 @@ const OrderCard = ({ showStatus, order }: IorderCardProps) => {
   const idCounts: { [key: string]: number } = {};
   selectedIngredientIds?.forEach((id) => {
     if (
-      id === '643d69a5c3f7b9001cfa093d' ||
-      id === '643d69a5c3f7b9001cfa093с'
+      id === '643d69a5c3f7b9001cfa093c' ||
+      id === '643d69a5c3f7b9001cfa093d'
     ) {
-      idCounts[id] = (idCounts[id] || 0) + 2;
+      idCounts[id] = idCounts[id] = 2;
     } else {
       idCounts[id] = (idCounts[id] || 0) + 1;
     }
@@ -47,7 +45,6 @@ const OrderCard = ({ showStatus, order }: IorderCardProps) => {
 
   const firstSixElements = selectedIngredients.slice(0, 6);
   const otherElements = selectedIngredients.length - 6;
-
   return (
     <div className={style.orderCard}>
       <p className={style.orderNumberBlock}>
@@ -68,20 +65,25 @@ const OrderCard = ({ showStatus, order }: IorderCardProps) => {
           <span
             className={`text text_type_main-medium ${style.orderStatus}`}
           >
-            {order.status}
+            {order.status === 'done' ? 'Готов' : 'Готовится'}
           </span>
         )}
       </section>
       <div className={style.ingredientsOrder}>
         <div className={style.ingredientIcons}>
-          {firstSixElements.map((image) => (
-            <img
-              key={image._id}
-              className={`${style.icons}`}
-              src={image.image_mobile}
-              alt="bun"
-            />
-          ))}
+          {firstSixElements.map((image, index) => {
+            // let zIndex = maxIngredient - index;
+            // let right = 20 * index
+            return (
+              <img
+                key={image._id}
+                // style={{zIndex:zIndex,right:right}}
+                className={`${style.icons}`}
+                src={image.image_mobile}
+                alt="bun"
+              />
+            );
+          })}
           {otherElements > 0 && (
             <span className={style.otherElements}>
               + {otherElements}

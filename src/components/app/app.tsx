@@ -84,8 +84,8 @@ function App() {
               element={<OnlyAuth component={<OrdersHistory />} />}
             />
             <Route
-              path="/profile/orders/:number"
-              element={<OnlyAuth component={<FeedDetails />} />}
+              path="/profile/order/:number"
+              element={<OnlyAuth component={<OrderDetailsModal />} />}
             />
             <Route
               path="/profile"
@@ -110,6 +110,14 @@ function App() {
             />
             <Route
               path="/feed/:number"
+              element={
+                <Modal close={handleModalClose}>
+                  <OrderDetailsModal />
+                </Modal>
+              }
+            />
+            <Route
+              path="/profile/order/:number"
               element={
                 <Modal close={handleModalClose}>
                   <OrderDetailsModal />
