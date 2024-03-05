@@ -20,7 +20,8 @@ const FeedDetails = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector((store) => store.ingredients.data);
   const { number } = useParams<{ number: string }>();
-
+  const bun1 = '643d69a5c3f7b9001cfa093d';
+  const bun2 = '643d69a5c3f7b9001cfa093c';
   const selectedOrder = useSelector((state) => {
     let order = state.getOrderList.orders.find(
       (o) => o.number === Number(number),
@@ -50,23 +51,21 @@ const FeedDetails = () => {
 
   const selectedIngredientIds = selectedOrder.ingredients;
 
-  const bun =
-    '643d69a5c3f7b9001cfa093c' || '643d69a5c3f7b9001cfa093d';
-  const idCounts: { [key: string]: number } = (
-    selectedIngredientIds || []
-  ).reduce<{ [key: string]: number }>((acc, id) => {
-    acc[id] = id === bun ? (acc[id] || 0) + 2 : (acc[id] || 0) + 1;
-    return acc;
-  }, {});
+  const idCounts: { [key: string]: number } = {};
 
-  const selectedIngredients = Array.from(
-    new Set(selectedIngredientIds),
-  ).map((id) =>
-    ingredients.find((item) => item._id === id),
-  ) as Array<TElements>;
-
+  selectedIngredientIds?.forEach((id) => {
+    if (id === bun1 || id === bun2) {
+      idCounts[id] = (idCounts[id] || 0) + 2;
+    } else {
+      idCounts[id] = (idCounts[id] || 0) + 1;
+    }
+  });
+  const selectedIngredients = ingredients.filter((ingredient) =>
+    selectedIngredientIds?.includes(ingredient._id),
+  );
   const totalOrderPrice: number = selectedIngredients.reduce(
-    (sum, ing) => sum + ing.price * idCounts[ing._id],
+    (sum: number, ing: TElements) =>
+      sum + ing.price * idCounts[ing._id],
     0,
   );
 

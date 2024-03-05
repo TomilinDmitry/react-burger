@@ -20,22 +20,22 @@ const OrderCard = ({ showStatus, order }: IorderCardProps) => {
   const selectedIngredients = ingredients.filter((ingredient) =>
     selectedIngredientIds?.includes(ingredient._id),
   );
-  const bun = '643d69a5c3f7b9001cfa093c' || '643d69a5c3f7b9001cfa093d';
-  const idCounts: { [key: string]: number } = (
-      selectedIngredientIds || []
-    ).reduce<{ [key: string]: number }>((acc, id) => {
-      acc[id] = id === bun ? (acc[id] || 0) + 2 : (acc[id] || 0) + 1;
-      return acc;
-    }, {});
+  const bun1 = '643d69a5c3f7b9001cfa093d';
+  const bun2 = '643d69a5c3f7b9001cfa093c';
+  const idCounts: { [key: string]: number } = {};
 
-  const totalOrderPrice: number = useMemo(() => {
-    return selectedIngredients.reduce(
-      (sum: number, ing: TElements) =>
-        sum + ing.price * idCounts[ing._id],
-      0,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedIngredients]);
+  selectedIngredientIds?.forEach((id) => {
+    if (id === bun1 || id === bun2) {
+      idCounts[id] = (idCounts[id] || 0) + 2;
+    } else {
+      idCounts[id] = (idCounts[id] || 0) + 1;
+    }
+  });
+  const totalOrderPrice: number = selectedIngredients.reduce(
+    (sum: number, ing: TElements) =>
+      sum + ing.price * idCounts[ing._id],
+    0,
+  );
 
   const firstSixElements = selectedIngredients.slice(0, 6);
   const otherElements = selectedIngredients.length - 6;
