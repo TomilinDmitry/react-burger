@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TElements } from '../../utils/Types/TElements';
 
 export interface OrderProfile {
   _id: string;

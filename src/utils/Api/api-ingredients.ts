@@ -4,6 +4,7 @@ import { TUser } from '../Types/TUser';
 import { TOrderInfo } from '../Types/TOrderInfo';
 import { TToken } from '../Types/TToken';
 import { TFecth } from '../Types/TFetch';
+import { TPayload } from '../../services/currentOrder/sliceCurrentOrder';
 
 export const baseUrl = 'https://norma.nomoreparties.space/api';
 
@@ -259,14 +260,14 @@ export const getUserProfile = (): Promise<TUser> => {
 };
 export const getOrderByNumber = (
   number: number,
-): Promise<TOrderInfo> => {
+): Promise<TPayload> => {
   return fetch(`${baseUrl}/orders/${number}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
   })
-    .then(checkResponse<TServerResponse<TOrderInfo>>)
+    .then(checkResponse<TServerResponse<TPayload>>)
     .then((data) => {
       if (data?.success) return data;
       return Promise.reject(data);

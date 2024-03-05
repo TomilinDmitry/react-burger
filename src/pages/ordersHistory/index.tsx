@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import style from './style.module.css';
 import ProfileNavigation from '../../components/UI/ProfileTabs';
 import OrderCard from '../../components/UI/OrderCard';
@@ -11,8 +11,6 @@ import {
   connectProfile,
   disconnectProfile,
 } from '../../services/socket/action';
-import { refreshToken } from '../../utils/Api/api-ingredients';
-import { checkUserAuth } from '../../services/users/action';
 const OrdersHistory = () => {
   const { orders } = useSelector(
     (state) => state.getOrderProfileList,
@@ -28,27 +26,30 @@ const OrdersHistory = () => {
       dispatch(disconnectProfile());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, []);
   return (
     <div className={style.container}>
       <div className={style.profileListBlock}>
         <ProfileNavigation />
       </div>
       <div className={style.orderCardBlock}>
-        {orders.slice().reverse().map((order) => (
-          <Link
-            key={order.number}
-            to={`/profile/order/${order.number}`}
-            state={{ background: location }}
-            className={style.link}
-          >
-            <OrderCard
-              order={order}
-              showStatus={order.status}
-              key={order._id}
-            />
-          </Link>
-        ))}
+        {orders
+          .slice()
+          .reverse()
+          .map((order) => (
+            <Link
+              key={order.number}
+              to={`/profile/order/${order.number}`}
+              state={{ background: location }}
+              className={style.link}
+            >
+              <OrderCard
+                order={order}
+                showStatus={order.status}
+                key={order._id}
+              />
+            </Link>
+          ))}
       </div>
     </div>
   );

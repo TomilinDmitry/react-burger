@@ -27,8 +27,6 @@ export const socketMiddleware = <Message, Send>(
   return (store) => {
     let socket: WebSocket | null = null;
     const {
-      // wsConnectionError,
-      // wsMessage,
       wsDisconnect,
       onError,
       onMessage,

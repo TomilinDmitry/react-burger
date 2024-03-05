@@ -3,7 +3,6 @@ import { setUser, setAuthChecked } from './user';
 import {
   api,
   getEmailForgotPassword,
-  getOrderByNumber,
   getUserProfile,
   setNewPassword,
   updateInfo,
@@ -18,17 +17,11 @@ export const getUser = () => {
     });
   };
 };
-export const fetchOrderById = createAsyncThunk(
-  'orders/fetchOrderById',
-  async (order: number) => {
-    const response = await getOrderByNumber(order);
-    return response;
-  },
-);
+
 export const setNewInfoUser = createAsyncThunk(
   'user/updateInfo',
   async ({ name, email, password }: TUser) => {
-    const response = await updateInfo(email, name!, password);
+    const response = await updateInfo(email, name!, password!);
     return response;
   },
 );
@@ -36,7 +29,7 @@ export const setNewInfoUser = createAsyncThunk(
 export const register = createAsyncThunk(
   'user/register',
   async ({ email, password, name }: TUser) => {
-    const res = await api.register(email, password, name!);
+    const res = await api.register(email, password!, name!);
     localStorage.setItem('accessToken', res.accessToken);
     localStorage.setItem('refreshToken', res.refreshToken);
     return res;
@@ -45,7 +38,7 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   'user/login',
   async ({ email, password }: TUser) => {
-    const res = await api.login(email, password);
+    const res = await api.login(email, password!);
     localStorage.setItem('accessToken', res.accessToken);
     localStorage.setItem('refreshToken', res.refreshToken);
     return res;

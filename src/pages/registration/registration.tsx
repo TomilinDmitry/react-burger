@@ -26,14 +26,12 @@ const Registration = () => {
   const onClick = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
-      // @ts-ignore
       register({
         email: emailValue,
         password: passwordValue,
         name: inputValue,
       }),
     );
-    // @ts-ignore
     dispatch(login({ email: emailValue, password: passwordValue }));
   };
   return (

@@ -6,9 +6,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './style.module.css';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector } from '../../utils/Types/hooks/typed-hooks';
 
 function AppHeader() {
-
+  const nameUser = useSelector((state) => state.user.user?.name);
   const navigate = useNavigate();
   const onClick = () => {
     navigate('/');
@@ -26,7 +27,7 @@ function AppHeader() {
             }
           >
             <BurgerIcon type="primary" />
-            <p className={`text text_type_main-default ml-2`} >
+            <p className={`text text_type_main-default ml-2`}>
               Конструктор
             </p>
           </NavLink>
@@ -57,7 +58,7 @@ function AppHeader() {
         >
           <ProfileIcon type="secondary" />
           <p className={`text text_type_main-default ml-2`}>
-            Личный кабинет
+            {nameUser ? nameUser : 'Личный кабинет'}{' '}
           </p>
         </NavLink>
       </section>

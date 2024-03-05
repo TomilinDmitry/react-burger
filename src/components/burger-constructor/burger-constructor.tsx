@@ -44,8 +44,8 @@ const BurgerConstructor = () => {
   };
   const [, drop] = useDrop({
     accept: 'ingredient',
-    drop: (item) => {
-      // @ts-ignore
+    drop: (item:TElements) => {
+   
       dispatch(setDraggedElements(item));
     },
   });

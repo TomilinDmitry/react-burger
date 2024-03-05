@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 205px;
   height: 275px;
   margin-bottom: 40px;
@@ -64,15 +64,18 @@ p {
   max-width: 414px;
   width: 414px;
 }
-.countIngredients{
-    display: flex;
-    align-items:center;
-    gap: 8px;
-    width: 98px;
+.countIngredients {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 98px;
 }
-.onLink{
+.onLink {
   width: 600px;
 }
-.onLinkStructure{
-height: 500px;
+.onLinkStructure {
+  width: 700px;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
 }

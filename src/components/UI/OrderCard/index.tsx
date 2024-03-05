@@ -16,23 +16,17 @@ interface IorderCardProps {
 
 const OrderCard = ({ showStatus, order }: IorderCardProps) => {
   const ingredients = useSelector((state) => state.ingredients.data);
-  const maxIngredient = 6;
   const selectedIngredientIds = order.ingredients;
   const selectedIngredients = ingredients.filter((ingredient) =>
     selectedIngredientIds?.includes(ingredient._id),
   );
-
-  const idCounts: { [key: string]: number } = {};
-  selectedIngredientIds?.forEach((id) => {
-    if (
-      id === '643d69a5c3f7b9001cfa093c' ||
-      id === '643d69a5c3f7b9001cfa093d'
-    ) {
-      idCounts[id] = idCounts[id] = 2;
-    } else {
-      idCounts[id] = (idCounts[id] || 0) + 1;
-    }
-  });
+  const bun = '643d69a5c3f7b9001cfa093c' || '643d69a5c3f7b9001cfa093d';
+  const idCounts: { [key: string]: number } = (
+      selectedIngredientIds || []
+    ).reduce<{ [key: string]: number }>((acc, id) => {
+      acc[id] = id === bun ? (acc[id] || 0) + 2 : (acc[id] || 0) + 1;
+      return acc;
+    }, {});
 
   const totalOrderPrice: number = useMemo(() => {
     return selectedIngredients.reduce(
@@ -72,12 +66,9 @@ const OrderCard = ({ showStatus, order }: IorderCardProps) => {
       <div className={style.ingredientsOrder}>
         <div className={style.ingredientIcons}>
           {firstSixElements.map((image, index) => {
-            // let zIndex = maxIngredient - index;
-            // let right = 20 * index
             return (
               <img
                 key={image._id}
-                // style={{zIndex:zIndex,right:right}}
                 className={`${style.icons}`}
                 src={image.image_mobile}
                 alt="bun"

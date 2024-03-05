@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import style from './order-info.module.css';
 
 import { useLocation } from 'react-router-dom';

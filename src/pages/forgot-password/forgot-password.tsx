@@ -10,17 +10,15 @@ import { forgotPassword } from '../../services/users/action';
 
 const ForgotPassword = () => {
   const [emailValue, setEmailValue] = useState<string>('');
-  const onChangeEmail = (e:ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(e.target.value);
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onClick = async (e:FormEvent<HTMLFormElement>) => {
+  const onClick = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // @ts-ignore
     const res = await dispatch(forgotPassword({ email: emailValue }));
-    // @ts-ignore
-    if (res.payload && res.payload.success) {
+    if (res.payload) {
       navigate('/reset-password');
     }
   };

@@ -27,8 +27,6 @@ import {
 } from '../protected-route/protected-route';
 import { checkUserAuth } from '../../services/users/action';
 import Feed from '../../pages/feed/feed';
-import FeedDetails from '../../pages/feedDetails';
-// import OrdersHistory from '../../pages/ordersHistory';
 import OrderDetailsModal from '../modal/modal-order-info/order-info';
 import OrdersHistory from '../../pages/ordersHistory';
 
