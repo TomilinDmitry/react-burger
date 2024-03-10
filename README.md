@@ -1,4 +1,4 @@
-<a href="https://tomilindmitry.github.io/react-burger/" style="color: white;">Официальный сайт Stellar Burger</a>
+<a href=https://tomilindmitry.github.io/react-burger/ style="color: white;">Официальный сайт Stellar Burger</a>
 
 # Stellar Burger
 
