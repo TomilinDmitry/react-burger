@@ -62,7 +62,6 @@ const BurgerIngredients = () => {
       mains: data.filter((ingredient) => ingredient.type === 'main'),
     };
   }, [data]);
-  console.log(filteredIngredient.buns.map((item) => item._id));
   const open = (ingredient: TElements) => {
     setOpenModal(true);
   };
