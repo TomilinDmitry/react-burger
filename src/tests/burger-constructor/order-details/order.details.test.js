@@ -5,14 +5,9 @@ import {
   ORDER_SUCCESS,
 } from '../../../services/burger-constructor/order-details/action';
 import { orderReducer } from '../../../services/burger-constructor/order-details/reducer';
+import { initialState } from '../../../services/burger-constructor/order-details/reducer';
 
 describe('orderReducer', () => {
-  const initialState = {
-    loading: false,
-    failed: false,
-    orderName: null,
-    orderNumber: null,
-  };
   it('should handle ORDER_LOADING', () => {
     const action = { type: ORDER_LOADING };
     const newState = orderReducer(initialState, action);

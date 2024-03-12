@@ -6,7 +6,7 @@ describe('Click on Card', () => {
   });
   it('Click on card', () => {
     cy.viewport(1920, 1080);
-    cy.visit('http://localhost:3000/');
+    cy.baseUrl();
     cy.get('[data-testid="bun"]').first().click();
     cy.contains('Детали').should('be.visible');
     cy.closeIcon();
@@ -22,7 +22,7 @@ describe('Move Ingredient and Create Order', () => {
   });
   it('move', () => {
     cy.viewport(1920, 1080);
-    cy.visit('http://localhost:3000/');
+    cy.baseUrl();
     cy.moveIngredient();
     cy.makeOrder();
     cy.loginUser('bezzy69@yandex.ru', '12345qq');

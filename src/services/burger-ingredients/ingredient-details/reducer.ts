@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootTypes } from '../../../utils/Types/RootTypes';
 type IngredientsState = RootTypes['selected'];
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   selectedIngredient: null,
 };
 const selectedIngSlice = createSlice({

@@ -1,13 +1,13 @@
 import React from 'react';
 import style from './ingridient-details.module.css';
 import { useSelector } from '../../../utils/Types/hooks/typed-hooks';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const IngredientDetails = () => {
   const { data } = useSelector((store) => store.ingredients);
 
-  const ingredientId = window.location.pathname.split('/').pop();
-
+  // const ingredientId = window.location.pathname.split('/').pop();
+  const { ingredientId } = useParams<{ ingredientId: string }>();
   const selectedIngredient = data.find(
     (ingredient) => ingredient._id === ingredientId,
   );

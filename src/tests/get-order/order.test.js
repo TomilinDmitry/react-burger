@@ -4,29 +4,17 @@ import {
   wsConnectionError,
   wsDisconnect,
   wsMessage,
+  initialState
 } from '../../services/get-order/slice';
 
 describe('order test', () => {
   it('wsConnect', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: null,
-      wsConnected: false,
-    };
     const newState = getOrderListReducer(initialState, wsConnect());
     expect(newState.connectingError).toBeNull();
     expect(newState.wsConnected).toBe(true);
   });
   it('wsConnectionError', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: null,
-      wsConnected: false,
-    };
+    
     const error = 'Ошибка';
     const newState = getOrderListReducer(
       initialState,
@@ -36,13 +24,6 @@ describe('order test', () => {
     expect(newState.wsConnected).toEqual(false);
   });
   it('wsMessage', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: 'Ошибка',
-      wsConnected: true,
-    };
     const payload = {
       orders: [
         {
@@ -68,13 +49,6 @@ describe('order test', () => {
     expect(newState.connectingError).toBeNull();
   });
   it('wsDisconnect', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: null,
-      wsConnected: true,
-    };
     const newState = getOrderListReducer(
       initialState,
       wsDisconnect(),

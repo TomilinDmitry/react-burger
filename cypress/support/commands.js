@@ -63,3 +63,6 @@ Cypress.Commands.add('makeOrder', () => {
     .contains('Оформить заказ')
     .click();
 });
+Cypress.Commands.add('baseUrl', () => {
+  cy.visit('http://localhost:3000/#/');
+});

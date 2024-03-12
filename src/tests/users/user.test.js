@@ -1,14 +1,12 @@
 import userReducer, {
   setAuthChecked,
   setUser,
+  initialState
 } from '../../services/users/user';
 
 describe('Users test', () => {
   it('setAuthChecked', () => {
-    const initialState = {
-      user: null,
-      isAuthChecked: false,
-    };
+    
     const newState = userReducer(initialState, setAuthChecked(true));
     expect(newState.isAuthChecked).toBe(true);
   });

@@ -1,16 +1,12 @@
 import {
   currentOrder,
   currentOrderReducer,
+  initialState
 } from '../../services/currentOrder/sliceCurrentOrder';
 import { fetchOrderById } from '../../services/get-order/action';
 
 describe('CurrentOrderReducer test', () => {
   it('currentOrder test', () => {
-    const initialState = {
-      order: null,
-      loading: false,
-      error: null,
-    };
     const action = currentOrder({
       orders: [
         {
@@ -38,22 +34,13 @@ describe('CurrentOrderReducer test', () => {
 
 describe('extraReducerTest', () => {
   it('should handle getIngredient.pending', () => {
-    const initialState = {
-      order: null,
-      loading: false,
-      error: null,
-    };
     const action = { type: fetchOrderById.pending.type };
     const newState = currentOrderReducer(initialState, action);
     expect(newState.loading).toEqual(true);
     expect(newState.error).toBeNull();
   });
   it('should handle getIngredient.fulfilled', () => {
-    const initialState = {
-      order: null,
-      loading: false,
-      error: null,
-    };
+   
     const action = currentOrder({
       orders: [
         {
@@ -80,11 +67,6 @@ describe('extraReducerTest', () => {
     expect(newState.error).toBeNull();
   });
   it('should handle getIngredient.rejected', () => {
-    const initialState = {
-      order: null,
-      loading: false,
-      error: null,
-    };
     const action = {
       type: fetchOrderById.rejected.type,
       error: { message: 'Ошибка' },

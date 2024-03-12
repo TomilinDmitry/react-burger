@@ -4,17 +4,11 @@ import {
   wsConnectionProfileError,
   wsDisconnectProfile,
   wsMessageProfile,
+  initialState
 } from '../../services/get-order/sliceProfile';
 
 describe('orderProfile test', () => {
   it('wsConnectProfile', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: null,
-      wsConnected: false,
-    };
     const newState = getOrderProfileListReducer(
       initialState,
       wsConnectProfile(),
@@ -23,13 +17,7 @@ describe('orderProfile test', () => {
     expect(newState.wsConnected).toBe(true);
   });
   it('wsConnectionError', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: null,
-      wsConnected: false,
-    };
+    
     const error = 'Ошибка';
     const newState = getOrderProfileListReducer(
       initialState,
@@ -39,13 +27,7 @@ describe('orderProfile test', () => {
     expect(newState.wsConnected).toEqual(false);
   });
   it('wsMessageProfile', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: 'Ошибка',
-      wsConnected: true,
-    };
+   
     const payload = {
       orders: [
         {
@@ -71,13 +53,6 @@ describe('orderProfile test', () => {
     expect(newState.connectingError).toBeNull();
   });
   it('wsDisconnect', () => {
-    const initialState = {
-      orders: [],
-      total: 0,
-      totalToday: 0,
-      connectingError: null,
-      wsConnected: true,
-    };
     const newState = getOrderProfileListReducer(
       initialState,
       wsDisconnectProfile(),

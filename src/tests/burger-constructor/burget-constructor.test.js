@@ -1,18 +1,16 @@
 import constructorReducer, {
   clearElements,
   deleteIngredient,
+  initialState,
   moveIngredient,
   setBun,
   setDraggedElements,
 } from '../../services/burger-constructor/reducer';
 
+const ingredient1 = { name: 'Ingredient1', unId: '12345' };
+const ingredient2 = { name: 'Ingredient2', unId: '54321' };
 
 describe('constructorReducer', () => {
-  const initialState = {
-    bun: null,
-    draggedElements: [],
-  };
-
   it('should handle setBun', () => {
     const newState = constructorReducer(
       initialState,
@@ -22,7 +20,6 @@ describe('constructorReducer', () => {
   });
 
   it('should handle setDraggedElements', () => {
-    const initialState = { bun: null, draggedElements: [] };
     const ingredient = {
       name: 'Ingredient1',
       unId: expect.any(String),
@@ -37,26 +34,20 @@ describe('constructorReducer', () => {
   it('should handle moveIngredient', () => {
     const state = {
       bun: null,
-      draggedElements: [
-        { name: 'Ingredient1', unId: '12345' },
-        { name: 'Ingredient2', unId: '54321' },
-      ],
+      draggedElements: [ingredient1, ingredient2],
     };
     const action = moveIngredient({ hoverIndex: 1, dragIndex: 0 });
     const newState = constructorReducer(state, action);
     expect(newState.draggedElements).toEqual([
-      { name: 'Ingredient2', unId: '54321' },
-      { name: 'Ingredient1', unId: '12345' },
+      ingredient2,
+      ingredient1,
     ]);
   });
 
   it('should handle deleteIngredient', () => {
     const state = {
       bun: null,
-      draggedElements: [
-        { name: 'Ingredient1', unId: '12345' },
-        { name: 'Ingredient2', unId: '54321' },
-      ],
+      draggedElements: [ingredient1, ingredient2],
     };
     const action = deleteIngredient('12345');
     const newState = constructorReducer(state, action);
@@ -68,10 +59,7 @@ describe('constructorReducer', () => {
   it('should handle clearElements', () => {
     const state = {
       bun: 'BunData',
-      draggedElements: [
-        { name: 'Ingredient1', unId: '12345' },
-        { name: 'Ingredient2', unId: '54321' },
-      ],
+      draggedElements: [ingredient1, ingredient2],
     };
     const action = clearElements();
     const newState = constructorReducer(state, action);
