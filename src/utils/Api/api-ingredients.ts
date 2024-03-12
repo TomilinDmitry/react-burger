@@ -19,10 +19,8 @@ export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
 }
-const checkResponse = <T>(res: Response): Promise<T> => {
-  return res.ok
-    ? res.json()
-    : res.json().then((err) => Promise.reject(err));
+export const checkResponse = <T>(res: Response): Promise<T> => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка:${res.status}`);
 };
 
 export const getIngredient = createAsyncThunk(

@@ -1,37 +1,33 @@
 describe('Click on Card', () => {
+  beforeEach(() => {
+    cy.intercept('GET', 'ingredients', { fixture: 'ingredients' }).as(
+      'Ingredients',
+    );
+  });
   it('Click on card', () => {
-    cy.visit('http://localhost:3002/');
+    cy.viewport(1920, 1080);
+    cy.visit('http://localhost:3000/');
     cy.get('[data-testid="bun"]').first().click();
-    cy.contains('Детали');
-    cy.get('[data-testid="closeIcon"]').click();
-    cy.contains('Соберите бургер');
+    cy.contains('Детали').should('be.visible');
+    cy.closeIcon();
+    cy.contains('Соберите бургер').should('be.visible');
   });
 });
 describe('Move Ingredient and Create Order', () => {
+  beforeEach(() => {
+    cy.intercept('GET', 'ingredients', { fixture: 'ingredients' }).as(
+      'Ingredients',
+    );
+    cy.intercept('POST', 'orders', { fixture: 'order' }).as('Order');
+  });
   it('move', () => {
-    cy.visit('http://localhost:3002/');
-    cy.get('[data-testid="bun"]').first();
-    cy.get('[data-testid="sauce"]').first();
-    cy.get('[data-testid="targetBlock"]').contains('Выберите булки');
-    cy.get('[data-testid="mainIng"]').contains('Выберите начинку');
-    cy.get('[data-testid="bun"]').first().trigger('dragstart');
-    cy.get('[data-testid="targetBlock"]').trigger('drop');
-    cy.get('[data-testid="sauce"]').first().trigger('dragstart');
-    cy.get('[data-testid="mainIng"]').trigger('drop');
-    cy.get('[data-testid="buttonOrder"]')
-      .contains('Оформить заказ')
-      .click();
-    cy.get('input[type="email"]').type('bezzy69@yandex.ru');
-    cy.get('input[type="password"]').type('12345qq');
-    cy.get('button').click();
-    cy.get('[data-testid="buttonOrder"]')
-      .contains('Оформить заказ')
-      .click();
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(18000);
-    cy.contains('Детали');
-
-    cy.get('[data-testid="closeIcon"]').click();
+    cy.viewport(1920, 1080);
+    cy.visit('http://localhost:3000/');
+    cy.moveIngredient();
+    cy.makeOrder();
+    cy.loginUser('bezzy69@yandex.ru', '12345qq');
+    cy.makeOrder();
+    cy.closeIcon();
     cy.contains('Соберите бургер');
   });
 });

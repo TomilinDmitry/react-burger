@@ -35,3 +35,31 @@
 //     }
 //   }
 // }
+Cypress.Commands.add('loginUser', (email, password) => {
+  cy.intercept('POST', 'login', { fixture: 'login' }).as('Login');
+  cy.get('input[type="email"]').type(email);
+  cy.get('input[type="password"]').type(password);
+  cy.get('button').click();
+});
+Cypress.Commands.add('closeIcon', () => {
+  cy.contains('Детали').should('be.visible');
+  cy.get('[data-testid="closeIcon"]').click();
+});
+Cypress.Commands.add('moveIngredient', () => {
+  cy.get('[data-testid="bun"]').as('bun');
+  cy.get('[data-testid="sauce"]').as('sauce');
+  cy.get('[data-testid="targetBlock"]')
+    .contains('Выберите булки')
+    .should('be.visible')
+    .as('targetBlock');
+  cy.get('[data-testid="mainIng"]').contains('Выберите начинку');
+  cy.get('@bun').trigger('dragstart');
+  cy.get('@targetBlock').trigger('drop');
+  cy.get('@sauce').trigger('dragstart');
+  cy.get('[data-testid="mainIng"]').trigger('drop');
+});
+Cypress.Commands.add('makeOrder', () => {
+  cy.get('[data-testid="buttonOrder"]')
+    .contains('Оформить заказ')
+    .click();
+});
