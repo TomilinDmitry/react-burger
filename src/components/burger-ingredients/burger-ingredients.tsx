@@ -135,7 +135,11 @@ const BurgerIngredients = () => {
             </h1>
             <section className={style.sectionBlock}>
               {filteredIngredient.buns.map((bun) => (
-                <div onClick={() => open(bun)} key={bun._id}>
+                <div
+                  onClick={() => open(bun)}
+                  key={bun._id}
+                  data-testid="bun"
+                >
                   <IngredientCard {...bun} />
                 </div>
               ))}
@@ -149,7 +153,7 @@ const BurgerIngredients = () => {
             </h1>
             <section className={style.sectionBlock}>
               {filteredIngredient.sauces.map((sauce) => (
-                <div onClick={() => open(sauce)} key={sauce._id}>
+                <div onClick={() => open(sauce)} key={sauce._id} data-testid='sauce'>
                   <IngredientCard {...sauce} />
                 </div>
               ))}

@@ -38,7 +38,7 @@ const Modal = ({
         <section className={style.title}>
           <h1>{title}</h1>
         </section>
-        <section className={style.closeBtn}>
+        <section className={style.closeBtn} data-testid='closeIcon'>
           <CloseIcon onClick={close} type="primary" />
         </section>
       </section>

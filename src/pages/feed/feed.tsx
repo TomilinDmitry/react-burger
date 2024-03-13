@@ -43,7 +43,7 @@ const Feed = () => {
             <div className={style.readyOrder}>
               <span className={style.titleReadyOrder}>Готовы:</span>
               <p className={style.orderList}>
-                {orders.slice(-10).map((order) => (
+                {orders.slice(0, 15).map((order) => (
                   <span
                     className="text text_type_digits-default"
                     key={order._id}

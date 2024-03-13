@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { RootTypes } from "../../utils/Types/RootTypes";
 
 type IngredientsState = RootTypes["container"];
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   bun: null,
   draggedElements:[],
 }

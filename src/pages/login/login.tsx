@@ -26,7 +26,7 @@ const Login = () => {
   return (
     <div className={style.container}>
       <p className={style.loginTitle}>Вход</p>
-      <form onSubmit={onClick} className={style.inputBlock}>
+      <form onSubmit={onClick} className={style.inputBlock} data-testid='login'>
         <EmailInput onChange={onChangeEmail} value={emailValue} />
         <PasswordInput
           value={passwordValue}

@@ -5,7 +5,6 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.65",
@@ -33,6 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "cypress": "cypress open cache clear",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -55,8 +55,14 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^14.2.1",
     "@types/react": "^18.2.38",
     "@types/uuid": "^9.0.8",
-    "gh-pages": "^6.1.1"
+
+    "cypress": "^13.6.6",
+    "eslint-plugin-cypress": "^2.15.1",
+    "fetch-mock": "^9.11.0",
+    "gh-pages": "^6.1.1",
+    "redux-mock-store": "^1.5.4"
   }
 }

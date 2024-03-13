@@ -106,7 +106,7 @@ const BurgerConstructor = () => {
       <section className="pl-8">
         <BottomStubs />
       </section>
-      <section className={style.bottomContainer}>
+      <section className={style.bottomContainer} data-testid='buttonOrder'>
         <p className="text text_type_digits-medium mr-10">
           {totalOrderPrice} <CurrencyIcon type="primary" />
         </p>

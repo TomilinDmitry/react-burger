@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWU5NzA4ODc4OTljMDAxYjgyYWJiYSIsImlhdCI6MTcxMDE2OTYwMiwiZXhwIjoxNzEwMTcwODAyfQ.ZDzgr-TfRh-yWj7iPHzKvQrO6uByxP-_DdXJJE5UAaw",
+  "refreshToken": "b8cb218b29f54bbbd223b489d868f67d93f3b8884b82bd3edca29a06db7b799d41bc6728b484f2ea",
+  "user": {
+    "email": "bezzy69@yandex.ru",
+    "name": "Дмитрий"
+  }
+}

@@ -6,7 +6,7 @@ import SortingIng from './sorting';
 const CenterStubs = () => {
   const { draggedElements } = useSelector((state) => state.container);
   return (
-    <div>
+    <div data-testid='mainIng'>
       {draggedElements.length > 0 ? (
         draggedElements.map((ingredient, index) => (
           <div key={ingredient.unId}>
