@@ -1,5 +1,7 @@
 <a href=https://tomilindmitry.github.io/react-burger/ style="color: white;"> Официальный сайт Stellar Burger </a>
 
+# Stellar Burger
+
 Добро пожаловать в Stellar Burger! Этот проект разработан с использованием следующего стека технологий:
 
 ## TypeScript   <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" title="TS" alt="TS" width="20" height="20"/>&nbsp;
